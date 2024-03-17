@@ -1,11 +1,15 @@
 <template>
   <div class="popup-menu rounded-[24px]" @click.stop>
     <div class="popup-content">
-      <div v-if="menuItem === 'БЖУ'">Форма для БЖУ</div>
+      <div v-if="menuItem === 'БЖУ'">
+        <BJU/>
+      </div>
       <p v-else-if="menuItem === 'Индекс массы тела'">
-        <IndexMassiTela></IndexMassiTela>
+        <IndexMassiTela/>
       </p>
-      <p v-else-if="menuItem === 'Калорийность'">Форма для калорийности</p>
+      <p v-else-if="menuItem === 'Калорийность'">
+        <CalculatorCalories/>
+      </p>
     </div>
   </div>
 </template>
@@ -13,7 +17,8 @@
 
 <script setup>
 import IndexMassiTela from "@/components/IndexMassiTela.vue"
-
+import BJU from "@/components/BJU.vue";
+import CalculatorCalories from "@/components/CalculatorCalories.vue";
 </script>
 
 <script>
