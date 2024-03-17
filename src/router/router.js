@@ -1,14 +1,21 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, createWebHashHistory } from "vue-router";
 import MainPage from "@/views/MainPage.vue";
+import CalculatorPage from "@/views/CalculatorPage.vue";
+import DietsPage from "@/views/DietsPage.vue";
+import LoginPage from "@/views/LoginPage.vue";
+import RegistrationPage from "@/views/RegistrationPage.vue";
+import Profile from "@/views/Profile.vue"
+import ReceiptsPage from "@/views/ReceiptsPage.vue";
 
-const routes = [
-    {
-        path:'/', component: MainPage
-    },
-]
-
-const router = createRouter({
+export default createRouter({
     history: createWebHistory(),
+    routes: [
+        {path: '/', component: MainPage},
+        {path: '/login', component: LoginPage},
+        {path: '/register', component: RegistrationPage},
+        {path: '/diets', component: DietsPage},
+        {path: '/receipts', component: ReceiptsPage},
+        {path: '/calculators', component: CalculatorPage},
+    ]
 });
 
-export default router;

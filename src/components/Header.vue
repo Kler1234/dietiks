@@ -15,32 +15,46 @@ export default {
   <header class="header">
     <div class="container__header">
       <div class="header__body">
-        <a href="index.html" class="header__logo">Диетикс</a>
+        <router-link to="/" class="header__logo">
+          Диетикс
+        </router-link>
         <div class="header__burger cursor-pointer" @click="getBurgerMenu">
           <span></span>
         </div>
         <nav class="header__menu">
           <ul class="header__list">
             <li>
-              <a href="/receipts.html" class="header__link">Рецепты</a>
+              <router-link to="/receipts" class="header__link">
+                Рецепты
+              </router-link>
             </li>
             <li>
-              <a href="/calculators.html" class="header__link">Калькуляторы</a>
+              <router-link to="/calculators" class="header__link">
+                Калькуляторы
+              </router-link>
             </li>
             <li>
-              <a href="/diets.html" class="header__link">Диеты</a>
+              <router-link to="/diets" class="header__link">
+                Диеты
+              </router-link>
             </li>
             <li>
-              <a href="/login.html" class="header__link">Войти</a>
+              <router-link to="/login" class="header__link">
+                Войти
+              </router-link>
             </li>
           </ul>
         </nav>
       </div>
     </div>
+
   </header>
 </template>
 
 <style scoped>
+
+
+
 @font-face {
   font-family: "Kyiv_TypeSerif";
   src: url("@/fonts/KyivTypeSerif-Regular2.otf");

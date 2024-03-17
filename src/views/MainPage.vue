@@ -1,10 +1,14 @@
 <script setup>
 import Header from "@/components/Header.vue";
+
+
 </script>
 
 <template>
+  <div class="btn-up btn-up_hide"></div>
   <Header/>
   <div class="main">
+    <div class="btn-up btn-up_hide"></div>
     <div class="section-about flex items-center justify-between pt-10">
       <div class="about-dietiks pl-80">
         <div class="title-dietiks">
@@ -17,7 +21,9 @@ import Header from "@/components/Header.vue";
             мы поможем вам достичь цели!</p>
         </div>
         <div class="btn-try relative bg-green-600 rounded-2xl mt-5 h-14 hover:-translate-y-0.5 cursor-pointer">
-          <p class="text-white text-center pt-3.5">Попробовать</p>
+          <router-link to="/register">
+            <p class="text-white text-center pt-3.5">Попробовать</p>
+          </router-link>
         </div>
       </div>
       <img src="@/assets/food2.png" alt="food" class="img-food scale-80">
@@ -45,7 +51,9 @@ import Header from "@/components/Header.vue";
             <div class="registration"> Подбери для себя оптимальный <span> план питания </span></div>
             <div class="regbox">
               <div class="regbox__block">
-                <a class="regbox__text" href="/registration.html">Зарегестрироваться</a>
+                <router-link to="/register">
+                  <p class="regbox__text">Зарегестрироваться</p>
+                </router-link>
               </div>
             </div>
           </div>
@@ -62,10 +70,12 @@ import Header from "@/components/Header.vue";
 @font-face {
   font-family: "Kyiv_TypeSerif";
   src: url("@/fonts/KyivTypeSerif-Regular2.otf");
+}
 @font-face {
   font-family: "Merriweather";
   src: url("@/fonts/Merriweather/Merriweather-Regular.ttf");
 }
+
 body {
   box-sizing: border-box;
 }
