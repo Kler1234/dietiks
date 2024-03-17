@@ -1,34 +1,107 @@
 <script setup>
 import Header from "@/components/Header.vue";
+import PopupMenu from '@/components/PopupMenu.vue';
+import { ref } from 'vue';
 
+const showPopupMenu = ref(false);
+const selectedMenuItem = ref('');
+
+const openPopupMenu = (item) => {
+  selectedMenuItem.value = item;
+  showPopupMenu.value = true;
+};
+
+const closePopupMenu = () => {
+  showPopupMenu.value = false;
+};
 </script>
 
+<script>
+export default {
+  components: {
+    PopupMenu
+  },
+  setup() {
+    return {
+      showPopupMenu,
+      selectedMenuItem,
+      openPopupMenu
+    };
+  }
+}
+</script>
 <template>
-  <Header/>
-  <div class="content">
-    <div class="title">
-      <div class="title__text">Калькуляторы</div>
-      <div class="section">
-        <a href="#" class="section__item">
-          <img class="section__img" src="../img/noto-v1_fork-and-knife-with-plate.png" alt="Упс, изображения нет!">
-          <p class="section__text">БЖУ</p>
-        </a>
-        <a href="#" class="section__item">
-          <img class="section__img" src="../img/noto_balance-scale.png" alt="Упс, изображения нет!">
-          <p class="section__text">Индекс <br> массы тела</p>
-        </a>
-        <a href="#" class="section__item">
-          <img class="section__img" src="../img/twemoji_carrot.png" alt="Упс, изображения нет!">
-          <p class="section__text">Калорийность</p>
-        </a>
+  <div>
+    <Header/>
+    <div class="content">
+      <div class="title">
+        <div class="title__text">Калькуляторы</div>
+        <div class="section">
+          <!-- Используем @click, чтобы обработать событие нажатия на элементы -->
+          <a href="#" class="section__item" @click="openPopupMenu('БЖУ')">
+            <img class="section__img" src="../img/noto-v1_fork-and-knife-with-plate.png" alt="Упс, изображения нет!">
+            <p class="section__text">БЖУ</p>
+          </a>
+          <a href="#" class="section__item" @click="openPopupMenu('Индекс массы тела')">
+            <img class="section__img" src="../img/noto_balance-scale.png" alt="Упс, изображения нет!">
+            <p class="section__text">Индекс <br> массы тела</p>
+          </a>
+          <a href="#" class="section__item" @click="openPopupMenu('Калорийность')">
+            <img class="section__img" src="../img/twemoji_carrot.png" alt="Упс, изображения нет!">
+            <p class="section__text">Калорийность</p>
+          </a>
+        </div>
       </div>
     </div>
+    <footer class="footer">
+    </footer>
+
+    <portal to="popup-menu">
+      <transition name="fade">
+        <div class="overlay" v-if="showPopupMenu" @click="closePopupMenu"></div>
+      </transition>
+      <transition name="slide">
+        <PopupMenu :menuItem="selectedMenuItem" v-if="showPopupMenu" />
+      </transition>
+    </portal>
   </div>
-  <footer class="footer">
-  </footer>
 </template>
 
+
 <style scoped>
+
+.input__weigth{
+  display: flex;
+}
+
+.title__weigth{
+  font-size: 15px;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active, .slide-leave-active {
+  transition: transform 0.5s;
+}
+.slide-enter, .slide-leave-to {
+  transform: translateY(-50%) translateX(-50%) scale(0.5);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998; /* Ниже z-index Popup меню */
+}
+
 .content {
   padding-top: 157px;
   width: 100%;

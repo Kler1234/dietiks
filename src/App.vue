@@ -1,5 +1,4 @@
 <script setup>
-import ReceiptsPage from "@/views/ReceiptsPage.vue";
 </script>
 
 

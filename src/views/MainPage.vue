@@ -5,7 +5,6 @@ import Header from "@/components/Header.vue";
 </script>
 
 <template>
-  <div class="btn-up btn-up_hide"></div>
   <Header/>
   <div class="main">
     <div class="btn-up btn-up_hide"></div>

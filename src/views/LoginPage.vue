@@ -29,6 +29,12 @@ import Header from "@/components/Header.vue";
 
 <style scoped>
 
+template{
+  background-color: #F2F2F2;
+
+}
+
+
 @font-face {
   font-family: "Merriweather";
   src: url("@/fonts/Merriweather/Merriweather-Regular.ttf");
@@ -51,14 +57,15 @@ import Header from "@/components/Header.vue";
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 900px;
-  background-color: #F2F2F2;
+  //height: 900px;
+  //margin: 0 auto;
+
 }
 
 .registration__form {
   width: 475px;
   background: #FFF;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 4px 4px rgba(0, 0, 0, 0.25);
   color: #000000;
   border-radius: 50px;
   height: 551px;
@@ -100,6 +107,10 @@ import Header from "@/components/Header.vue";
 
 .input-box input::placeholder {
   color: #000000;
+}
+
+.input-box{
+
 }
 
 .forgot {
@@ -159,5 +170,23 @@ a:hover:after {
   .header__list li {
     margin-top: 5px;
   }
+}
+
+@media (max-width: 450px){
+  .registration__form {
+    padding-top: 0;
+    height: 450px;
+    width: 300px;
+  }
+
+  .input-box input{
+    width: 230px;
+  }
+
+  .registration__form .input-box{
+    //margin: 0;
+    width: 250px;
+  }
+
 }
 </style>
