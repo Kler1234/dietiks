@@ -17,8 +17,10 @@ import Header from "@/components/Header.vue";
           </div>
         </div>
         <div class="forgot">
-          <p>Забыли логин или пароль?</p>
-          <a href="#">Восстановить</a>
+          <p>Нет аккаунта?</p>
+          <router-link to="/register">
+            Зарегестрироваться
+          </router-link>
         </div>
         <button type="submit" class="btn">Войти</button>
       </form>
@@ -151,6 +153,7 @@ a:hover:after {
   margin: 0 auto;
   display: block;
   align-content: center;
+  margin-top: 37px;
 }
 
 .footer {

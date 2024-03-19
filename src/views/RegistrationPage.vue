@@ -14,8 +14,10 @@ const value = ref(null);
     <div class="content">
       <div class="registration__form">
         <form class="form" action="">
-          <h1 class="title">Зарегистрируйся</h1>
-          <h2>и контролируй ситуацию</h2>
+          <div class="text">
+            <h1 class="title">Зарегистрируйся</h1>
+            <h2 class="subtitle">и контролируй ситуацию</h2>
+          </div>
           <div class="registration__input-box">
             <div class="input-box">
               <input type="text" placeholder="Введите почту" required>
@@ -30,30 +32,30 @@ const value = ref(null);
           </div>
           <div class="forgot">
             <p>Уже есть аккаунт?</p>
-            <a href="">Вход</a>
+            <router-link to="/login">
+              Вход
+            </router-link>
           </div>
           <button type="submit" class="btn">Войти</button>
         </form>
       </div>
-    </div>s
+    </div>
   </div>
     <footer class="footer"></footer>
 </template>
 
 <style scoped>
 .content {
-  padding-top: 100px;
+  padding-top: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 900px;
-  background-color: #F2F2F2;
 }
 
 .registration__form {
   width: 475px;
   background: #FFF;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 4px 4px rgba(0, 0, 0, 0.25);
   color: #000000;
   border-radius: 50px;
   height: 640px;
@@ -105,13 +107,15 @@ const value = ref(null);
 
 .forgot {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 10px;
   text-align: center;
-  margin: 0 120px;
+  margin: 0 auto;
   margin-top: 37px;
 }
 
 .forgot a {
+  display: flex;
   color: #1CA909;
   text-transform: none;
   text-decoration: none;
@@ -147,19 +151,39 @@ a:hover:after {
   position: fixed;
   left: 0;
   bottom: 0;
-  /* Добавим цвет и ширину блока для наглядности*/
   background-color: #54B947;
   width: 100%;
   height: 50px;
 }
 
-@media (max-width: 952px) {
-  .header__list {
-    padding-top: 30px;
+
+@media (max-width: 425px){
+
+  .input-box{
+    margin: 0 auto;
   }
-  .header__list li {
-    margin-top: 5px;
+  .registration__form h1 {
+    font-size: 30px;
+  }
+
+  .registration__form h2 {
+    font-size: 20px;
+  }
+
+  .registration__form{
+    width: 300px;
+  }
+  .registration__form .input-box{
+    width: 250px;
+  }
+
+  .content{
+    padding-top: 100px;
+    margin-bottom: 50px;
+  }
+
+  .footer{
+    visibility: hidden;
   }
 }
-
 </style>

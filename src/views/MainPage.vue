@@ -407,9 +407,11 @@ a:hover:after, a:focus:after {
   }
   .about-dietiks{
     width: 100%;
-    padding-left: 10px;
   }
 
+  .title-dietiks, .title-description{
+    padding-left: 20px;
+  }
   .img-dietiks{
     margin: 0 auto;
     padding: 50px 0 50px 0;
