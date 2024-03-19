@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="title-block">
-      <h2 class="title">Расчет Индекса Массы Тела (ИМТ)</h2>
+      <h2 class="title"><strong>Расчет Индекса Массы Тела (ИМТ)</strong></h2>
     </div>
     <div class="input__weigth">
       <label for="weight">Вес (в кг):</label>
@@ -14,8 +14,7 @@
       <button class="btn mt-5" @click="calculate">Рассчитать</button>
     <div class="result" v-if="bmi !== null">
       <h3>Ваш ИМТ:</h3>
-      <p class="">{{bmiCategory}}  ({{ bmi.toFixed(2) }})</p>
-<!--      <p>{{ bmiCategory }}</p>-->
+      <p class="result__num" :class="bmiCategoryClass">{{bmiCategory}}  ({{ bmi.toFixed(2) }})</p>
     </div>
   </div>
 </template>
@@ -49,7 +48,20 @@ export default {
         alert('Пожалуйста, заполните все поля для расчета.');
       }
     }
-  }
+  },
+  computed: {
+    bmiCategoryClass() {
+      if (this.bmi < 18.5) {
+        return 'underweight';
+      } else if (this.bmi >= 18.5 && this.bmi < 25) {
+        return 'normal';
+      } else if (this.bmi >= 25 && this.bmi < 30) {
+        return 'overweight';
+      } else if (this.bmi >= 30) {
+        return 'obese';
+      }
+    }
+  },
 };
 </script>
 
@@ -102,5 +114,25 @@ input{
   padding-top: 10px;
   font-size: 25px;
   text-align: center;
+}
+
+.result__num{
+  padding-top: 5px;
+}
+
+.result__num.underweight {
+  color: red;
+}
+
+.result__num.normal {
+  color: green;
+}
+
+.result__num.overweight {
+  color: orange;
+}
+
+.result__num.obese {
+  color: red;
 }
 </style>

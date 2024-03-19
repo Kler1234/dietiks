@@ -53,7 +53,7 @@ template{
 }
 
 .content {
-  padding-top: 100px;
+  padding-top: 150px;
   display: flex;
   justify-content: center;
   align-items: center;

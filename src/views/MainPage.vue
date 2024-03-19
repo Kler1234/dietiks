@@ -9,7 +9,7 @@ import Header from "@/components/Header.vue";
   <div class="main">
     <div class="btn-up btn-up_hide"></div>
     <div class="section-about flex items-center justify-between pt-10">
-      <div class="about-dietiks pl-80">
+      <div class="about-dietiks pl-60">
         <div class="title-dietiks">
           <p>Диетикс</p>
         </div>
@@ -75,9 +75,7 @@ import Header from "@/components/Header.vue";
   src: url("@/fonts/Merriweather/Merriweather-Regular.ttf");
 }
 
-body {
-  box-sizing: border-box;
-}
+
 
 a {
   text-decoration: none;
@@ -119,6 +117,7 @@ a:hover:after, a:focus:after {
   flex-flow: column;
   justify-content: space-between;
   /*padding: 145px 307px 0 308px; */
+  padding-left: 50px;
   padding-top: 145px;
   margin: 0 auto;
 }
@@ -162,13 +161,9 @@ a:hover:after, a:focus:after {
   justify-content: center;
   align-items: center;
   background: url(@/assets/bg_image_main.png);
-  /* Путь к картинке */
   background-repeat: no-repeat;
-  /* Фон не повторяется */
   background-size: cover;
-  /* Растягиваем  фон по высоте и ширине */
   background-position: center;
-  /* Позиция фона по центру */
   height: 723px;
 }
 
@@ -232,7 +227,6 @@ a:hover:after, a:focus:after {
   margin-top: 99px;
   left: 0;
   bottom: 0;
-  /* Добавим цвет и ширину блока для наглядности*/
   background-color: #54B947;
   width: 100%;
   height: 50px;
@@ -373,9 +367,19 @@ a:hover:after, a:focus:after {
   .wrapper__info {
     margin: 0 auto;
   }
+  .footer-block{
+    width: 100%;
+  }
+
+  .about-dietiks{
+    padding-left: 0px;
+  }
 }
 
-.about-dietiks{
-  padding-left: 120px;
+@media(max-width:425px) {
+  .regbox__text{
+    padding: 20px;
+  }
 }
+
 </style>

@@ -1,69 +1,87 @@
 <template>
   <div class="bzhu-form">
-    <h2>Расчет базового обмена веществ (БЖУ)</h2>
-    <form @submit.prevent="calculateBZHU">
-      <!-- Добавлено поле "Цель" -->
-
-      <!-- Конец добавления -->
-      <div class="form-group">
-        <label for="gender">Пол:</label>
-        <select v-model="gender" id="gender">
-          <option value="male">Мужской</option>
-          <option value="female">Женский</option>
-        </select>
+    <h2 class="title"> <strong>Расчет базового обмена веществ (БЖУ)</strong></h2>
+    <!-- Шаг 1: Выбор пола -->
+    <div v-if="step === 1">
+      <h1 class="select-gender">Выберите пол:</h1>
+      <div class="gender-buttons">
+        <button @click="selectGender('male')" :class="{ 'selected': gender === 'male' }">М</button>
+        <button @click="selectGender('female')" :class="{ 'selected': gender === 'female' }">Ж</button>
       </div>
-      <div class="form-group">
-        <label for="activity-level">Уровень активности:</label>
-        <select v-model="activityLevel" id="activity-level">
-          <option value="sedentary">Сидячий образ жизни</option>
-          <option value="lightly-active">Малоподвижный</option>
-          <option value="moderately-active">Умеренно активный</option>
-          <option value="very-active">Очень активный</option>
-          <option value="extra-active">Экстремально активный</option>
-        </select>
+      <div class="group-of-button">
+        <button class="next-button" @click="nextStep">Далее</button>
       </div>
-      <div class="form-group">
-        <label for="age">Возраст (лет):</label>
-        <input type="number" v-model.number="age" id="age">
+    </div>
+    <!-- Шаг 2: Выбор активности -->
+    <div v-else-if="step === 2">
+      <h1 class="select-activity"> Ваш образ жизни:</h1>
+      <div class="activity-level-buttons">
+        <button @click="selectActivityLevel('sedentary')" :class="{ 'selected': activityLevel === 'sedentary' }">Сидячий образ жизни</button>
+        <button @click="selectActivityLevel('lightly-active')" :class="{ 'selected': activityLevel === 'lightly-active' }">Малоподвижный</button>
+        <button @click="selectActivityLevel('moderately-active')" :class="{ 'selected': activityLevel === 'moderately-active' }">Умеренно активный</button>
+        <button @click="selectActivityLevel('very-active')" :class="{ 'selected': activityLevel === 'very-active' }">Очень активный</button>
+        <button @click="selectActivityLevel('extra-active')" :class="{ 'selected': activityLevel === 'extra-active' }">Экстремально активный</button>
       </div>
-      <div class="form-group">
-        <label for="height">Рост (см):</label>
-        <input type="number" v-model.number="height" id="height">
+      <div class="group-of-button">
+          <button class="prev-button" @click="prevStep">Назад</button>
+          <button class="next-button" @click="nextStep">Далее</button>
       </div>
-      <div class="form-group">
-        <label for="weight">Вес (кг):</label>
-        <input type="number" v-model.number="weight" id="weight">
+    </div>
+    <!-- Шаг 3: Заполнение данных -->
+    <div v-else-if="step === 3">
+      <form @submit.prevent="calculateBZHU">
+        <div class="form-group">
+          <label for="age">Возраст (лет):</label>
+          <input type="number" v-model.number="age" id="age">
+        </div>
+        <div class="form-group">
+          <label for="height">Рост (см):</label>
+          <input type="number" v-model.number="height" id="height">
+        </div>
+        <div class="form-group">
+          <label for="weight">Вес (кг):</label>
+          <input type="number" v-model.number="weight" id="weight">
+        </div>
+        <div class="form-group">
+          <label>Тренировка силы и объема мышц:</label>
+          <input type="checkbox" id="strength-training" v-model="strengthTraining">
+          <label for="strength-training">Да</label>
+        </div>
+        <div class="form-group">
+          <label for="goal">Цель:</label>
+          <select v-model="goal" id="goal">
+            <option value="lose-weight">Сбросить вес</option>
+            <option value="maintain-weight">Поддерживать вес</option>
+            <option value="gain-weight">Набрать вес</option>
+          </select>
+        </div>
+        <div class="group-of-button">
+          <button class="prev-button" @click="prevStep">Назад</button>
+          <button class="result-btn" type="submit">Рассчитать БЖУ</button>
+        </div>
+      </form>
+    </div>
+    <!--Показ результатов -->
+    <div v-else-if="step === 4">
+      <div v-if="result" class="result">
+        <h3>Ваш БЖУ составляет:</h3>
+        <div class="result">
+          <p>Калории: {{ result.calories }} ккал</p>
+          <p>Белки: {{ result.proteins }} г</p>
+          <p>Жиры: {{ result.fats }} г</p>
+          <p>Углеводы: {{ result.carbs }} г</p>
+        </div>
+        <button class="restart" @click="resetForm">Новый расчет</button>
       </div>
-      <div class="form-group">
-        <label>Тренировка силы и объема мышц:</label>
-        <input type="checkbox" id="strength-training" v-model="strengthTraining">
-        <label for="strength-training">Да</label>
-      </div>
-      <div class="form-group">
-        <label for="goal">Цель:</label>
-        <select v-model="goal" id="goal">
-          <option value="lose-weight">Сбросить вес</option>
-          <option value="maintain-weight">Поддерживать вес</option>
-          <option value="gain-weight">Набрать вес</option>
-        </select>
-      </div>
-      <button type="submit">Рассчитать БЖУ</button>
-    </form>
-    <div v-if="result" class="result">
-      <h3>Ваш БЖУ составляет:</h3>
-      <p>Калории: {{ result.calories }} ккал</p>
-      <p>Белки: {{ result.proteins }} г</p>
-      <p>Жиры: {{ result.fats }} г</p>
-      <p>Углеводы: {{ result.carbs }} г</p>
     </div>
   </div>
 </template>
-
 
 <script>
 export default {
   data() {
     return {
+      step: 1, // Текущий шаг
       gender: 'male',
       activityLevel: 'sedentary',
       age: null,
@@ -76,7 +94,17 @@ export default {
     };
   },
   methods: {
+    selectGender(selectedGender) {
+      this.gender = selectedGender;
+    },
+    selectActivityLevel(selectedActivityLevel) {
+      this.activityLevel = selectedActivityLevel;
+    },
     calculateBZHU() {
+      if (!this.age || !this.height || !this.weight) {
+        alert('Пожалуйста, заполните все поля.');
+        return;
+      }
       // Определение базового метаболизма (BMR)
       let bmr;
       if (this.gender === 'male') {
@@ -107,10 +135,8 @@ export default {
           activityFactor = 1.2;
       }
 
-      // Общее энергопотребление
       const totalCalories = bmr * activityFactor;
 
-      // Множитель для корректировки калорий в зависимости от цели
       let goalMultiplier;
       switch (this.goal) {
         case 'lose-weight':
@@ -126,10 +152,8 @@ export default {
           goalMultiplier = 1;
       }
 
-      // Корректировка калорий в зависимости от тренировок
       const trainingMultiplier = this.strengthTraining ? 1.1 : 1;
 
-      // Итоговое количество калорий
       const adjustedCalories = totalCalories * goalMultiplier * trainingMultiplier;
 
       // Расчет БЖУ
@@ -143,12 +167,139 @@ export default {
         fats: fats.toFixed(0),
         carbs: carbs.toFixed(0)
       };
-    }
 
+      this.step = 4; // Переход к результатам
+    },
+    nextStep() {
+      this.step++; // Переход к следующему шагу
+    },
+    prevStep() {
+      this.step--; // Возврат к предыдущему шагу
+    },
+    resetForm() {
+      // Сброс формы для нового расчета
+      this.step = 1;
+      this.result = null;
+    }
   }
 };
 </script>
 
 <style scoped>
-/* Стили для формы */
+.bzhu-form {
+  display: flex;
+  flex-flow: column;
+}
+
+.title {
+  font-size: 25px;
+}
+
+.gender-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.gender-buttons button {
+  width: 50px;
+  height: 50px;
+  margin: 0 5px;
+  border-radius: 50%;
+  border: none;
+  background-color: #ccc;
+  font-size: 20px;
+}
+
+.gender-buttons button.selected {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.activity-level-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.activity-level-buttons button {
+  width: 200px;
+  height: 35px;
+  margin: 0 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ccc;
+  font-size: 14px;
+}
+
+.select-activity{
+  text-align: center;
+  font-size: 20px;
+}
+
+.activity-level-buttons button.selected {
+  background-color: #04AA6D;
+  color: white;
+}
+
+
+input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.group-of-button{
+  display: flex;
+  justify-content: space-between;
+}
+
+.prev-button, .next-button, .restart, .result-btn{
+  background-color: #04AA6D;
+  padding: 5px 10px 5px 10px;
+  margin: 15px 0 15px 0;
+  border-radius: 5px;
+  color: white;
+}
+
+.form-group label{
+  padding-left: 10px;
+}
+
+.result{
+  padding-top: 10px;
+  justify-content: center;
+  text-align: center;
+}
+
+.result h3{
+  font-size: 20px;
+}
+
+@media (max-width: 498px){
+
+  .title{
+    font-size: 15px;
+  }
+
+  .select-gender{
+    padding-top: 5px;
+    text-align: center;
+  }
+
+  .gender-buttons{
+    padding-top: 10px;
+  }
+
+  input{
+    margin-top: 0;
+  }
+
+}
 </style>

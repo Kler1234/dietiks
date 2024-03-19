@@ -37,12 +37,12 @@ export default {
   height: 500px;
   background-color: white;
   border: 1px solid black;
-  z-index: 9999; /* Убедитесь, что z-index выше, чем у остального содержимого */
-  /* Дополнительные стили для оформления меню */
+  z-index: 9999;
+
 }
 
 
-@media (max-width: 425px) {
+@media (max-width: 498px) {
   .popup-menu{
     width: 300px;
     height: 400px;
@@ -52,11 +52,14 @@ export default {
   .title__weigth{
     font-size: 10px;
   }
+
 }
 
 .popup-content {
   padding: 20px;
 }
+
+
 
 
 </style>

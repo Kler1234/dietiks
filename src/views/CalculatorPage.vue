@@ -39,15 +39,15 @@ export default {
         <div class="section">
           <!-- Используем @click, чтобы обработать событие нажатия на элементы -->
           <a href="#" class="section__item" @click="openPopupMenu('БЖУ')">
-            <img class="section__img" src="../img/noto-v1_fork-and-knife-with-plate.png" alt="Упс, изображения нет!">
+            <img class="section__img" src="@/assets/noto-v1_fork-and-knife-with-plate.png" alt="Упс, изображения нет!">
             <p class="section__text">БЖУ</p>
           </a>
           <a href="#" class="section__item" @click="openPopupMenu('Индекс массы тела')">
-            <img class="section__img" src="../img/noto_balance-scale.png" alt="Упс, изображения нет!">
+            <img class="section__img" src="@/assets/noto_balance-scale.png" alt="Упс, изображения нет!">
             <p class="section__text">Индекс <br> массы тела</p>
           </a>
           <a href="#" class="section__item" @click="openPopupMenu('Калорийность')">
-            <img class="section__img" src="../img/twemoji_carrot.png" alt="Упс, изображения нет!">
+            <img class="section__img" src="@/assets/twemoji_carrot.png" alt="Упс, изображения нет!">
             <p class="section__text">Калорийность</p>
           </a>
         </div>
@@ -144,7 +144,11 @@ export default {
 }
 
 .section__item img, .section__item p {
-  padding-top: 47px;
+  padding-top: 40px;
+}
+
+.section__item img{
+  margin: 0 auto;
 }
 
 .section a:after {

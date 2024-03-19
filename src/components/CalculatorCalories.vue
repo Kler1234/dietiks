@@ -47,14 +47,16 @@ const fetchCalories = async () => {
 
 <template>
   <div class="calorie-calculator">
-    <h2>Расчет калорийности продукта</h2>
+    <h2><strong>Расчет калорийности продукта</strong></h2>
     <form @submit.prevent="fetchCalories">
-      <label for="productName">Название продукта:</label>
-      <input type="text" id="productName" v-model.trim="productName" required>
-
-      <label for="grams">Граммы продукта:</label>
-      <input type="number" id="grams" v-model.number="grams" required>
-
+      <div class="product-name">
+        <label for="productName">Название продукта (на англ):</label>
+        <input type="text" id="productName" v-model.trim="productName" required>
+      </div>
+      <div class="product-grams">
+        <label for="grams">Граммы продукта:</label>
+        <input type="number" id="grams" v-model.number="grams" required>
+      </div>
       <button type="submit">Рассчитать</button>
     </form>
 
@@ -65,5 +67,29 @@ const fetchCalories = async () => {
 </template>
 
 <style scoped>
+.calorie-calculator{
+  display: flex;
+  flex-flow: column;
+
+}
+
+form{
+  padding-top: 20px;
+}
+
+button {
+  background-color: #04AA6D;
+  padding: 5px 10px 5px 10px;
+  margin: 15px 0 15px 0;
+  border-radius: 5px;
+  color: white;
+}
+
+input{
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-left: 20px;
+}
 
 </style>
