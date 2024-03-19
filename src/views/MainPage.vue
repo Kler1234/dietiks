@@ -8,7 +8,7 @@ import Header from "@/components/Header.vue";
   <Header/>
   <div class="main">
     <div class="btn-up btn-up_hide"></div>
-    <div class="section-about flex items-center justify-between pt-10">
+    <div class="section-about flex items-center justify-between0">
       <div class="about-dietiks pl-60">
         <div class="title-dietiks">
           <p>Диетикс</p>
@@ -25,7 +25,9 @@ import Header from "@/components/Header.vue";
           </router-link>
         </div>
       </div>
-      <img src="@/assets/food2.png" alt="food" class="img-food scale-80">
+      <div class="img-dietiks">
+        <img src="@/assets/food2.png" alt="food" class="img-food scale-80">
+      </div>
     </div>
     <section class="section-info">
       <div class="wrapper">
@@ -96,6 +98,13 @@ a:after {
 }
 a:hover:after, a:focus:after {
   width: 100%;
+}
+
+.about-dietiks{
+  width: 800px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
 }
 
 .title-description__text, .title-dietiks{
@@ -360,26 +369,78 @@ a:hover:after, a:focus:after {
   .registration span {
     font-size: 20px;
   }
+  
+  .section-info{
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+  }
   .section-registry__container {
     width: 500px;
     height: 280px;
   }
   .wrapper__info {
     margin: 0 auto;
+
+  }
+  .wrapper__image{
+    padding: 0;
   }
   .footer-block{
     width: 100%;
   }
 
   .about-dietiks{
-    padding-left: 0px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 500px;
+    margin: 0 auto;
   }
 }
 
 @media(max-width:425px) {
+
   .regbox__text{
     padding: 20px;
   }
+  .about-dietiks{
+    width: 100%;
+    padding-left: 10px;
+  }
+
+  .img-dietiks{
+    margin: 0 auto;
+    padding: 50px 0 50px 0;
+  }
+
+  .btn-try{
+    width: 100%;
+  }
+
+  .section-registry__container{
+    width: 100%;
+  }
+  .title-dietiks{
+    font-size: 60px;
+  }
+  .title-description__text{
+    font-size: 20px;
+  }
+
+  .registration{
+    text-align: center;
+  }
+  .wrapper__info{
+    padding: 0;
+  }
+}
+
+@media (max-width: 320px){
+.regbox__block{
+  width: 100%;
+}
 }
 
 </style>

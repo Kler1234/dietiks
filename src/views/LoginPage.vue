@@ -57,8 +57,8 @@ template{
   display: flex;
   justify-content: center;
   align-items: center;
-  //height: 900px;
-  //margin: 0 auto;
+  padding-bottom: 50px;
+  height: 100vh;
 
 }
 
@@ -70,6 +70,7 @@ template{
   border-radius: 50px;
   height: 551px;
 }
+
 
 .title {
   padding-top: 63px;
@@ -150,14 +151,13 @@ a:hover:after {
   margin: 0 auto;
   display: block;
   align-content: center;
-  margin-top: 37px;
 }
 
 .footer {
-  position: fixed;
+  display: flex;
+  position: absolute;
   left: 0;
   bottom: 0;
-  /* Добавим цвет и ширину блока для наглядности*/
   background-color: #54B947;
   width: 100%;
   height: 50px;
@@ -178,14 +178,26 @@ a:hover:after {
     height: 450px;
     width: 300px;
   }
-
   .input-box input{
     width: 230px;
   }
 
   .registration__form .input-box{
-    //margin: 0;
     width: 250px;
+  }
+
+  .content{
+    margin: 0;
+    padding: 0;
+    padding-bottom: 50px;
+  }
+  .btn{
+    margin-top: 50px;
+    margin-bottom: 60px;
+  }
+
+  footer{
+    visibility: hidden;
   }
 
 }
