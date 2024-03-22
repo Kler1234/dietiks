@@ -26,7 +26,7 @@ const value = ref(null);
               <input type="password" placeholder="Введите пароль" required>
             </div>
             <div class="input-box">
-            <input type="password" placeholder="Повторите пароль" required>
+              <input type="password" placeholder="Повторите пароль" required>
             </div>
 
           </div>
@@ -41,7 +41,7 @@ const value = ref(null);
       </div>
     </div>
   </div>
-    <footer class="footer"></footer>
+  <footer class="footer"></footer>
 </template>
 
 <style scoped>

@@ -7,6 +7,7 @@ import RegistrationPage from "@/views/RegistrationPage.vue";
 import Profile from "@/views/Profile.vue"
 import ReceiptsPage from "@/views/ReceiptsPage.vue";
 import IndexMassiTela from "@/components/IndexMassiTela.vue";
+import CalculatorCalories from "@/components/CalculatorCalories.vue";
 
 export default createRouter({
     history: createWebHistory(),
@@ -17,7 +18,8 @@ export default createRouter({
         {path: '/diets', component: DietsPage},
         {path: '/receipts', component: ReceiptsPage},
         {path: '/calculators', component: CalculatorPage},
-        {path: '/test', component: IndexMassiTela}
+        {path: '/test', component: IndexMassiTela},
+        {path: '/product/:productName', component: CalculatorCalories}
     ]
 });
 
