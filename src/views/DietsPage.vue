@@ -1,6 +1,24 @@
 <script setup>
 
 import Header from "@/components/Header.vue";
+import PopupMenuDiets from "@/components/PopupMenuDiets.vue"; // Импортируем компонент PopupMenuDiets
+import { ref } from 'vue';
+
+// Состояние для отображения PopupMenu и выбранной диеты
+const popupMenuVisible = ref(false);
+const selectedDiet = ref('');
+
+// Функция для открытия PopupMenu и передачи информации о выбранной диете
+const openPopupMenu = (diet) => {
+  popupMenuVisible.value = true;
+  selectedDiet.value = diet;
+};
+
+// Функция для закрытия PopupMenu
+const closePopupMenu = () => {
+  popupMenuVisible.value = false;
+};
+
 </script>
 
 <template>
@@ -10,63 +28,99 @@ import Header from "@/components/Header.vue";
       <div class="title">Диеты</div>
       <div class="section">
         <div class="section__info">
-          <a href="#" class="section__item">
+          <div @click="openPopupMenu('vegetarian')" class="section__item">
             <img src="@/assets/diets/noto_cheese-wedge.png" alt="cheese" class="item__img">
             <p class="item__text">Вегетариан- <br>ская</p>
-          </a>
-          <a href="#"  class="section__item">
+          </div>
+          <div @click="openPopupMenu('vegan')" class="section__item">
             <img src="@/assets/diets/twemoji_leafy-green.png" alt="leafy" class="item__img">
             <p class="item__text">Веганская</p>
-          </a>
-          <a href="#"  class="section__item">
+          </div>
+          <div @click="openPopupMenu('lowuglevod')" class="section__item">
             <img src="@/assets/diets/noto_peanuts.png" alt="peanuts" class="item__img">
             <p class="item__text">Низкоуглево-<br>дная</p>
-          </a>
-          <a href="#"  class="section__item">
+          </div>
+          <div @click="openPopupMenu('highcellulose')" class="section__item">
             <img src="@/assets/diets/twemoji_broccoli.png" alt="broccoli" class="item__img">
             <p class="item__text">Много клетчатки</p>
-          </a>
-          <a href="#"  class="section__item">
+          </div>
+          <div @click="openPopupMenu('clearfood')" class="section__item">
             <img src="@/assets/diets/openmoji_scales.png" alt="scales" class="item__img">
             <p class="item__text">Чистое питание</p>
-          </a>
-          <a href="#"  class="section__item">
+          </div>
+          <div @click="openPopupMenu('ketodiet')" class="section__item">
             <img src="@/assets/diets/twemoji_bacon.png" alt="bacon" class="item__img">
             <p class="item__text">Кетодиета</p>
-          </a>
-          <a href="#"  class="section__item">
+          </div>
+          <div @click="openPopupMenu('lowfat')" class="section__item">
             <img src="@/assets/diets/twemoji_cucumber.png" alt="cucumber" class="item__img">
             <p class="item__text">Мало жира</p>
-          </a>
-          <a href="#"  class="section__item">
+          </div>
+          <div @click="openPopupMenu('lowcalories')" class="section__item">
             <img src="@/assets/diets/noto_green-apple.png" alt="green-apple" class="item__img">
             <p class="item__text">Низко-<br>калорийная</p>
-          </a>
-          <a href="#"  class="section__item">
+          </div>
+          <div @click="openPopupMenu('highbelok')" class="section__item">
             <img src="@/assets/diets/noto-v1_egg.png" alt="egg" class="item__img">
             <p class="item__text">Высоко-<br>белковая</p>
-          </a>
-          <a href="#"  class="section__item">
+          </div>
+          <div @click="openPopupMenu('pesketar')" class="section__item">
             <img src="@/assets/diets/noto_fish.png" alt="fish" class="item__img">
             <p class="item__text">Пескета-<br>ринство</p>
-          </a>
-          <a href="#"  class="section__item">
+          </div>
+          <div @click="openPopupMenu('nosugar')" class="section__item">
             <img src="@/assets/diets/fluent-emoji-flat_candy.png" alt="no-candy" class="item__img">
             <p class="item__text">Без сахара</p>
-          </a>
-          <a href="#"  class="section__item">
+          </div>
+          <div @click="openPopupMenu('nomilk')" class="section__item">
             <img src="@/assets/diets/emojione_glass-of-milk.png" alt="no-milk" class="item__img">
             <p class="item__text">Без лактозы</p>
-          </a>
+          </div>
 
         </div>
       </div>
     </div>
   </div>
   <footer class="footer"></footer>
+  <transition name="fade">
+    <div class="overlay" v-if="popupMenuVisible" @click="closePopupMenu"></div>
+  </transition>
+  <transition name="slide-fade">
+    <PopupMenuDiets v-if="popupMenuVisible" :menuItem="selectedDiet" :closePopup="closePopupMenu" />
+  </transition>
 </template>
 
 <style scoped>
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.5s;
+}
+
+.slide-fade-leave-active {
+  transition: transform 0.5s;
+}
+
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateY(-50%) translateX(-50%) scale(0.5);
+}
+
 .content {
   //position: relative;
   padding-top: 100px;
@@ -109,6 +163,7 @@ import Header from "@/components/Header.vue";
   background: #FFF;
   box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   transition: 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .section__item img {

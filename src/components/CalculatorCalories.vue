@@ -12,7 +12,6 @@
         </ul>
       </div>
       <button type="submit">Рассчитать</button>
-
     </form>
 
     <div v-if="product">
@@ -144,25 +143,25 @@ export default {
 
 <style scoped>
 
-.autocomplete-results {
+.autocomplete-list {
   position: absolute;
+  z-index: 999;
   background-color: #fff;
   border: 1px solid #ccc;
   max-height: 200px;
   overflow-y: auto;
-  width: 183px;
-  height: 50px;
+  width: 150px;
   margin-left: 260px;
 }
 
-.autocomplete-results li:hover{
+.autocomplete-list li {
+  list-style-type: none;
+  padding: 5px 10px;
   cursor: pointer;
-  background-color: #e6e8e6;
 }
 
 .autocomplete-list li:hover {
   background-color: #f0f0f0;
-  cursor: pointer;
 }
 
 .calorie-calculator{
@@ -193,7 +192,12 @@ input{
 @media (max-width: 498px) {
   .autocomplete-results {
     width: calc(100% - 4px);
-    display: none;
+  }
+  .addProduct input{
+    width: 70px;
+  }
+  #newProductName{
+    width: 150px;
   }
 }
 
