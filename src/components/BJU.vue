@@ -23,8 +23,8 @@
         <button @click="selectActivityLevel('extra-active')" :class="{ 'selected': activityLevel === 'extra-active' }">Экстремально активный</button>
       </div>
       <div class="group-of-button">
-          <button class="prev-button" @click="prevStep">Назад</button>
-          <button class="next-button" @click="nextStep">Далее</button>
+        <button class="prev-button" @click="prevStep">Назад</button>
+        <button class="next-button" @click="nextStep">Далее</button>
       </div>
     </div>
     <!-- Шаг 3: Заполнение данных -->
@@ -41,11 +41,6 @@
         <div class="form-group">
           <label for="weight">Вес (кг):</label>
           <input type="number" v-model.number="weight" id="weight">
-        </div>
-        <div class="form-group">
-          <label>Тренировка силы и объема мышц:</label>
-          <input type="checkbox" id="strength-training" v-model="strengthTraining">
-          <label for="strength-training">Да</label>
         </div>
         <div class="form-group">
           <label for="goal">Цель:</label>
@@ -88,7 +83,6 @@ export default {
       height: null,
       weight: null,
       caloricDeficit: 'no',
-      strengthTraining: false,
       goal: 'lose-weight',
       result: null
     };
@@ -152,9 +146,8 @@ export default {
           goalMultiplier = 1;
       }
 
-      const trainingMultiplier = this.strengthTraining ? 1.1 : 1;
 
-      const adjustedCalories = totalCalories * goalMultiplier * trainingMultiplier;
+      const adjustedCalories = totalCalories * goalMultiplier;
 
       // Расчет БЖУ
       const proteins = 0.8 * this.weight; // грамм белков на килограмм веса
@@ -281,6 +274,7 @@ input {
 .result h3{
   font-size: 20px;
 }
+
 
 @media (max-width: 498px){
 
