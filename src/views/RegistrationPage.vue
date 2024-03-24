@@ -1,10 +1,39 @@
 <script setup>
 import Header from "@/components/Header.vue";
-import Password from 'primevue/password';
 import { ref } from 'vue';
+import { useRouter } from "vue-router";
 
+const email = ref('');
+const password = ref('');
+const confirmPassword = ref('');
+const error=ref('');
 const value = ref(null);
+const success = ref(false);
+const router = useRouter();
+const register = async () => {
+  try {
+    const response = await fetch('http://localhost:3000/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email: email.value, password: password.value })
+    });
 
+    if (!response.ok) {
+      throw new Error('Произошла ошибка');
+    }
+    const data = await response.json();
+    const token = data.token;
+    localStorage.setItem('token', token);
+    success.value = true;
+    setTimeout(() => {
+      router.push('/');
+    }, 2000);
+  } catch (err) {
+    error.value = err.message;
+  }
+}
 
 </script>
 
@@ -12,21 +41,21 @@ const value = ref(null);
   <Header/>
   <div class="wrapper">
     <div class="content">
-      <div class="registration__form">
-        <form class="form" action="">
+      <div class="registration__form" v-if="!success">
+        <form  class="form" action="" @submit.prevent="register">
           <div class="text">
             <h1 class="title">Зарегистрируйся</h1>
             <h2 class="subtitle">и контролируй ситуацию</h2>
           </div>
           <div class="registration__input-box">
             <div class="input-box">
-              <input type="text" placeholder="Введите почту" required>
+              <input type="text" placeholder="Введите почту" required v-model="email">
             </div>
             <div class="input-box">
-              <input type="password" placeholder="Введите пароль" required>
+              <input type="password" placeholder="Введите пароль" required v-model="password">
             </div>
             <div class="input-box">
-              <input type="password" placeholder="Повторите пароль" required>
+              <input type="password" placeholder="Повторите пароль" required v-model="confirmPassword">
             </div>
 
           </div>
@@ -39,12 +68,43 @@ const value = ref(null);
           <button type="submit" class="btn">Войти</button>
         </form>
       </div>
+      <div v-if="success" class="success-message">
+        <div class="loader"></div>
+      </div>
     </div>
   </div>
   <footer class="footer"></footer>
 </template>
 
 <style scoped>
+.success-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loader {
+  border: 8px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 8px solid #3498db;
+  width: 50px;
+  height: 50px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 .content {
   padding-top: 150px;
   display: flex;

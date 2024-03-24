@@ -1,5 +1,10 @@
 <script>
 export default {
+  data() {
+    return {
+      loggedIn: false // Изначально считаем, что пользователь не авторизован
+    };
+  },
   methods: {
     getBurgerMenu: function() {
       document.querySelector('.header__burger').classList.toggle('active');
@@ -39,8 +44,8 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link to="/login" class="header__link">
-                Войти
+              <router-link :to="loggedIn ? '/profile' : '/login'" class="header__link">
+                {{ loggedIn ? 'Профиль' : 'Войти' }}
               </router-link>
             </li>
           </ul>

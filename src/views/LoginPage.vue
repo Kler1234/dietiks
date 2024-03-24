@@ -1,19 +1,51 @@
 <script setup>
 import Header from "@/components/Header.vue";
+import {useRouter} from "vue-router";
+import { ref } from 'vue'
+
+const router = useRouter();
+const email = ref('');
+const password = ref('');
+const loggedIn = ref(false);
+const login = async () => {
+  try {
+    const response =  await fetch('http://localhost:3000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email: email.value, password: password.value })
+    });
+    if (!response.ok) {
+      throw new Error('Неверные почта или пароль');
+    }
+
+    const data = await response.json();
+    const token = data.token;
+    localStorage.setItem('token', token);
+    setTimeout(() => {
+      router.push('/');
+    }, 2000);
+    loggedIn.value = true;
+  } catch (err) {
+    console.error('Ошибка входа:', err);
+  }
+}
+
 </script>
 
 <template>
   <Header/>
   <div class="content">
-    <div class="registration__form">
+    <div class="registration__form" v-if="!loggedIn" @submit.prevent="login">
       <form class="form" action="">
         <h1 class="title">Вход</h1>
         <div class="registration__input-box">
           <div class="input-box">
-            <input type="text" placeholder="Введите почту" required>
+            <input type="text" placeholder="Введите почту" required v-model="email">
           </div>
           <div class="input-box">
-            <input type="password" placeholder="Введите пароль" required>
+            <input type="password" placeholder="Введите пароль" required v-model="password">
           </div>
         </div>
         <div class="forgot">
@@ -25,17 +57,46 @@ import Header from "@/components/Header.vue";
         <button type="submit" class="btn">Войти</button>
       </form>
     </div>
+    <div v-if="loggedIn" class="success-message">
+      <div class="loader"></div>
+    </div>
   </div>
   <footer class="footer"></footer>
 </template>
 
 <style scoped>
 
-template{
-  background-color: #F2F2F2;
-
+.success-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
+.loader {
+  border: 8px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 8px solid #3498db;
+  width: 50px;
+  height: 50px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+template{
+  background-color: #F2F2F2;
+}
 
 @font-face {
   font-family: "Merriweather";
