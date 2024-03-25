@@ -1,14 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
-import MainPage from "@/views/MainPage.vue";
-import CalculatorPage from "@/views/CalculatorPage.vue";
-import DietsPage from "@/views/DietsPage.vue";
-import LoginPage from "@/views/LoginPage.vue";
-import RegistrationPage from "@/views/RegistrationPage.vue";
-import Profile from "@/views/Profile.vue"
-import ReceiptsPage from "@/views/ReceiptsPage.vue";
-import IndexMassiTela from "@/components/IndexMassiTela.vue";
-import CalculatorCalories from "@/components/CalculatorCalories.vue";
 import store from '@/store';
+
+const MainPage = () => import("@/views/MainPage.vue");
+const CalculatorPage = () => import("@/views/CalculatorPage.vue");
+const DietsPage = () => import("@/views/DietsPage.vue");
+const LoginPage = () => import("@/views/LoginPage.vue");
+const RegistrationPage = () => import("@/views/RegistrationPage.vue");
+const Profile = () => import("@/views/Profile.vue");
+const ReceiptsPage = () => import("@/views/ReceiptsPage.vue");
+const IndexMassiTela = () => import("@/components/IndexMassiTela.vue");
+const CalculatorCalories = () => import("@/components/CalculatorCalories.vue");
 
 const router = createRouter({
     history: createWebHistory(),
@@ -26,18 +27,13 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    // Проверяем, требует ли маршрут аутентификации
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        // Проверяем, авторизован ли пользователь
         if (!store.state.loggedIn) {
-            // Если пользователь не авторизован, перенаправляем его на страницу входа
             next('/login');
         } else {
-            // Если пользователь авторизован, разрешаем доступ к защищенному маршруту
             next();
         }
     } else {
-        // Если маршрут не требует аутентификации, разрешаем доступ без ограничений
         next();
     }
 });

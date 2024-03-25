@@ -4,12 +4,14 @@ import { useStore } from 'vuex';
 
 const store = useStore();
 const loggedIn = computed(() => store.getters.isLoggedIn);
-const burgerMenuOpen = ref(false);
-
 const toggleBurgerMenu = () => {
-  burgerMenuOpen.value = !burgerMenuOpen.value;
-};
+  document.querySelector('.header__burger').classList.toggle('active');
+  document.querySelector('.header__menu').classList.toggle('active');
+  document.querySelector('body').classList.toggle('lock');
+}
 </script>
+
+
 
 <template>
   <header class="header">

@@ -206,7 +206,6 @@ a:hover:after {
   margin: 0 auto;
   display: block;
   align-content: center;
-  margin-top: 37px;
 }
 
 .footer {

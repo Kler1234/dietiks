@@ -1,22 +1,29 @@
+// store/index.js
 import { createStore } from 'vuex';
 
 export default createStore({
     state: {
-        loggedIn: false // изначально считаем, что пользователь не авторизован
+        loggedIn: false,
+        token: null
     },
     mutations: {
         setLoggedIn(state, value) {
             state.loggedIn = value;
         },
+        setToken(state, token) {
+            state.token = token;
+            sessionStorage.setItem('token', token); // Сохраняем токен в sessionStorage
+        },
         logout(state) {
-            localStorage.removeItem('token');
+            sessionStorage.removeItem('token'); // Удаляем токен из sessionStorage при выходе
             state.loggedIn = false;
+            state.token = null;
         },
     },
     actions: {
         async login({ commit }, { email, password }) {
             try {
-                const response = await fetch('http://localhost:3000/login', {
+                const response = await fetch('http://192.168.1.2:3000/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -29,21 +36,22 @@ export default createStore({
 
                 const data = await response.json();
                 const token = data.token;
-                localStorage.setItem('token', token);
 
-                commit('setLoggedIn', true);
+                commit('setToken', token); // Устанавливаем токен в состояние приложения
+                commit('setLoggedIn', true); // Устанавливаем флаг входа в состояние приложения
 
-                return true; // успешный вход
+                return true;
             } catch (err) {
                 console.error('Ошибка входа:', err);
-                return false; // ошибка входа
+                return false;
             }
         },
-        async autoLogin({ commit }, token) {
+        async autoLogin({ commit }) {
             try {
-
+                const token = sessionStorage.getItem('token'); // Получаем токен из sessionStorage
                 if (token) {
-                    commit('setLoggedIn', true);
+                    commit('setToken', token); // Устанавливаем токен в состояние приложения
+                    commit('setLoggedIn', true); // Устанавливаем флаг входа в состояние приложения
                     return true;
                 } else {
                     return false;
@@ -54,7 +62,7 @@ export default createStore({
             }
         },
         logout({ commit }) {
-            localStorage.removeItem('token');
+            sessionStorage.removeItem('token'); // Удаляем токен из sessionStorage при выходе
             commit('setLoggedIn', false);
         }
     },
