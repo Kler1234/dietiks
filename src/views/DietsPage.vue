@@ -1,20 +1,17 @@
 <script setup>
 
 import Header from "@/components/Header.vue";
-import PopupMenuDiets from "@/components/PopupMenuDiets.vue"; // Импортируем компонент PopupMenuDiets
+import PopupMenuDiets from "@/components/PopupMenuDiets.vue";
 import { ref } from 'vue';
 
-// Состояние для отображения PopupMenu и выбранной диеты
 const popupMenuVisible = ref(false);
 const selectedDiet = ref('');
 
-// Функция для открытия PopupMenu и передачи информации о выбранной диете
 const openPopupMenu = (diet) => {
   popupMenuVisible.value = true;
   selectedDiet.value = diet;
 };
 
-// Функция для закрытия PopupMenu
 const closePopupMenu = () => {
   popupMenuVisible.value = false;
 };

@@ -1,6 +1,10 @@
 <script setup>
 import Header from "@/components/Header.vue";
+import {ref, computed} from 'vue';
+import { useStore } from 'vuex';
 
+const store = useStore();
+const loggedIn = computed(() => store.getters.isLoggedIn);
 
 </script>
 
@@ -20,7 +24,7 @@ import Header from "@/components/Header.vue";
             мы поможем вам достичь цели!</p>
         </div>
         <div class="btn-try relative bg-green-600 rounded-2xl mt-5 h-14 hover:-translate-y-0.5 cursor-pointer">
-          <router-link to="/register">
+          <router-link :to="loggedIn ? '/profile' : '/register'">
             <p class="text-white text-center pt-3.5">Попробовать</p>
           </router-link>
         </div>
@@ -52,7 +56,7 @@ import Header from "@/components/Header.vue";
             <div class="registration"> Подбери для себя оптимальный <span> план питания </span></div>
             <div class="regbox">
               <div class="regbox__block">
-                <router-link to="/register">
+                <router-link :to="loggedIn ? '/profile' : '/register'">
                   <p class="regbox__text">Зарегестрироваться</p>
                 </router-link>
               </div>

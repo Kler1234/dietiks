@@ -1,4 +1,3 @@
-// store/index.js
 import { createStore } from 'vuex';
 
 export default createStore({
@@ -8,7 +7,11 @@ export default createStore({
     mutations: {
         setLoggedIn(state, value) {
             state.loggedIn = value;
-        }
+        },
+        logout(state) {
+            localStorage.removeItem('token');
+            state.loggedIn = false;
+        },
     },
     actions: {
         async login({ commit }, { email, password }) {
@@ -34,6 +37,20 @@ export default createStore({
             } catch (err) {
                 console.error('Ошибка входа:', err);
                 return false; // ошибка входа
+            }
+        },
+        async autoLogin({ commit }, token) {
+            try {
+
+                if (token) {
+                    commit('setLoggedIn', true);
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (error) {
+                console.error('Ошибка автоматического входа:', error);
+                return false;
             }
         },
         logout({ commit }) {

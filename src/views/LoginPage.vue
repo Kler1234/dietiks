@@ -16,7 +16,7 @@ const handleLogin = async () => {
     const success = await store.dispatch('login', { email: email.value, password: password.value });
     if (success) {
       setTimeout(() => {
-        router.push('/');
+        router.push('/profile');
       }, 2000);
     }
   } catch (error) {
