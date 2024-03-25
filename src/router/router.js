@@ -26,6 +26,9 @@ const router = createRouter({
     ]
 });
 
+router.afterEach((to, from) => {
+    window.scrollTo(0, 0);
+});
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!store.state.loggedIn) {

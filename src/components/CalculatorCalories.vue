@@ -143,7 +143,7 @@ export default {
 
 <style scoped>
 
-.autocomplete-list {
+.autocomplete-results {
   position: absolute;
   z-index: 999;
   background-color: #fff;
@@ -191,7 +191,13 @@ input{
 
 @media (max-width: 498px) {
   .autocomplete-results {
-    width: calc(100% - 4px);
+    width: calc(100% - 100px);
+    position: relative;
+    margin: 0 20px;
+  }
+
+  #productName input{
+    margin: 0 auto;
   }
   .addProduct input{
     width: 70px;
