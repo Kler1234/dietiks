@@ -1,44 +1,35 @@
 <script setup>
 import Header from "@/components/Header.vue";
-import {useRouter} from "vue-router";
-import { ref } from 'vue'
+import {ref, computed} from 'vue';
+import { useRouter } from "vue-router";
+import { useStore } from 'vuex';
 
 const router = useRouter();
+const store = useStore();
+
 const email = ref('');
 const password = ref('');
-const loggedIn = ref(false);
-const login = async () => {
+const loggedIn = computed(() => store.getters.isLoggedIn);
+
+const handleLogin = async () => {
   try {
-    const response =  await fetch('http://localhost:3000/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email: email.value, password: password.value })
-    });
-    if (!response.ok) {
-      throw new Error('Неверные почта или пароль');
+    const success = await store.dispatch('login', { email: email.value, password: password.value });
+    if (success) {
+      setTimeout(() => {
+        router.push('/');
+      }, 2000);
     }
-
-    const data = await response.json();
-    const token = data.token;
-    localStorage.setItem('token', token);
-    setTimeout(() => {
-      router.push('/');
-    }, 2000);
-    loggedIn.value = true;
-  } catch (err) {
-    console.error('Ошибка входа:', err);
+  } catch (error) {
+    console.error('Ошибка входа:', error.message);
   }
-}
-
+};
 </script>
 
 <template>
-  <Header/>
+  <Header />
   <div class="content">
-    <div class="registration__form" v-if="!loggedIn" @submit.prevent="login">
-      <form class="form" action="">
+    <div class="registration__form" v-if="!loggedIn">
+      <form class="form" @submit.prevent="handleLogin">
         <h1 class="title">Вход</h1>
         <div class="registration__input-box">
           <div class="input-box">
@@ -51,18 +42,19 @@ const login = async () => {
         <div class="forgot">
           <p>Нет аккаунта?</p>
           <router-link to="/register">
-            Зарегестрироваться
+            Зарегистрироваться
           </router-link>
         </div>
         <button type="submit" class="btn">Войти</button>
       </form>
     </div>
-    <div v-if="loggedIn" class="success-message">
+    <div v-else class="success-message">
       <div class="loader"></div>
     </div>
   </div>
   <footer class="footer"></footer>
 </template>
+
 
 <style scoped>
 

@@ -1,19 +1,14 @@
-<script>
-export default {
-  data() {
-    return {
-      loggedIn: false // Изначально считаем, что пользователь не авторизован
-    };
-  },
-  methods: {
-    getBurgerMenu: function() {
-      document.querySelector('.header__burger').classList.toggle('active');
-      document.querySelector('.header__menu').classList.toggle('active');
-      document.querySelector('body').classList.toggle('lock');
-    }
-  }
-}
+<script setup>
+import {ref, computed} from 'vue';
+import { useStore } from 'vuex';
 
+const store = useStore();
+const loggedIn = computed(() => store.getters.isLoggedIn);
+const burgerMenuOpen = ref(false);
+
+const toggleBurgerMenu = () => {
+  burgerMenuOpen.value = !burgerMenuOpen.value;
+};
 </script>
 
 <template>
@@ -23,10 +18,10 @@ export default {
         <router-link to="/" class="header__logo">
           Диетикс
         </router-link>
-        <div class="header__burger cursor-pointer" @click="getBurgerMenu">
+        <div class="header__burger cursor-pointer" @click="toggleBurgerMenu">
           <span></span>
         </div>
-        <nav class="header__menu">
+        <nav class="header__menu" :class="{ active: burgerMenuOpen }">
           <ul class="header__list">
             <li>
               <router-link to="/receipts" class="header__link">
@@ -52,9 +47,9 @@ export default {
         </nav>
       </div>
     </div>
-
   </header>
 </template>
+
 
 <style scoped>
 

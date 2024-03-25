@@ -25,7 +25,6 @@ const register = async () => {
     }
     const data = await response.json();
     const token = data.token;
-    localStorage.setItem('token', token);
     success.value = true;
     setTimeout(() => {
       router.push('/');
