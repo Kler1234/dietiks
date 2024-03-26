@@ -11,7 +11,15 @@ const value = ref(null);
 const success = ref(false);
 const router = useRouter();
 const register = async () => {
+
   try {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.value)) {
+      throw new Error('Неверный формат email');
+    }
+    if (password.value !== confirmPassword.value) {
+      throw new Error('Пароли не совпадают');
+    }
     const response = await fetch('http://192.168.1.2:3000/register', {
       method: 'POST',
       headers: {
@@ -19,9 +27,10 @@ const register = async () => {
       },
       body: JSON.stringify({ email: email.value, password: password.value })
     });
+    error.value = '';
 
     if (!response.ok) {
-      throw new Error('Произошла ошибка');
+      throw new Error('Данная почта уже занята');
     }
     const data = await response.json();
     const token = data.token;
@@ -45,6 +54,8 @@ const register = async () => {
           <div class="text">
             <h1 class="title">Зарегистрируйся</h1>
             <h2 class="subtitle">и контролируй ситуацию</h2>
+            <div class="error" v-if="error">{{ error }}</div>
+
           </div>
           <div class="registration__input-box">
             <div class="input-box">
@@ -67,7 +78,9 @@ const register = async () => {
           <button type="submit" class="btn">Войти</button>
         </form>
       </div>
-      <div v-if="success" class="success-message">
+      <div v-if="success" class="success-message flex flex-col gap-10">
+        <h1>Успешная регистрация!</h1>
+
         <div class="loader"></div>
       </div>
     </div>
@@ -76,6 +89,14 @@ const register = async () => {
 </template>
 
 <style scoped>
+.error {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  color: red;
+  padding-top: 15px;
+}
+
 .success-message {
   position: absolute;
   top: 50%;
@@ -91,6 +112,7 @@ const register = async () => {
   height: 50px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
+  margin: 0 auto;
 }
 
 /* Safari */

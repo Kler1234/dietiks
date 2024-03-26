@@ -9,18 +9,34 @@ const store = useStore();
 
 const email = ref('');
 const password = ref('');
+const error = ref('');
+const userExists = ref(false);
 const loggedIn = computed(() => store.getters.isLoggedIn);
 
 const handleLogin = async () => {
   try {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.value)) {
+      throw new Error('Неверный формат email');
+    }
+    if (!userExists.value) {
+      error.value = 'Пользователь не существует';
+      return;
+    }
     const success = await store.dispatch('login', { email: email.value, password: password.value });
+    error.value = '';
     if (success) {
       setTimeout(() => {
         router.push('/profile');
       }, 2000);
     }
-  } catch (error) {
-    console.error('Ошибка входа:', error.message);
+
+  } catch (err) {
+    if (err.response && err.response.status === 401) {
+      error.value = 'Пользователь с такими учетными данными не найден';
+    } else {
+      error.value = err.message;
+    }
   }
 };
 </script>
@@ -31,6 +47,7 @@ const handleLogin = async () => {
     <div class="registration__form" v-if="!loggedIn">
       <form class="form" @submit.prevent="handleLogin">
         <h1 class="title">Вход</h1>
+        <div class="error" v-if="error">{{ error }}</div>
         <div class="registration__input-box">
           <div class="input-box">
             <input type="text" placeholder="Введите почту" required v-model="email">
@@ -58,6 +75,12 @@ const handleLogin = async () => {
 
 <style scoped>
 
+.error {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  color: red;
+}
 .success-message {
   position: absolute;
   top: 50%;
@@ -118,6 +141,7 @@ template{
 }
 
 .registration__form {
+  position: absolute;
   width: 475px;
   background: #FFF;
   box-shadow: 0px 4px 4px 4px rgba(0, 0, 0, 0.25);
@@ -230,7 +254,7 @@ a:hover:after {
 @media (max-width: 450px){
   .registration__form {
     padding-top: 0;
-    height: 450px;
+    height: 520px;
     width: 300px;
   }
   .input-box input{
@@ -241,6 +265,9 @@ a:hover:after {
     width: 250px;
   }
 
+  .registration__input-box{
+    padding: 0;
+  }
   .content{
     margin: 0;
     padding: 0;

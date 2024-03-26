@@ -1,6 +1,6 @@
 <template>
   <div class="bzhu-form">
-    <h2 class="title"> <strong>Расчет базового обмена веществ (БЖУ)</strong></h2>
+    <h2 class="title"> <strong>Расчет базового обмена веществ (БЖУ)</strong></h2> <!-- формула Миффлина-Сан Жеора -->
     <!-- Шаг 1: Выбор пола -->
     <div v-if="step === 1">
       <h1 class="select-gender">Выберите пол:</h1>
