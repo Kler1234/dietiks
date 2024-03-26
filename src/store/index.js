@@ -46,27 +46,23 @@ export default createStore({
                 return false;
             }
         },
-        async autoLogin({ commit }) {
-            try {
-                const token = sessionStorage.getItem('token'); // Получаем токен из sessionStorage
-                if (token) {
-                    commit('setToken', token); // Устанавливаем токен в состояние приложения
-                    commit('setLoggedIn', true); // Устанавливаем флаг входа в состояние приложения
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (error) {
-                console.error('Ошибка автоматического входа:', error);
+        autoLogin({ commit }) {
+            const token = sessionStorage.getItem('token'); // Получаем токен из sessionStorage
+            if (token) {
+                commit('setToken', token); // Устанавливаем токен в состояние приложения
+                commit('setLoggedIn', true); // Устанавливаем флаг входа в состояние приложения
+                return true;
+            } else {
                 return false;
             }
         },
         logout({ commit }) {
             sessionStorage.removeItem('token'); // Удаляем токен из sessionStorage при выходе
-            commit('setLoggedIn', false);
+            commit('logout');
         }
     },
     getters: {
         isLoggedIn: state => state.loggedIn
-    }
+    },
+
 });

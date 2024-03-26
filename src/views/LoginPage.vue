@@ -19,10 +19,6 @@ const handleLogin = async () => {
     if (!emailRegex.test(email.value)) {
       throw new Error('Неверный формат email');
     }
-    if (!userExists.value) {
-      error.value = 'Пользователь не существует';
-      return;
-    }
     const success = await store.dispatch('login', { email: email.value, password: password.value });
     error.value = '';
     if (success) {

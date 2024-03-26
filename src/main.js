@@ -11,7 +11,7 @@ app.use(PrimeVue, {unstyled: true});
 app.use(router);
 app.use(store);
 
-const token = localStorage.getItem('token');
+const token = sessionStorage.getItem('token');
 if (token) {
     store.dispatch('autoLogin', token).then(success => {
         if (success) {
