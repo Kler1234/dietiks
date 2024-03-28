@@ -65,11 +65,11 @@
         <h3>Ваш БЖУ составляет:</h3>
         <div class="result">
           <p>Калории: {{ result.calories }} ккал</p>
-          <p>Белки: {{ result.proteins }} г</p>
+          <p>Белки: {{ result.protein }} г</p>
           <p>Жиры: {{ result.fats }} г</p>
           <p>Углеводы: {{ result.carbs }} г</p>
         </div>
-        <button class="restart" @click="resetForm">Продолжить</button>
+        <router-link class="goToProfile" to="/profile">В профиль</router-link>
       </div>
     </div>
   </div>
@@ -189,7 +189,7 @@ export default {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` // Передача токена в заголовке
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({ token, bzhuData })
       })
@@ -212,12 +212,7 @@ export default {
     prevStep() {
       this.step--; // Возврат к предыдущему шагу
     },
-    resetForm() {
-      // Сброс формы для нового расчета
-      this.step = 1;
-      this.result = null;
-    }
-  }
+  },
 };
 </script>
 
@@ -306,13 +301,14 @@ input {
 
 }
 
-.prev-button, .next-button, .restart, .result-btn{
+.prev-button, .next-button, .goToProfile, .result-btn{
   background-color: #04AA6D;
   padding: 5px 10px 5px 10px;
   margin: 15px 0 15px 0;
   border-radius: 5px;
   color: white;
 }
+
 
 .form-group label{
   padding-left: 10px;
@@ -322,6 +318,7 @@ input {
   padding-top: 10px;
   justify-content: center;
   text-align: center;
+  padding-bottom: 15px;
 }
 
 .result h3{

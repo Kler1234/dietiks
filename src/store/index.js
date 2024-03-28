@@ -3,7 +3,7 @@ import { createStore } from 'vuex';
 export default createStore({
     state: {
         loggedIn: false,
-        token: null
+        token: null,
     },
     mutations: {
         setLoggedIn(state, value) {
@@ -18,6 +18,7 @@ export default createStore({
             state.loggedIn = false;
             state.token = null;
         },
+
     },
     actions: {
         async login({ commit }, { email, password }) {
@@ -58,10 +59,10 @@ export default createStore({
         logout({ commit }) {
             sessionStorage.removeItem('token'); // Удаляем токен из sessionStorage при выходе
             commit('logout');
-        }
+        },
     },
     getters: {
-        isLoggedIn: state => state.loggedIn
+        isLoggedIn: state => state.loggedIn,
     },
 
 });

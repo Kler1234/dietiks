@@ -4,7 +4,7 @@ import Sidebar from "@/components/Profile/Sidebar.vue";
 import MealSquare from '@/components/Profile/MealSquare.vue';
 import RecipeSquare from "@/components/Profile/RecipeSquare.vue";
 import { useRouter } from 'vue-router';
-import {ref, computed} from 'vue';
+import {ref, computed, reactive, onMounted} from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
@@ -15,6 +15,40 @@ const handleLogout = () => {
   store.dispatch('logout');
   router.push('/login');
 };
+
+const userData = reactive({
+  username: '',
+  protein: 0,
+  fats: 0,
+  carbohydrate: 0,
+  calorie_result: 0
+});
+
+const fetchUserData = async () => {
+  try {
+    const response = await fetch('http://192.168.1.2:3000/user/profile', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+      }
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch user data');
+    }
+    const data = await response.json();
+    const { username, protein, fat, carbohydrate, calorie_result } = data;
+    userData.username = username;
+    userData.protein = protein;
+    userData.fats = fat;
+    userData.carbohydrate = carbohydrate;
+    userData.calorie_result = calorie_result;
+  } catch (error) {
+    console.error('Error fetching user data', error);
+  }
+};
+
+onMounted(fetchUserData);
 
 const value = 100;
 const total = 200;
@@ -27,7 +61,6 @@ const recipes = [
   { id: 1, title: "Паста с томатным соусом", ingredients: "Сочный томатный соус, спагетти, пармезан", calories: 350 },
   { id: 2, title: "Греческий салат", ingredients: "Свежие огурцы, помидоры, маслины, фета", calories: 200 },
   { id: 3, title: "Овощной рагу", ingredients: "Цветная капуста, баклажаны, морковь", calories: 180 },
-
 ];
 
 </script>
@@ -37,31 +70,32 @@ const recipes = [
   <div class="content">
     <Sidebar @logout="handleLogout" class="sidebar"/>
     <div class="main">
-      <h1 class="profile text-center pb-10 text-3xl">Профиль</h1>
+      <h1 class="profile text-center pb-10 text-3xl">Здравствуйте, {{userData.username}}</h1>
+      <h1 class="profile-phone text-center pb-10 text-3xl"><strong>{{userData.username}}</strong></h1>
       <div class="progressBar flex gap-5">
           <div class="score flex ">
             <div class="eatede">
               <h1 class="text-2xl">Съедено</h1>
-              <h2>{{ value }} / {{total}}</h2>
+              <h2>{{ value }} / {{userData.calorie_result}}</h2>
 
             </div>
             <div class="needToEat">
               <h1 class="text-2xl"> Осталось </h1>
-              <h2>{{ remaining }} / {{total}}</h2>
+              <h2>{{ remaining }} / {{userData.calorie_result}}</h2>
             </div>
           </div>
           <div class="nutr flex">
             <div class="belki">
               <h1 class="text-2xl">Белки</h1>
-              <h2>{{protein.value}}/{{protein.total}}</h2>
+              <h2>{{protein.value}}/{{ userData.protein }}</h2>
             </div>
             <div class="fats">
               <h1 class="text-2xl">Жиры</h1>
-              <h2>{{fat.value}}/{{fat.total}}</h2>
+              <h2>{{fat.value}}/{{ userData.fats }}</h2>
             </div>
             <div class="uglevodi">
               <h1 class="text-2xl">Углеводы</h1>
-              <h2>{{carbs.value}}/{{carbs.total}}</h2>
+              <h2>{{carbs.value}}/{{ userData.carbohydrate }}</h2>
             </div>
           </div>
         <div class="food"></div>
@@ -206,7 +240,7 @@ const recipes = [
     height: 100%;
   }
   .profile{
-    visibility: hidden;
+    display: none;
   }
 }
 

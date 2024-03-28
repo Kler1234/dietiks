@@ -1,40 +1,90 @@
 <script setup>
 import Header from '@/components/Header.vue'
 import Sidebar from "@/components/Profile/Sidebar.vue";
+import {computed, ref} from 'vue'
+import store from "@/store/index.js";
+import router from "@/router/router.js";
 
-let username = "John Doe";
-let password = "";
-let recalculateMacro = false;
+const oldPassword = ref('');
+const newPassword = ref('');
+const confirmPassword = ref('');
+const newUsername = ref('');
+const loggedIn = computed(() => store.getters.isLoggedIn);
 
-function updateUsername(newName) {
-  username = newName;
+const handleLogout = () => {
+  store.dispatch('logout');
+  router.push('/login');
+};
+async function changeUsername() {
+  try{
+    const token = sessionStorage.getItem('token');
+    const response = await fetch('http://192.168.1.2:3000/user/changeUsername', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+      },
+      body: JSON.stringify({token, newUsername: newUsername.value})
+    });
+    if (!response.ok) {
+      throw new Error(`Ошибка: ${response.status} ${response.statusText}`);
+    }
+    alert("Имя успешно изменено.");
+  } catch (error) {
+    console.error('Ошибка при изменении пароля:', error.message);
+    alert('Ошибка при изменении имени. Пожалуйста, попробуйте снова.');
+  }
 }
-
-function updatePassword(newPassword) {
-  password = newPassword;
-}
-
-function toggleRecalculate() {
-  recalculateMacro = !recalculateMacro;
+async function changePassword() {
+  try {
+    if (newPassword.value !== confirmPassword.value) {
+      throw new Error("Новый пароль и его подтверждение не совпадают.");
+    }
+    const token = sessionStorage.getItem('token');
+    const response = await fetch('http://192.168.1.2:3000/user/changePassword', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+      },
+      body: JSON.stringify({token, oldPassword: oldPassword.value, newPassword: newPassword.value})
+    });
+    if (!response.ok) {
+      throw new Error(`Ошибка: ${response.status} ${response.statusText}`);
+    }
+    alert("Пароль успешно изменен.");
+  } catch (error) {
+    console.error('Ошибка при изменении пароля:', error.message);
+    alert('Ошибка при изменении пароля. Пожалуйста, попробуйте снова.');
+  }
 }
 </script>
 
 <template>
   <Header/>
   <div class="content">
-    <Sidebar/>
+    <Sidebar @logout="handleLogout"/>
     <div class="main">
       <h1 class="text-2xl">Настройки</h1>
-      <form class="form">
-        <label for="username">Имя:</label>
-        <input type="text" id="username" v-model="username">
-        <br>
-        <label for="password">Пароль:</label>
-        <input type="password" id="password" v-model="password">
-        <br>
+      <form class="form" @submit.prevent>
+        <div class="changeName">
+          <label for="username">Имя:</label>
+          <input type="text" id="username" v-model="newUsername">
+          <button class="btn" @click="changeUsername">Изменить имя</button>
+        </div>
+        <div class="changePassword">
+          <label for="oldPassword">Старый пароль:</label>
+          <input type="password" id="oldPassword" v-model="oldPassword">
+          <br>
+          <label for="newPassword">Новый пароль:</label>
+          <input type="password" id="newPassword" v-model="newPassword">
+          <br>
+          <label for="confirmPassword">Повторите новый пароль:</label>
+          <input type="password" id="confirmPassword" v-model="confirmPassword">
+        </div>
+        <button class="btn" @click="changePassword">Изменить пароль</button>
         <div class="btn-group flex gap-x-5">
           <router-link to="/calculate" class="btn">Пересчитать БЖУ</router-link>
-          <button class="btn">Сохранить изменения</button>
         </div>
       </form>
     </div>

@@ -14,6 +14,7 @@ const confirmPassword = ref('');
 const error=ref('');
 const value = ref(null);
 const success = ref(false);
+const name = ref('');
 const register = async () => {
 
   try {
@@ -29,7 +30,7 @@ const register = async () => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email: email.value, password: password.value })
+      body: JSON.stringify({ email: email.value, password: password.value, name: name.value })
     });
     error.value = '';
 
@@ -38,8 +39,8 @@ const register = async () => {
     }
     const data = await response.json();
     const token = data.token;
-    store.dispatch('setUserToken', token);
-    store.dispatch('setLoggedIn', true);
+    store.commit('setToken', token);
+    store.commit('setLoggedIn', true);
     success.value = true;
     setTimeout(() => {
       router.push('/calculate');
@@ -66,6 +67,9 @@ const register = async () => {
           <div class="registration__input-box">
             <div class="input-box">
               <input type="text" placeholder="Введите почту" required v-model="email">
+            </div>
+            <div class="input-box">
+              <input type="text" placeholder="Введите имя" required v-model="name">
             </div>
             <div class="input-box">
               <input type="password" placeholder="Введите пароль" required v-model="password">
@@ -134,7 +138,7 @@ const register = async () => {
 }
 
 .content {
-  padding-top: 150px;
+  padding-top: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -146,7 +150,8 @@ const register = async () => {
   box-shadow: 0px 4px 4px 4px rgba(0, 0, 0, 0.25);
   color: #000000;
   border-radius: 50px;
-  height: 640px;
+  height: 700px;
+  padding-bottom: 150px;
 }
 
 .title {

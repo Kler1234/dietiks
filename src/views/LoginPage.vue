@@ -1,6 +1,6 @@
 <script setup>
 import Header from "@/components/Header.vue";
-import {ref, computed} from 'vue';
+import {ref, computed, onMounted} from 'vue';
 import { useRouter } from "vue-router";
 import { useStore } from 'vuex';
 
