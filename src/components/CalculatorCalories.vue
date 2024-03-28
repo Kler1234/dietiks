@@ -196,12 +196,13 @@ input{
     margin: 0 20px;
   }
 
-  #productName input{
+  #productName input-text{
     margin: 0 auto;
   }
   .addProduct input{
     width: 70px;
   }
+
   #newProductName{
     width: 150px;
   }

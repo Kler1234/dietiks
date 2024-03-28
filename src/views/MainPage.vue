@@ -15,7 +15,7 @@ const loggedIn = computed(() => store.getters.isLoggedIn);
     <div class="section-about flex items-center justify-between0">
       <div class="about-dietiks pl-60">
         <div class="title-dietiks">
-          <p>Диетикс</p>
+          <p>Диетикс ⃰</p>
         </div>
         <div class="title-description">
           <p class="title-description__text">Если вы устали от срывов и жестких диет,<br>
@@ -66,8 +66,8 @@ const loggedIn = computed(() => store.getters.isLoggedIn);
       </div>
     </section>
   </div>
-  <footer>
-    <div class="footer-block"></div>
+  <footer class="footer-block">
+      <p class="text-xs text-white">* - Этот сайт предоставляет информацию о диетах и здоровье и не является медицинской организацией. Мы не предоставляем медицинских консультаций и не имеем медицинского образования. Перед принятием каких-либо диетических решений, проконсультируйтесь с врачом или другим квалифицированным специалистом.</p>
   </footer>
 </template>
 
@@ -112,7 +112,7 @@ a:hover:after, a:focus:after {
 }
 
 .title-description__text, .title-dietiks{
-  font-family: Kyiv_TypeSerif;
+  font-family: Kyiv_TypeSerif, serif;
   font-size: 25px ;
 }
 
@@ -121,7 +121,7 @@ a:hover:after, a:focus:after {
 }
 
 .btn-try{
-  font-family: Merriweather;
+ font-family: Merriweather;
   width: 350px;
 }
 
@@ -199,7 +199,7 @@ a:hover:after, a:focus:after {
   display: flex;
   flex-flow: column;
   align-items: center;
-  font-family: Merriweather, serif;
+font-family: Merriweather, serif;
   font-size: 32px;
 }
 .section-registry__infoblock span {
@@ -207,6 +207,7 @@ a:hover:after, a:focus:after {
   flex-flow: column;
   align-items: center;
   font-family: Merriweather, serif;
+
   font-size: 32px;
 }
 
@@ -233,6 +234,7 @@ a:hover:after, a:focus:after {
 .regbox__text {
   padding-top: 27px;
   color: white;
+
 }
 
 .footer-block {
@@ -244,6 +246,7 @@ a:hover:after, a:focus:after {
   width: 100%;
   height: 50px;
 }
+
 
 @media (max-width: 1250px) {
   .wrapper {
@@ -360,6 +363,7 @@ a:hover:after, a:focus:after {
   .section-info {
     padding: 0;
   }
+
 }
 @media (max-width: 778px) {
   .regbox__block {
@@ -392,7 +396,13 @@ a:hover:after, a:focus:after {
   }
   .footer-block{
     width: 100%;
+    height: 100%;
   }
+  .footer-block p{
+    padding: 10px;
+  }
+
+
 
   .about-dietiks{
     padding: 0;

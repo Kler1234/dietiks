@@ -1,5 +1,8 @@
 <script setup>
 import Header from '@/components/Header.vue'
+import Sidebar from "@/components/Profile/Sidebar.vue";
+import MealSquare from '@/components/Profile/MealSquare.vue';
+import RecipeSquare from "@/components/Profile/RecipeSquare.vue";
 import { useRouter } from 'vue-router';
 import {ref, computed} from 'vue';
 import { useStore } from 'vuex';
@@ -12,139 +15,211 @@ const handleLogout = () => {
   store.dispatch('logout');
   router.push('/login');
 };
+
+const value = 100;
+const total = 200;
+const remaining = total - value;
+const protein = { value: 50, total: 100 };
+const fat = { value: 30, total: 60 };
+const carbs = { value: 20, total: 40 };
+
+const recipes = [
+  { id: 1, title: "Паста с томатным соусом", ingredients: "Сочный томатный соус, спагетти, пармезан", calories: 350 },
+  { id: 2, title: "Греческий салат", ingredients: "Свежие огурцы, помидоры, маслины, фета", calories: 200 },
+  { id: 3, title: "Овощной рагу", ingredients: "Цветная капуста, баклажаны, морковь", calories: 180 },
+
+];
+
 </script>
 
 <template>
   <Header/>
-  <div class="content__container">
-    <div class="content">
-      <div class="aside">
-        <div class="aside__avatar"></div>
-        <div class="aside__link">
-          <a href="#" class="profile">Профиль</a>
-          <a href="#" class="Settings">Настройки</a>
-          <button class="logout" @click="handleLogout">Выйти из аккаунта</button>
+  <div class="content">
+    <Sidebar @logout="handleLogout" class="sidebar"/>
+    <div class="main">
+      <h1 class="profile text-center pb-10 text-3xl">Профиль</h1>
+      <div class="progressBar flex gap-5">
+          <div class="score flex ">
+            <div class="eatede">
+              <h1 class="text-2xl">Съедено</h1>
+              <h2>{{ value }} / {{total}}</h2>
+
+            </div>
+            <div class="needToEat">
+              <h1 class="text-2xl"> Осталось </h1>
+              <h2>{{ remaining }} / {{total}}</h2>
+            </div>
+          </div>
+          <div class="nutr flex">
+            <div class="belki">
+              <h1 class="text-2xl">Белки</h1>
+              <h2>{{protein.value}}/{{protein.total}}</h2>
+            </div>
+            <div class="fats">
+              <h1 class="text-2xl">Жиры</h1>
+              <h2>{{fat.value}}/{{fat.total}}</h2>
+            </div>
+            <div class="uglevodi">
+              <h1 class="text-2xl">Углеводы</h1>
+              <h2>{{carbs.value}}/{{carbs.total}}</h2>
+            </div>
+          </div>
+        <div class="food"></div>
+        <div class="favorite"></div>
         </div>
+      <div class="meal-squares">
+        <MealSquare mealName="Завтрак" />
+        <MealSquare mealName="Завтрак" />
+        <MealSquare mealName="Завтрак" />
+        <MealSquare mealName="Завтрак" />
       </div>
-      <div class="content__main item">
-        <h1 class="title">Здравствуйте, Имя</h1>
-        <p class="subtitle">Ваша активность:</p>
-        <div class="container">
-          <div class="container__item activity"></div>
-          <div class="container__item breakfast">
-            <div class="breakfast__text">Завтрак</div>
-          </div>
-          <div class="container__item lunch" >
-            <div class="lunch__text">Обед</div>
-          </div>
-          <div class="container__item dinner">
-            <div class="dinner__text">Ужин</div>
+      <div class="favorites">
+        <h2>Избранное</h2>
+        <div class="recipes-container">
+          <div class="recipes">
+            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
+            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
+            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
+            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
+            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
+            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
+            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
+            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
+            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
+            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
+            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
+            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
+            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
+            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
+            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
           </div>
         </div>
       </div>
     </div>
   </div>
   <footer class="footer">
+    <p class="text-xs text-white">* - Этот сайт предоставляет информацию о диетах и здоровье и не является медицинской организацией. Мы не предоставляем медицинских консультаций и не имеем медицинского образования. Перед принятием каких-либо диетических решений, проконсультируйтесь с врачом или другим квалифицированным специалистом.</p>
   </footer>
-
 </template>
-
 
 <style scoped>
 
-.content {
-  padding-top: 135px;
-  padding-left: 145px;
-  display: grid;
-  grid-template-areas: "aside content";
-  grid-gap: 314px;
-  grid-template-columns: 328px 960px;
-}
-
-.aside {
-  grid-area: aside;
-  align-self: start;
-}
-
-.aside__avatar {
-  background: #E24545;
-  width: 364px;
-  height: 364px;
-  border-radius: 8px;
-}
-
-.aside__link a {
-  display: block;
-  font-size: 24px;
-  margin-top: 21px;
-  width: 141px;
-}
-
-.content__main {
-  grid-area: content;
-}
-
-.content__main h1 {
-  font-size: 40px;
-  margin-left: 140px;
-  margin-top: 51px;
-}
-
-.content__main p {
-  font-size: 24px;
-  margin-top: 26px;
-  margin-bottom: 7px;
-}
-
-.container {
-  display: grid;
+.content{
+  padding-top: 150px;
   height: 100%;
-  width: 690px;
-  grid-template-areas: "header header header" "first second third";
-  justify-content: space-between;
+  display: flex;
 }
 
-.activity {
-  grid-area: header;
-  border-radius: 20px;
-  height: 290px;
-  box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+.main{
+  flex-grow: 1;
+  width: 80%;
 }
 
-.breakfast {
-  grid-area: first;
-  width: 180px;
-  height: 167px;
-  border-radius: 20px;
-  box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+.progressBar{
+  flex-flow: column;
+  padding-top: 5px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
+  width: 50%;
+  margin: 0 auto;
+  min-width: 300px
 }
-.breakfast .breakfast__text {
-  margin-top: 190px;
-  margin-left: 50px;
+.score{
+  justify-content: space-around;
+  text-align: center;
+}
+.nutr{
+  justify-content: space-around;
+  text-align: center;
+  bottom: 0;
 }
 
-.lunch {
-  grid-area: second;
-  width: 180px;
-  height: 167px;
-  border-radius: 20px;
-  box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-.lunch .lunch__text {
-  margin-top: 190px;
-  margin-left: 50px;
+.meal-squares {
+  display: flex;
+  flex-wrap: wrap;
+  overflow-x: auto;
+  margin-top: 20px;
+  align-content: center;
+  justify-content: center;
 }
 
-.dinner {
-  grid-area: third;
-  width: 180px;
-  height: 167px;
-  border-radius: 20px;
-  box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-.dinner .dinner__text {
-  margin-top: 190px;
-  margin-left: 50px;
+.favorites {
+  margin-top: 20px;
+  text-align: center;
 }
 
+.favorites h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+
+.recipes-container {
+  display: flex;
+  width: 50%;
+  max-height: 350px;
+  overflow-y: auto;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  align-content: center;
+  margin: 0 auto;
+  justify-content: center;
+  min-width: 350px
+}
+.recipes {
+  display: inline-flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  justify-content: center;
+
+}
+
+.footer {
+  margin-top: 50px;
+  display: flex;
+  left: 0;
+  bottom: 0;
+  background-color: #54B947;
+  width: 100%;
+  height: 50px;
+}
+
+@media (max-width: 952px){
+  .content{
+    padding-top: 100px;
+    flex-wrap: wrap;
+  }
+  .sidebar{
+    text-align: center;
+    margin: 0 auto;
+    box-sizing: content-box;
+  }
+  .recipes-container{
+    overflow-y: auto;
+  }
+  .main{
+    width: 100%;
+  }
+  .footer{
+    height: 100%;
+  }
+  .profile{
+    visibility: hidden;
+  }
+}
+
+@media (max-width: 839px){
+}
+@media (max-width: 768px) {
+  .recipes-container {
+    overflow-y: auto;
+  }
+
+  .recipes {
+    display: flex;
+    flex-direction: column; /* Направление столбцом */
+  }
+}
 </style>

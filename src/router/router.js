@@ -8,8 +8,11 @@ const LoginPage = () => import("@/views/LoginPage.vue");
 const RegistrationPage = () => import("@/views/RegistrationPage.vue");
 const Profile = () => import("@/views/Profile.vue");
 const ReceiptsPage = () => import("@/views/ReceiptsPage.vue");
+const SettingPage = () => import("@/views/SettingPage.vue")
 const IndexMassiTela = () => import("@/components/IndexMassiTela.vue");
 const CalculatorCalories = () => import("@/components/CalculatorCalories.vue");
+const CalculatePage = () => import("@/views/CalculatePage.vue")
+
 
 const router = createRouter({
     history: createWebHistory(),
@@ -22,7 +25,10 @@ const router = createRouter({
         {path: '/calculators', component: CalculatorPage},
         {path: '/test', component: IndexMassiTela},
         {path: '/product/:productName', component: CalculatorCalories},
-        {path: '/profile', component: Profile, meta: { requiresAuth: true }}
+        {path: '/profile', component: Profile, meta: { requiresAuth: true }},
+        {path: '/settings', component: SettingPage, meta: {requiresAuth: true}},
+        {path: '/calculate', component: CalculatePage, meta: {requiresAuth: true}},
+
     ]
 });
 

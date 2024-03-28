@@ -2,6 +2,11 @@
 import Header from "@/components/Header.vue";
 import { ref } from 'vue';
 import { useRouter } from "vue-router";
+import { useStore } from 'vuex';
+
+const store = useStore();
+const router = useRouter();
+
 
 const email = ref('');
 const password = ref('');
@@ -9,7 +14,6 @@ const confirmPassword = ref('');
 const error=ref('');
 const value = ref(null);
 const success = ref(false);
-const router = useRouter();
 const register = async () => {
 
   try {
@@ -34,9 +38,11 @@ const register = async () => {
     }
     const data = await response.json();
     const token = data.token;
+    store.dispatch('setUserToken', token);
+    store.dispatch('setLoggedIn', true);
     success.value = true;
     setTimeout(() => {
-      router.push('/');
+      router.push('/calculate');
     }, 2000);
   } catch (err) {
     error.value = err.message;
@@ -80,12 +86,13 @@ const register = async () => {
       </div>
       <div v-if="success" class="success-message flex flex-col gap-10">
         <h1>Успешная регистрация!</h1>
-
         <div class="loader"></div>
       </div>
     </div>
   </div>
-  <footer class="footer"></footer>
+  <footer class="footer">
+    <p class="text-xs text-white">* - Этот сайт предоставляет информацию о диетах и здоровье и не является медицинской организацией. Мы не предоставляем медицинских консультаций и не имеем медицинского образования. Перед принятием каких-либо диетических решений, проконсультируйтесь с врачом или другим квалифицированным специалистом.</p>
+  </footer>
 </template>
 
 <style scoped>

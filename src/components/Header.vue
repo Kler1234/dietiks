@@ -18,7 +18,7 @@ const toggleBurgerMenu = () => {
     <div class="container__header">
       <div class="header__body">
         <router-link to="/" class="header__logo">
-          Диетикс
+          Диетикс ⃰
         </router-link>
         <div class="header__burger cursor-pointer" @click="toggleBurgerMenu">
           <span></span>
@@ -37,7 +37,7 @@ const toggleBurgerMenu = () => {
             </li>
             <li>
               <router-link to="/diets" class="header__link">
-                Диеты
+                <p>Диеты</p>
               </router-link>
             </li>
             <li>

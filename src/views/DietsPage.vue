@@ -78,7 +78,9 @@ const closePopupMenu = () => {
       </div>
     </div>
   </div>
-  <footer class="footer"></footer>
+  <footer class="footer">
+    <p class="text-xs text-white">* - Этот сайт предоставляет информацию о диетах и здоровье и не является медицинской организацией. Мы не предоставляем медицинских консультаций и не имеем медицинского образования. Перед принятием каких-либо диетических решений, проконсультируйтесь с врачом или другим квалифицированным специалистом.</p>
+  </footer>
   <transition name="fade">
     <div class="overlay" v-if="popupMenuVisible" @click="closePopupMenu"></div>
   </transition>
@@ -204,6 +206,9 @@ const closePopupMenu = () => {
   .section__info {
     grid-template-columns: repeat(3, minmax(171px, 171px));
     grid-template-rows: 171px 171px 171px 171px 171px;
+  }
+  .footer{
+    height: 15%;
   }
 }
 @media (max-width: 842px) {

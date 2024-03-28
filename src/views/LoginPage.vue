@@ -39,33 +39,36 @@ const handleLogin = async () => {
 
 <template>
   <Header />
-  <div class="content">
-    <div class="registration__form" v-if="!loggedIn">
-      <form class="form" @submit.prevent="handleLogin">
-        <h1 class="title">Вход</h1>
-        <div class="error" v-if="error">{{ error }}</div>
-        <div class="registration__input-box">
-          <div class="input-box">
-            <input type="text" placeholder="Введите почту" required v-model="email">
+    <div class="content">
+      <div class="registration__form" v-if="!loggedIn">
+        <form class="form" @submit.prevent="handleLogin">
+          <h1 class="title">Вход</h1>
+          <div class="error" v-if="error">{{ error }}</div>
+          <div class="registration__input-box">
+            <div class="input-box">
+              <input type="text" placeholder="Введите почту" required v-model="email">
+            </div>
+            <div class="input-box">
+              <input type="password" placeholder="Введите пароль" required v-model="password">
+            </div>
           </div>
-          <div class="input-box">
-            <input type="password" placeholder="Введите пароль" required v-model="password">
+          <div class="forgot">
+            <p>Нет аккаунта?</p>
+            <router-link to="/register">
+              Зарегистрироваться
+            </router-link>
           </div>
-        </div>
-        <div class="forgot">
-          <p>Нет аккаунта?</p>
-          <router-link to="/register">
-            Зарегистрироваться
-          </router-link>
-        </div>
-        <button type="submit" class="btn">Войти</button>
-      </form>
+          <button type="submit" class="btn">Войти</button>
+        </form>
+      </div>
+      <div v-else class="success-message">
+        <div class="loader"></div>
+      </div>
     </div>
-    <div v-else class="success-message">
-      <div class="loader"></div>
-    </div>
-  </div>
-  <footer class="footer"></footer>
+    <footer class="footer">
+      <p class="text-xs text-white">* - Этот сайт предоставляет информацию о диетах и здоровье и не является медицинской организацией. Мы не предоставляем медицинских консультаций и не имеем медицинского образования. Перед принятием каких-либо диетических решений, проконсультируйтесь с врачом или другим квалифицированным специалистом.</p>
+    </footer>
+
 </template>
 
 
@@ -135,6 +138,7 @@ template{
   height: 100vh;
 
 }
+
 
 .registration__form {
   position: absolute;
@@ -230,7 +234,7 @@ a:hover:after {
 
 .footer {
   display: flex;
-  position: absolute;
+  position: relative;
   left: 0;
   bottom: 0;
   background-color: #54B947;
@@ -245,6 +249,9 @@ a:hover:after {
   .header__list li {
     margin-top: 5px;
   }
+}
+
+@media (max-width: 622px){
 }
 
 @media (max-width: 450px){
@@ -267,7 +274,7 @@ a:hover:after {
   .content{
     margin: 0;
     padding: 0;
-    padding-bottom: 50px;
+
   }
   .btn{
     margin-top: 50px;
@@ -275,7 +282,7 @@ a:hover:after {
   }
 
   footer{
-    visibility: hidden;
+   visibility: hidden;
   }
 
 }
