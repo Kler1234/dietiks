@@ -1,8 +1,8 @@
 <template>
-  <div class="cards">
-    <div class="cards-card flex flex-col shadow-md w-250">
+  <div class="cards flex">
+    <div class="cards-card flex flex-col shadow-md">
       <img :src="recipe.image" :alt="recipe.label">
-      <h1 class="food-name m-auto p-3">{{ recipe.label }}</h1>
+      <h1 class="food-name">{{ recipe.label }}</h1>
     </div>
   </div>
 </template>
@@ -12,16 +12,12 @@ const { recipe } = defineProps(['recipe']);
 </script>
 
 <style scoped>
-
-
-
-.card {
-  background: var(--surface-card);
-  padding: 2rem;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-  background-color: #D9D9D9;
-  border: 1px solid black;
+.cards-card{
+  width: 300px;
+  height: 350px;
+  margin: 20px;
+  padding: 20px;
+  cursor: pointer;
 }
 
 </style>

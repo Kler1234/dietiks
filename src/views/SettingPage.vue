@@ -66,25 +66,34 @@ async function changePassword() {
     <Sidebar @logout="handleLogout"/>
     <div class="main">
       <h1 class="text-2xl">Настройки</h1>
-      <form class="form" @submit.prevent>
-        <div class="changeName">
-          <label for="username">Имя:</label>
+      <hr>
+      <form class="form pt-5" @submit.prevent>
+        <div class="changeName pb-5">
+          <h2 class="text-xl">Изменить имя:</h2>
+          <label for="username" class="">Имя:</label>
           <input type="text" id="username" v-model="newUsername">
-          <button class="btn" @click="changeUsername">Изменить имя</button>
         </div>
-        <div class="changePassword">
+        <button class="btn" @click="changeUsername">Изменить имя</button>
+        <div class="changePassword pt-5">
+          <h2 class="text-xl">Изменить пароль:</h2>
+
           <label for="oldPassword">Старый пароль:</label>
+          <br>
           <input type="password" id="oldPassword" v-model="oldPassword">
           <br>
           <label for="newPassword">Новый пароль:</label>
+          <br>
           <input type="password" id="newPassword" v-model="newPassword">
           <br>
-          <label for="confirmPassword">Повторите новый пароль:</label>
+          <label for="confirmPassword">Повторите пароль:</label>
+          <br>
           <input type="password" id="confirmPassword" v-model="confirmPassword">
+
         </div>
-        <button class="btn" @click="changePassword">Изменить пароль</button>
+        <button class="btn mt-5 mb-5" @click="changePassword">Изменить пароль</button>
+        <hr>
         <div class="btn-group flex gap-x-5">
-          <router-link to="/calculate" class="btn">Пересчитать БЖУ</router-link>
+          <router-link to="/calculate" id="recalculate" class="btn">Пересчитать БЖУ</router-link>
         </div>
       </form>
     </div>
@@ -95,6 +104,9 @@ async function changePassword() {
 </template>
 
 <style scoped>
+.changeName{
+
+}
 .content{
   padding-top: 150px;
   height: 100%;
@@ -130,14 +142,13 @@ input{
 
 .btn-group{
   padding-top: 30px;
-  padding-bottom: 300px;
+  padding-bottom: 160px;
   align-content: center;
   justify-content: center;
 }
 .footer {
   margin-top: 50px;
   display: flex;
-  position: absolute;
   left: 0;
   bottom: 0;
   background-color: #54B947;
@@ -162,5 +173,7 @@ input{
     position: relative;
     height: 100%;
   }
+
+
 }
 </style>

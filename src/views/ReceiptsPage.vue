@@ -1,9 +1,16 @@
 <template>
   <Header/>
-  <div class="wrapper flex flex-row">
-    <Filter :applyFiltersCallback="applyFilters"/>
-    <CardList :recipes="recipes"/>
+  <div class="wrapper grid grid-cols-2 row-span-1">
+    <div class="wrapper-filter pt-5">
+      <Filter :applyFiltersCallback="applyFilters"/>
+    </div>
+    <div class="wrapper-recipes flex flex-wrap">
+      <CardList :recipes="recipes"/>
+    </div>
   </div>
+  <footer class="footer">
+    <p class="text-xs text-white">* - Этот сайт предоставляет информацию о диетах и здоровье и не является медицинской организацией. Мы не предоставляем медицинских консультаций и не имеем медицинского образования. Перед принятием каких-либо диетических решений, проконсультируйтесь с врачом или другим квалифицированным специалистом.</p>
+  </footer>
 </template>
 
 <script setup>
@@ -54,20 +61,47 @@ const applyFilters = async (filters) => {
 
 
 
+
 <style scoped>
 .wrapper{
-  padding-top: 120px;
+  padding-top: 100px;
+  grid-template-columns: 500px auto;
+  padding-bottom: 320px;
 }
-
-.cards{
-  grid-template-columns: 300px 300px 300px;
-  grid-gap: 150px;
-  margin: 0 auto;
+.footer {
+  margin-top: 50px;
+  display: flex;
+  left: 0;
+  bottom: 0;
+  background-color: #54B947;
+  width: 100%;
+  height: 50px;
 }
+@media (max-width: 952px){
+  .wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: column;
+    flex: 1;
+  }
 
+  .wrapper-recipes{
+    align-content: center;
+    justify-content: center;
+  }
+  .wrapper-filter{
+    padding: 0;
+  }
 
-
-.food-name{
-  font-size: 25px;
+  .cards{
+    flex-wrap: nowrap;
+    flex-flow: column;
+  }
+}
+@media (max-width: 623px) {
+  .footer{
+    height: 100%;
+  }
+  
 }
 </style>

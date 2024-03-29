@@ -209,6 +209,9 @@ const recipes = [
   justify-content: center;
 
 }
+.profile-phone{
+  display: none;
+}
 
 .footer {
   margin-top: 50px;
@@ -241,6 +244,9 @@ const recipes = [
   }
   .profile{
     display: none;
+  }
+  .profile-phone{
+    display: block;
   }
 }
 

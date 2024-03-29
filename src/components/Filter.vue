@@ -1,6 +1,6 @@
 <template>
   <div class="filter-area">
-    <div class="filter bg-green-600 pl-5 rounded-r-lg">
+    <div class="filter pl-5 rounded-r-lg">
       <h1 class="title text-center">Рецепты</h1>
       <h1 class="title-secondLVL pt-5">Количество калорий:</h1>
       <div class="checkboxes">
@@ -82,5 +82,17 @@ const applyFilters = async () => {
 .filter-checkbox label{
   cursor: pointer;
 }
+.filter{
+  background-color: #54B947;
+}
 
+@media(max-width: 952px) {
+  .filter-area{
+    width: 100%;
+    text-align: center;
+  }
+  .filter{
+    border-radius: 0;
+  }
+}
 </style>

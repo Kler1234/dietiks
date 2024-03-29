@@ -6,11 +6,16 @@ const { recipes } = defineProps(['recipes']);
 </script>
 
 <template>
-  <div class="cards grid grid-cols-2">
-    <Card v-for="(recipe, index) in recipes" :key="index" :recipe="recipe" />
+  <div class="cards flex flex-wrap">
+    <Card v-for="(recipe, index) in recipes" :key="index" :recipe="recipe" class="cardReceipt"/>
   </div>
 </template>
 
+
 <style scoped>
 
+
+
+.cardReceipt{
+}
 </style>
