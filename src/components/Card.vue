@@ -1,23 +1,29 @@
 <template>
-  <div class="cards flex">
-    <div class="cards-card flex flex-col shadow-md">
-      <img :src="recipe.image" :alt="recipe.label">
-      <h1 class="food-name">{{ recipe.label }}</h1>
-    </div>
+  <div class="cards-card flex flex-col shadow-md" @click="openRecipePopup(recipe)">
+    <img :src="recipe.image_url" :alt="recipe.name">
+    <h1 class="food-name">{{ recipe.name }}</h1>
+    <p>Kkal: {{ recipe.kkal }}</p>
+
   </div>
 </template>
 
 <script setup>
-const { recipe } = defineProps(['recipe']);
+import { defineProps, defineEmits } from 'vue';
+
+const props = defineProps(['recipe']);
+const emit = defineEmits(['recipeClick']);
+
+const openRecipePopup = (recipe) => {
+  emit('recipeClick', recipe);
+};
 </script>
 
 <style scoped>
-.cards-card{
+.cards-card {
   width: 300px;
   height: 350px;
   margin: 20px;
   padding: 20px;
   cursor: pointer;
 }
-
 </style>
