@@ -3,7 +3,7 @@
     <Header/>
     <div class="wrapper grid grid-cols-2 row-span-1">
       <div class="wrapper-filter pt-5">
-        <Filter :applyFiltersCallback="applyFilters"/>
+        <Filter :applyFiltersCallback="updateRecipes"/>
       </div>
       <div class="wrapper-recipes flex flex-wrap">
         <template v-if="!loading && recipes.length === 0">
@@ -32,21 +32,8 @@ const loading = ref(false);
 const recipes = ref([]);
 const selectedRecipe = ref(null);
 const popupVisible = ref(false);
-const applyFilters = async () => {
-  loading.value = true;
-  try {
-    const response = await fetch('http://192.168.1.2:3000/recipes');
-    const responseData = await response.json();
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch recipes');
-    }
-
-    recipes.value = responseData;
-  } catch (error) {
-    console.error('Error loading recipes:', error);
-  }
-  loading.value = false;
+const updateRecipes = (newRecipes) => {
+  recipes.value = newRecipes;
 };
 
 const openRecipePopup = (recipe) => {
