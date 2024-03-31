@@ -9,8 +9,8 @@
       <div v-show="showCalories">
         <div class="checkboxes">
           <div v-for="(calorie, index) in calories" :key="index" class="filter-checkbox flex gap-5">
-            <RadioButton v-model="selectedCalories" :inputId="'caloriesType'+(index+1)" name="filter" :value="calorie"/>
-            <label :for="'caloriesType'+(index+1)" class="ml-2">{{ calorie }}</label>
+            <RadioButton v-model="selectedCalories" :inputId="'caloriesType'+(index+1)" name="filter" :value="calorie.value"/>
+            <label :for="'caloriesType'+(index+1)" class="ml-2">{{ calorie.label }}</label>
           </div>
         </div>
       </div>
@@ -60,8 +60,8 @@ import {ref, defineProps} from 'vue';
 const {applyFiltersCallback} = defineProps(['applyFiltersCallback']);
 
 const loading = ref(false);
-const calories = ["300", "500", "700"];
-const meals = [{label: "Завтрак", value: "breakfast"}, {label: "Обед", value: "lunch"}, {
+const calories = [{ label: "Ничего из нижеперечисленного", value: null },{label: "300", value: '300'}, {label: '500', value: '500'}, {label: "700", value: '700'}];
+const meals = [{ label: "Ничего из нижеперечисленного", value: null },{label: "Завтрак", value: "breakfast"}, {label: "Обед", value: "lunch"}, {
   label: "Ужин",
   value: "dinner"
 }, {label: "Перекус", value: "snack"}];
