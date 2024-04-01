@@ -3,7 +3,7 @@
     <Header/>
     <div class="wrapper grid grid-cols-2 row-span-1">
       <div class="wrapper-filter pt-5">
-        <Filter :applyFiltersCallback="updateRecipes"/>
+        <Filter :applyFiltersCallback="updateRecipes" />
       </div>
       <div class="wrapper-recipes flex flex-wrap">
         <template v-if="!loading && recipes.length === 0">
@@ -17,7 +17,7 @@
     <footer class="footer">
       <p class="text-xs text-white">* - Этот сайт предоставляет информацию о диетах и здоровье и не является медицинской организацией. Мы не предоставляем медицинских консультаций и не имеем медицинского образования. Перед принятием каких-либо диетических решений, проконсультируйтесь с врачом или другим квалифицированным специалистом.</p>
     </footer>
-    <PopupRecipe v-if="popupVisible" :recipeInfo="selectedRecipe" @closePopup="closeRecipePopup" />
+    <PopupRecipe v-if="popupVisible"  :recipeInfo="selectedRecipe" @closePopup="closeRecipePopup" />
   </div>
 </template>
 
@@ -32,8 +32,9 @@ const loading = ref(false);
 const recipes = ref([]);
 const selectedRecipe = ref(null);
 const popupVisible = ref(false);
+
 const updateRecipes = (newRecipes) => {
-  recipes.value = newRecipes;
+  recipes.value = newRecipes.recipes;
 };
 
 const openRecipePopup = (recipe) => {
@@ -44,7 +45,6 @@ const openRecipePopup = (recipe) => {
 const closeRecipePopup = () => {
   popupVisible.value = false;
 };
-
 </script>
 
 <style scoped>
@@ -64,11 +64,12 @@ const closeRecipePopup = () => {
   height: 50px;
 }
 
-.noRecipes{
+.noRecipes {
   align-content: center;
   justify-content: center;
   text-align: center;
 }
+
 @media (max-width: 952px) {
   .wrapper {
     display: flex;
@@ -91,7 +92,7 @@ const closeRecipePopup = () => {
     flex-flow: column;
   }
 
-  .noRecipes{
+  .noRecipes {
     padding-top: 150px;
   }
 }

@@ -3,6 +3,7 @@ import Header from '@/components/Header.vue'
 import Sidebar from "@/components/Profile/Sidebar.vue";
 import MealSquare from '@/components/Profile/MealSquare.vue';
 import RecipeSquare from "@/components/Profile/RecipeSquare.vue";
+import PopupRecipe from "@/components/PopupRecipePage/PopupRecipe.vue";
 import { useRouter } from 'vue-router';
 import {ref, computed, reactive, onMounted} from 'vue';
 import { useStore } from 'vuex';
@@ -10,6 +11,15 @@ import { useStore } from 'vuex';
 const store = useStore();
 const router = useRouter();
 const loggedIn = computed(() => store.getters.isLoggedIn);
+const selectedRecipe = ref(null);
+
+const openRecipePopup = (recipe) => {
+  selectedRecipe.value = recipe;
+};
+
+const closeRecipePopup = () => {
+  selectedRecipe.value = null;
+};
 
 const handleLogout = () => {
   store.dispatch('logout');
@@ -48,7 +58,35 @@ const fetchUserData = async () => {
   }
 };
 
+const fetchFavoriteRecipes = async () => {
+  try {
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      console.error('Токен пользователя отсутствует');
+      return;
+    }
+
+    const response = await fetch('http://192.168.1.2:3000/favorites/recipes', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Ошибка запроса');
+    }
+
+    const data = await response.json();
+    recipes.value = data;
+  } catch (error) {
+    console.error('Ошибка:', error.message);
+  }
+};
+
 onMounted(fetchUserData);
+onMounted(fetchFavoriteRecipes);
 
 const value = 100;
 const total = 200;
@@ -56,12 +94,9 @@ const remaining = total - value;
 const protein = { value: 50, total: 100 };
 const fat = { value: 30, total: 60 };
 const carbs = { value: 20, total: 40 };
+const recipes = ref([]);
 
-const recipes = [
-  { id: 1, title: "Паста с томатным соусом", ingredients: "Сочный томатный соус, спагетти, пармезан", calories: 350 },
-  { id: 2, title: "Греческий салат", ingredients: "Свежие огурцы, помидоры, маслины, фета", calories: 200 },
-  { id: 3, title: "Овощной рагу", ingredients: "Цветная капуста, баклажаны, морковь", calories: 180 },
-];
+
 
 </script>
 
@@ -111,21 +146,7 @@ const recipes = [
         <h2>Избранное</h2>
         <div class="recipes-container">
           <div class="recipes">
-            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
-            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
-            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
-            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
-            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
-            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
-            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
-            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
-            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
-            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
-            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
-            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
-            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
-            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
-            <RecipeSquare :recipe="recipe" v-for="recipe in recipes" :key="recipe.id"/>
+            <RecipeSquare class="cursor-pointer" :recipe="recipe" v-for="recipe in recipes" :key="recipe.id" @click="openRecipePopup(recipe)"/>
           </div>
         </div>
       </div>
@@ -134,10 +155,12 @@ const recipes = [
   <footer class="footer">
     <p class="text-xs text-white">* - Этот сайт предоставляет информацию о диетах и здоровье и не является медицинской организацией. Мы не предоставляем медицинских консультаций и не имеем медицинского образования. Перед принятием каких-либо диетических решений, проконсультируйтесь с врачом или другим квалифицированным специалистом.</p>
   </footer>
+  <PopupRecipe :recipeInfo="selectedRecipe" v-if="selectedRecipe" @closePopup="closeRecipePopup" />
 </template>
 
-<style scoped>
 
+
+<style scoped>
 .content{
   padding-top: 150px;
   height: 100%;

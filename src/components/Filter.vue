@@ -53,39 +53,44 @@
 
 <script setup>
 import Button from "primevue/button";
-import Checkbox from "primevue/checkbox";
 import RadioButton from "primevue/radiobutton";
 import {ref, defineProps} from 'vue';
+import { watch } from 'vue';
 
-const {applyFiltersCallback} = defineProps(['applyFiltersCallback']);
+const { applyFiltersCallback, currentPage } = defineProps(['applyFiltersCallback', 'currentPage']);
 
 const loading = ref(false);
-const calories = [{ label: "Ничего из нижеперечисленного", value: null },{label: "300", value: '300'}, {label: '500', value: '500'}, {label: "700", value: '700'}];
-const meals = [{ label: "Ничего из нижеперечисленного", value: null },{label: "Завтрак", value: "breakfast"}, {label: "Обед", value: "lunch"}, {
-  label: "Ужин",
-  value: "dinner"
-}, {label: "Перекус", value: "snack"}];
-const diets = [{label: "Вегетарианство", value: "vegetarian"}, {
-  label: "Веганская",
-  value: "vegan"
-}, {label: "Низкоуглеводная", value: "lowCarb"}, {
-  label: "Много клетчатки",
-  value: "highFiber"
-}, {label: "Чистое питание", value: "cleanEating"}, {label: "Кетодиета", value: "keto"}, {
-  label: "Мало жира",
-  value: "lowFat"
-}, {label: "Низкокалорийная", value: "lowCalorie"}, {
-  label: "Высокобелковая",
-  value: "highProtein"
-}, {label: "Пескетарианство", value: "pescatarian"}, {label: "Без сахара", value: "sugarFree"}, {
-  label: "Без лактозы",
-  value: "lactoseFree"
-}];
+const calories = [
+  { label: "Ничего из нижеперечисленного", value: null },
+  { label: "300", value: '300' },
+  { label: '500', value: '500' },
+  { label: "700", value: '700' }
+];
+const meals = [
+  { label: "Ничего из нижеперечисленного", value: null },
+  { label: "Завтрак", value: "breakfast" },
+  { label: "Обед", value: "lunch" },
+  { label: "Ужин", value: "dinner" },
+  { label: "Перекус", value: "snack" }
+];
+const diets = [
+  { label: "Вегетарианство", value: "vegetarian" },
+  { label: "Веганская", value: "vegan" },
+  { label: "Низкоуглеводная", value: "lowCarb" },
+  { label: "Много клетчатки", value: "highFiber" },
+  { label: "Чистое питание", value: "cleanEating" },
+  { label: "Кетодиета", value: "keto" },
+  { label: "Мало жира", value: "lowFat" },
+  { label: "Низкокалорийная", value: "lowCalorie" },
+  { label: "Высокобелковая", value: "highProtein" },
+  { label: "Пескетарианство", value: "pescatarian" },
+  { label: "Без сахара", value: "sugarFree" },
+  { label: "Без лактозы", value: "lactoseFree" }
+];
 
 const selectedCalories = ref(null);
 const selectedMeal = ref(null);
 const selectedDiets = ref([]);
-
 
 const showCalories = ref(false);
 const showMeals = ref(false);
@@ -95,15 +100,11 @@ const applyFilters = async () => {
   loading.value = true;
   try {
     const queryParams = [];
-
     if (selectedCalories.value) queryParams.push(`kkal=${selectedCalories.value}`);
     if (selectedMeal.value) queryParams.push(`meal_type=${selectedMeal.value}`);
-
-    // Проверяем, что selectedDiets является массивом, если нет - преобразуем его
     if (!Array.isArray(selectedDiets.value)) {
       selectedDiets.value = [selectedDiets.value];
     }
-
     if (selectedDiets.value.length > 0) {
       selectedDiets.value.forEach(diet => queryParams.push(`diet=${diet}`));
     }
@@ -118,11 +119,13 @@ const applyFilters = async () => {
     }
 
     applyFiltersCallback(responseData);
+
   } catch (error) {
     console.error('Error applying filters:', error);
   }
   loading.value = false;
 };
+
 
 const toggleCalories = () => {
   showCalories.value = !showCalories.value;
@@ -135,6 +138,7 @@ const toggleMeals = () => {
 const toggleDiets = () => {
   showDiets.value = !showDiets.value;
 };
+
 </script>
 
 <style scoped>

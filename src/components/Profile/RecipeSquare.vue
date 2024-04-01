@@ -1,16 +1,27 @@
 <template>
-  <div class="recipe-square">
-    <h3>{{ recipe.title }}</h3>
-    <p>{{ recipe.description }}</p>
-    <p>Калории: {{ recipe.calories }}</p>
+  <div class="recipe-square" @click="openPopup(recipe)">
+    <h3>{{ recipe.name }}</h3>
+    <p>Калории: {{ Math.round(recipe.kkal) }}</p>
   </div>
 </template>
 
 <script setup>
+import PopupRecipe from '@/components/PopupRecipePage/PopupRecipe.vue';
+import {ref} from 'vue';
 const props = defineProps({
   recipe: Object
 });
+
+const popupRecipeInfo = ref(null);
+const openPopup = (recipe) => {
+  popupRecipeInfo.value = recipe;
+};
+
+const closePopup = () => {
+  popupRecipeInfo.value = null;
+};
 </script>
+
 
 <style scoped>
 .recipe-square {

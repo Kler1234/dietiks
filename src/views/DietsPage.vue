@@ -182,13 +182,13 @@ const closePopupMenu = () => {
 }
 
 .footer {
-  position: fixed;
+  position: relative;
   left: 0;
   bottom: 0;
-  /* Добавим цвет и ширину блока для наглядности*/
   background-color: #54B947;
   width: 100%;
   height: 50px;
+  margin-top: 150px;
 }
 
 @media (max-height: 500px) {
