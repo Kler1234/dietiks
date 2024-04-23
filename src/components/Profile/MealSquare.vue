@@ -4,7 +4,7 @@
     <div class="recipes" ref="recipeContainer">
       <div v-for="recipe in filteredRecipes" :key="recipe.entry_id" class="recipe">
         <p>{{ recipe.name }}</p>
-        <button>
+        <button @click="deleteRecipe(recipe.entry_id)">
           <img class="delete-img" src="@/assets/delete-button-svgrepo-com.svg" alt="delete">
         </button>
       </div>
@@ -22,6 +22,7 @@ const props = defineProps({
   mealName: String,
   mealUser: String,
   recipes: Array,
+  updateRecipes: Function,
 });
 
 const recipeContainer = ref(null);
@@ -30,7 +31,24 @@ const filteredRecipes = computed(() => {
   return props.recipes.filter(recipe => recipe.meal_type === props.mealName);
 });
 
-
+const deleteRecipe = async (entryID) => {
+  try {
+    const token = sessionStorage.getItem('token');
+    const response = await fetch('http://192.168.1.2:3000/diary/delete', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ token, entryID })
+    });
+    if (!response.ok) {
+      throw new Error('Не удалось удалить рецепт');
+    }
+    props.updateRecipes();
+  } catch (error) {
+    console.error('Ошибка:', error.message);
+  }
+};
 
 </script>
 

@@ -17,6 +17,13 @@ const breakfastRecipes = ref([]);
 const lunchRecipes = ref([]);
 const dinnerRecipes = ref([]);
 const snackRecipes = ref([]);
+const updateRecipes = async () => {
+  breakfastRecipes.value = [];
+  lunchRecipes.value = [];
+  dinnerRecipes.value = [];
+  snackRecipes.value = [];
+  await fetchUserRecipes();
+};
 
 const openRecipePopup = (recipe) => {
   selectedRecipe.value = recipe;
@@ -106,7 +113,6 @@ const fetchUserRecipes = async () => {
 
     const data = await response.json();
 
-    // Разделить рецепты на соответствующие контейнеры
     data.forEach(recipe => {
       if (recipe.meal_type === 'breakfast') {
         breakfastRecipes.value.push(recipe);
@@ -129,7 +135,6 @@ onMounted(fetchFavoriteRecipes);
 onMounted(fetchUserRecipes);
 
 const value = computed(() => {
-  // Вычислить общее количество калорий, потребляемых из рецептов
   let totalCalories = 0;
   [breakfastRecipes, lunchRecipes, dinnerRecipes, snackRecipes].forEach(recipeList => {
     recipeList.value.forEach(recipe => {
@@ -140,12 +145,10 @@ const value = computed(() => {
 });
 
 const remaining = computed(() => {
-  // Вычислить оставшиеся калории
   return userData.calorie_result - value.value;
 });
 
 const proteinValue = computed(() => {
-  // Вычислить общее количество белков, потребляемых из рецептов
   let totalProtein = 0;
   [breakfastRecipes, lunchRecipes, dinnerRecipes, snackRecipes].forEach(recipeList => {
     recipeList.value.forEach(recipe => {
@@ -156,7 +159,6 @@ const proteinValue = computed(() => {
 });
 
 const fatValue = computed(() => {
-  // Вычислить общее количество жиров, потребляемых из рецептов
   let totalFat = 0;
   [breakfastRecipes, lunchRecipes, dinnerRecipes, snackRecipes].forEach(recipeList => {
     recipeList.value.forEach(recipe => {
@@ -167,7 +169,6 @@ const fatValue = computed(() => {
 });
 
 const carbsValue = computed(() => {
-  // Вычислить общее количество углеводов, потребляемых из рецептов
   let totalCarbs = 0;
   [breakfastRecipes, lunchRecipes, dinnerRecipes, snackRecipes].forEach(recipeList => {
     recipeList.value.forEach(recipe => {
@@ -226,10 +227,10 @@ const recipes = ref([]);
         <div class="favorite"></div>
         </div>
       <div class="meal-squares">
-        <MealSquare mealName="breakfast" mealUser="Завтрак" :recipes="breakfastRecipes" />
-        <MealSquare mealName="lunch" mealUser="Обед" :recipes="lunchRecipes" />
-        <MealSquare mealName="dinner" mealUser="Ужин" :recipes="dinnerRecipes" />
-        <MealSquare mealName="snack" mealUser="Перекус" :recipes="snackRecipes" />
+        <MealSquare mealName="breakfast" mealUser="Завтрак" :recipes="breakfastRecipes" :updateRecipes="updateRecipes" />
+        <MealSquare mealName="lunch" mealUser="Обед" :recipes="lunchRecipes" :updateRecipes="updateRecipes" />
+        <MealSquare mealName="dinner" mealUser="Ужин" :recipes="dinnerRecipes" :updateRecipes="updateRecipes" />
+        <MealSquare mealName="snack" mealUser="Перекус" :recipes="snackRecipes" :updateRecipes="updateRecipes" />
       </div>
       <div class="favorites">
         <h2>Избранное</h2>
