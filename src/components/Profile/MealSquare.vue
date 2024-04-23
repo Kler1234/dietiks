@@ -30,6 +30,8 @@ const filteredRecipes = computed(() => {
   return props.recipes.filter(recipe => recipe.meal_type === props.mealName);
 });
 
+
+
 </script>
 
 <style scoped>

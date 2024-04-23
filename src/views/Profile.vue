@@ -128,13 +128,56 @@ onMounted(fetchUserData);
 onMounted(fetchFavoriteRecipes);
 onMounted(fetchUserRecipes);
 
-const value = 100;
-const total = 200;
-const remaining = total - value;
-const protein = { value: 50, total: 100 };
-const fat = { value: 30, total: 60 };
-const carbs = { value: 20, total: 40 };
+const value = computed(() => {
+  // Вычислить общее количество калорий, потребляемых из рецептов
+  let totalCalories = 0;
+  [breakfastRecipes, lunchRecipes, dinnerRecipes, snackRecipes].forEach(recipeList => {
+    recipeList.value.forEach(recipe => {
+      totalCalories += recipe.kkal;
+    });
+  });
+  return totalCalories;
+});
+
+const remaining = computed(() => {
+  // Вычислить оставшиеся калории
+  return userData.calorie_result - value.value;
+});
+
+const proteinValue = computed(() => {
+  // Вычислить общее количество белков, потребляемых из рецептов
+  let totalProtein = 0;
+  [breakfastRecipes, lunchRecipes, dinnerRecipes, snackRecipes].forEach(recipeList => {
+    recipeList.value.forEach(recipe => {
+      totalProtein += recipe.protein;
+    });
+  });
+  return totalProtein;
+});
+
+const fatValue = computed(() => {
+  // Вычислить общее количество жиров, потребляемых из рецептов
+  let totalFat = 0;
+  [breakfastRecipes, lunchRecipes, dinnerRecipes, snackRecipes].forEach(recipeList => {
+    recipeList.value.forEach(recipe => {
+      totalFat += recipe.fats;
+    });
+  });
+  return totalFat;
+});
+
+const carbsValue = computed(() => {
+  // Вычислить общее количество углеводов, потребляемых из рецептов
+  let totalCarbs = 0;
+  [breakfastRecipes, lunchRecipes, dinnerRecipes, snackRecipes].forEach(recipeList => {
+    recipeList.value.forEach(recipe => {
+      totalCarbs += recipe.carbohydrates;
+    });
+  });
+  return totalCarbs;
+});
 const recipes = ref([]);
+
 
 </script>
 
@@ -168,15 +211,15 @@ const recipes = ref([]);
           <div class="nutr flex">
             <div class="belki">
               <h1 class="text-2xl">Белки</h1>
-              <h2>{{protein.value}}/{{ userData.protein }}</h2>
+              <h2>{{proteinValue}}/{{ userData.protein }}</h2>
             </div>
             <div class="fats">
               <h1 class="text-2xl">Жиры</h1>
-              <h2>{{fat.value}}/{{ userData.fats }}</h2>
+              <h2>{{fatValue}}/{{ userData.fats }}</h2>
             </div>
             <div class="uglevodi">
               <h1 class="text-2xl">Углеводы</h1>
-              <h2>{{carbs.value}}/{{ userData.carbohydrate }}</h2>
+              <h2>{{carbsValue}}/{{ userData.carbohydrate }}</h2>
             </div>
           </div>
         <div class="food"></div>
