@@ -12,6 +12,11 @@ const store = useStore();
 const router = useRouter();
 const loggedIn = computed(() => store.getters.isLoggedIn);
 const selectedRecipe = ref(null);
+const currentDate = computed(() => new Date().toLocaleDateString());
+const breakfastRecipes = ref([]);
+const lunchRecipes = ref([]);
+const dinnerRecipes = ref([]);
+const snackRecipes = ref([]);
 
 const openRecipePopup = (recipe) => {
   selectedRecipe.value = recipe;
@@ -85,8 +90,43 @@ const fetchFavoriteRecipes = async () => {
   }
 };
 
+const fetchUserRecipes = async () => {
+  try {
+    const response = await fetch('http://192.168.1.2:3000/user/recipes', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch user recipes');
+    }
+
+    const data = await response.json();
+
+    // Разделить рецепты на соответствующие контейнеры
+    data.forEach(recipe => {
+      if (recipe.meal_type === 'breakfast') {
+        breakfastRecipes.value.push(recipe);
+      } else if (recipe.meal_type === 'lunch') {
+        lunchRecipes.value.push(recipe);
+      } else if (recipe.meal_type === 'dinner') {
+        dinnerRecipes.value.push(recipe);
+      } else if (recipe.meal_type === 'snack') {
+        snackRecipes.value.push(recipe);
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching user recipes', error);
+  }
+};
+
+
 onMounted(fetchUserData);
 onMounted(fetchFavoriteRecipes);
+onMounted(fetchUserRecipes);
 
 const value = 100;
 const total = 200;
@@ -95,8 +135,6 @@ const protein = { value: 50, total: 100 };
 const fat = { value: 30, total: 60 };
 const carbs = { value: 20, total: 40 };
 const recipes = ref([]);
-
-
 
 </script>
 
@@ -107,12 +145,20 @@ const recipes = ref([]);
     <div class="main">
       <h1 class="profile text-center pb-10 text-3xl">Здравствуйте, {{userData.username}}</h1>
       <h1 class="profile-phone text-center pb-10 text-3xl"><strong>{{userData.username}}</strong></h1>
+      <div class="date">
+        <button>
+          <img class="arrow-left" src="@/assets/arrow-left-5-svgrepo-com.svg" alt="left-arrow">
+        </button>
+        <div class="currentDate pb-5 text-2xl"> {{currentDate}}</div>
+        <button>
+          <img class="arrow-right" src="@/assets/right-arrow-svgrepo-com.svg" alt="right-arrow">
+        </button>
+      </div>
       <div class="progressBar flex gap-5">
           <div class="score flex ">
             <div class="eatede">
               <h1 class="text-2xl">Съедено</h1>
               <h2>{{ value }} / {{userData.calorie_result}}</h2>
-
             </div>
             <div class="needToEat">
               <h1 class="text-2xl"> Осталось </h1>
@@ -137,14 +183,17 @@ const recipes = ref([]);
         <div class="favorite"></div>
         </div>
       <div class="meal-squares">
-        <MealSquare mealName="Завтрак" />
-        <MealSquare mealName="Завтрак" />
-        <MealSquare mealName="Завтрак" />
-        <MealSquare mealName="Завтрак" />
+        <MealSquare mealName="breakfast" mealUser="Завтрак" :recipes="breakfastRecipes" />
+        <MealSquare mealName="lunch" mealUser="Обед" :recipes="lunchRecipes" />
+        <MealSquare mealName="dinner" mealUser="Ужин" :recipes="dinnerRecipes" />
+        <MealSquare mealName="snack" mealUser="Перекус" :recipes="snackRecipes" />
       </div>
       <div class="favorites">
         <h2>Избранное</h2>
-        <div class="recipes-container">
+        <div v-if="recipes.length === 0" class="no-recipes">
+          <p>Вы еще не добавили рецепты в избранное.</p>
+        </div>
+        <div v-else class="recipes-container">
           <div class="recipes">
             <RecipeSquare class="cursor-pointer" :recipe="recipe" v-for="recipe in recipes" :key="recipe.id" @click="openRecipePopup(recipe)"/>
           </div>
@@ -173,8 +222,16 @@ const recipes = ref([]);
   width: 80%;
 }
 
+.date {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  margin: 0 auto;
+  width: 40%;
+}
 
 .progressBar{
+  position: relative;
   flex-flow: column;
   padding-top: 5px;
   border-radius: 15px;
@@ -182,6 +239,21 @@ const recipes = ref([]);
   width: 50%;
   margin: 0 auto;
   min-width: 300px
+}
+
+.arrow-left{
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: 0;
+  left: -35px;
+}
+.arrow-right{
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: 0;
+  right: -35px;
 }
 .score{
   justify-content: space-around;
@@ -223,7 +295,7 @@ const recipes = ref([]);
   align-content: center;
   margin: 0 auto;
   justify-content: center;
-  min-width: 350px
+  min-width: 300px
 }
 .recipes {
   display: inline-flex;
@@ -237,7 +309,7 @@ const recipes = ref([]);
 }
 
 .footer {
-  margin-top: 50px;
+  margin-top: 250px;
   display: flex;
   left: 0;
   bottom: 0;
@@ -285,4 +357,6 @@ const recipes = ref([]);
     flex-direction: column; /* Направление столбцом */
   }
 }
+
+
 </style>

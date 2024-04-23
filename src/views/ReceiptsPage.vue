@@ -66,8 +66,6 @@ const closeRecipePopup = () => {
 
 .noRecipes {
   align-content: center;
-  justify-content: center;
-  text-align: center;
 }
 
 @media (max-width: 952px) {
