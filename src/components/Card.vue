@@ -3,7 +3,7 @@
     <div class="recipe-info">
       <img :src="recipe.image_url" :alt="recipe.name">
       <h1 class="food-name">{{ recipe.name }}</h1>
-      <p>Kkal: {{ recipe.kkal }}</p>
+      <p>Ккал: {{ recipe.kkal }}</p>
     </div>
     <div class="btn-group">
       <button @click.stop="toggleMenu">

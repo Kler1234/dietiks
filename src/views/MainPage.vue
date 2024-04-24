@@ -80,7 +80,10 @@ const loggedIn = computed(() => store.getters.isLoggedIn);
   font-family: "Merriweather";
   src: url("@/fonts/Merriweather/Merriweather-Regular.ttf");
 }
-
+@font-face {
+  font-family: "LTSuperior";
+  src: url("@/fonts/LTSuperior-Regular.otf")
+}
 
 
 a {

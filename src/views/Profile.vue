@@ -190,13 +190,13 @@ const recipes = ref([]);
       <h1 class="profile text-center pb-10 text-3xl">Здравствуйте, {{userData.username}}</h1>
       <h1 class="profile-phone text-center pb-10 text-3xl"><strong>{{userData.username}}</strong></h1>
       <div class="date">
-        <button>
-          <img class="arrow-left" src="@/assets/arrow-left-5-svgrepo-com.svg" alt="left-arrow">
-        </button>
+<!--        <button>-->
+<!--          <img class="arrow-left" src="@/assets/arrow-left-5-svgrepo-com.svg" alt="left-arrow">-->
+<!--        </button>-->
         <div class="currentDate pb-5 text-2xl"> {{currentDate}}</div>
-        <button>
-          <img class="arrow-right" src="@/assets/right-arrow-svgrepo-com.svg" alt="right-arrow">
-        </button>
+<!--        <button>-->
+<!--          <img class="arrow-right" src="@/assets/right-arrow-svgrepo-com.svg" alt="right-arrow">-->
+<!--        </button>-->
       </div>
       <div class="progressBar flex gap-5">
           <div class="score flex ">

@@ -18,6 +18,7 @@
               <p>Углеводы: {{ props.recipeInfo.carbohydrates }} грамм</p>
               <p>Диета: {{ props.recipeInfo.diet }} грамм</p>
               <h2 class="text-xl pt-5 pb-2">Источник: {{ props.recipeInfo.source }}</h2>
+              <h3 class="text-id pt-5 pb-2">ID рецепта: {{props.recipeInfo.recipe_id}}</h3>
             </div>
           </div>
         </div>
@@ -129,5 +130,10 @@ p {
 
 .slide-fade-enter, .slide-fade-leave-to {
   transform: translateY(-50%) translateX(-50%) scale(0.5);
+}
+
+.text-id {
+  font-size: 10px;
+  text-align: center;
 }
 </style>

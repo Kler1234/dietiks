@@ -65,6 +65,7 @@ const toggleBurgerMenu = () => {
   src: url("@/fonts/Merriweather/Merriweather-Regular.ttf");
 }
 
+
 body {
   box-sizing: border-box;
   font-family: Merriweather, serif;
@@ -97,7 +98,7 @@ a:hover:after, a:focus:after {
   top: 0;
   left: 0;
   z-index: 50;
-  font-family: Merriweather, serif;
+  font-family: Merriweather;
   font-size: calc(14px + 0.5208333333vw);
 }
 

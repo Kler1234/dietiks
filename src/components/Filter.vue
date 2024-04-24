@@ -169,6 +169,7 @@ const toggleDiets = () => {
   color: black;
   padding-top: 7px;
   background-color: #54B947;
+
 }
 
 .filter-area {
