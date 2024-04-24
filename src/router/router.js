@@ -28,19 +28,32 @@ const router = createRouter({
         {path: '/profile', component: Profile, meta: { requiresAuth: true }},
         {path: '/settings', component: SettingPage, meta: {requiresAuth: true}},
         {path: '/calculate', component: CalculatePage, meta: {requiresAuth: true}},
-        {path: '/admin', component: AdminPanelPage},
+        {path: '/admin', component: AdminPanelPage, meta: {requiresAuth: true, requiresAdmin: true}},
     ]
 });
 
 router.afterEach((to, from) => {
     window.scrollTo(0, 0);
 });
-router.beforeEach(async(to, from, next) => {
+
+router.beforeEach(async (to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!store.state.loggedIn) {
             next('/login');
         } else {
-            next();
+            // Проверяем, является ли пользователь администратором
+            if (to.matched.some(record => record.meta.requiresAdmin)) {
+                // Проверяем, есть ли токен в хранилище
+                if (!store.state.token) {
+                    next('/login'); // Перенаправляем на страницу входа, если токен отсутствует
+                } else if (!store.state.isAdmin) {
+                    next('/'); // Перенаправляем на главную страницу, если пользователь не администратор
+                } else {
+                    next();
+                }
+            } else {
+                next();
+            }
         }
     } else {
         next();

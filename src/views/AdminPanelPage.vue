@@ -114,8 +114,25 @@ const submitRecipe = () => {
   console.log('Отправляем рецепт:', recipe.value)
 }
 
-const deleteRecipe = () => {
-  console.log('Удаляем рецепт с ID:', recipeIdToDelete.value)
+const deleteRecipe = async () => {
+  try {
+    const recipeID = recipeIdToDelete.value;
+    const response = await fetch('http://192.168.1.2:3000/admin/delete', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ recipeID })
+    });
+
+    if (!response.ok) {
+      throw new Error('Произошла ошибка при удалении рецепта.');
+    }
+
+    alert('Рецепт успешно удален');
+  } catch (error) {
+    console.error('Ошибка:', error.message);
+  }
 }
 </script>
 

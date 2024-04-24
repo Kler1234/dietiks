@@ -4,6 +4,7 @@ export default createStore({
     state: {
         loggedIn: false,
         token: null,
+        isAdmin: false,
     },
     mutations: {
         setLoggedIn(state, value) {
@@ -15,10 +16,15 @@ export default createStore({
         },
         logout(state) {
             sessionStorage.removeItem('token'); // Удаляем токен из sessionStorage при выходе
+            sessionStorage.removeItem('isAdmin');
             state.loggedIn = false;
             state.token = null;
+            state.isAdmin = false;
         },
-
+        setAdminStatus(state, isAdmin) {
+            state.isAdmin = isAdmin;
+            sessionStorage.setItem('isAdmin', isAdmin); // Сохраняем статус администратора в sessionStorage
+        },
     },
     actions: {
         async login({ commit }, { email, password }) {
@@ -35,10 +41,11 @@ export default createStore({
                 }
 
                 const data = await response.json();
-                const token = data.token;
+                const { token, isAdmin } = data;
 
-                commit('setToken', token); // Устанавливаем токен в состояние приложения
-                commit('setLoggedIn', true); // Устанавливаем флаг входа в состояние приложения
+                commit('setToken', token);
+                commit('setLoggedIn', true);
+                commit('setAdminStatus', isAdmin);
 
                 return true;
             } catch (err) {
@@ -48,9 +55,11 @@ export default createStore({
         },
         autoLogin({ commit }) {
             const token = sessionStorage.getItem('token'); // Получаем токен из sessionStorage
+            const isAdmin = sessionStorage.getItem('isAdmin'); // Получаем статус администратора из sessionStorage
             if (token) {
-                commit('setToken', token); // Устанавливаем токен в состояние приложения
-                commit('setLoggedIn', true); // Устанавливаем флаг входа в состояние приложения
+                commit('setToken', token);
+                commit('setLoggedIn', true);
+                commit('setAdminStatus', isAdmin === 'true'); // Преобразуем строку в булево значение
                 return true;
             } else {
                 return false;
@@ -58,11 +67,11 @@ export default createStore({
         },
         logout({ commit }) {
             sessionStorage.removeItem('token'); // Удаляем токен из sessionStorage при выходе
+            sessionStorage.removeItem('isAdmin'); // Удаляем статус администратора из sessionStorage при выходе
             commit('logout');
         },
     },
     getters: {
         isLoggedIn: state => state.loggedIn,
     },
-
 });
