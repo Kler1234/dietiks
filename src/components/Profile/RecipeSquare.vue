@@ -1,5 +1,6 @@
 <template>
   <div class="recipe-square" @click="openPopup(recipe)">
+    <img class="recipe-image" :src="'http://192.168.1.2:3000/' + recipe.image_url" :alt="recipe.name">
     <h3>{{ recipe.name }}</h3>
     <p>Калории: {{ Math.round(recipe.kkal) }}</p>
   </div>
@@ -28,7 +29,6 @@ const closePopup = () => {
   width: 300px;
   height: 300px;
   box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
-
   border-radius: 5px;
   padding: 10px;
   margin: 5px;
@@ -43,5 +43,12 @@ const closePopup = () => {
 .recipe-square p {
   font-size: 14px;
   margin-bottom: 3px;
+}
+
+.recipe-image{
+  max-width: 200px;
+  max-height: 170px;
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
 </style>

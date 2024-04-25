@@ -4,7 +4,7 @@
     <h1 class="title-admin text-center text-3xl">Админ панель</h1>
     <div class="form-container">
       <div class="form-wrapper">
-        <form class="form" @submit.prevent="submitRecipe" enctype="multipart/form-data">
+        <form class="form" @submit.prevent="submitRecipe">
           <h1 class="text-2xl text-center pb-5">Добавление рецепта</h1>
           <label class="form-label">
             Изображение:
@@ -77,7 +77,7 @@
         <form class="delete-form" @submit.prevent="deleteRecipe">
           <h1 class="text-2xl text-center pb-5">Удалить рецепт по ID:</h1>
           <div class="explanation">
-            <span class="explanation-sign" text='Чтобы узнать ID рецепта зайдите на страницу "Рецепты", нажмите на интересующий рецепт и в появившемся окне, снизу, будет ID рецепта'>?</span>
+            <span class="explanation-sign" text='Чтобы узнать ID рецепта зайдите на страницу "Рецепты", нажмите на интересующий рецепт и в появившемся окне, снизу, будет ID рецепта.'>?</span>
           </div>
           <label class="form-label">
             Напишите ID рецепта
@@ -95,7 +95,7 @@ import Header from '@/components/Header.vue'
 import { ref } from 'vue'
 
 const recipe = ref({
-  image: '',
+  image: null,
   title: '',
   ingredients: '',
   instructions: '',
@@ -110,30 +110,35 @@ const recipe = ref({
 
 const recipeIdToDelete = ref(null)
 
-const onImageChange = (event) => {
-  const file = event.target.files[0];
-  recipe.value.image = file;
+const onImageChange = (e) => {
+  const file = e.target.files[0];
+  console.log('Выбранный файл:', file);
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    recipe.value.image = file;
+  };
+  reader.readAsDataURL(file);
 }
+
 const submitRecipe = async () => {
   try {
+    console.log(recipe.value.image);
+    const formData = new FormData();
+    formData.append('recipeImage', recipe.value.image);
+    formData.append('recipeName', recipe.value.title);
+    formData.append('recipeIngredients', recipe.value.ingredients);
+    formData.append('recipeSteps', recipe.value.instructions);
+    formData.append('recipeDiet', recipe.value.diet);
+    formData.append('recipeMealType', recipe.value.meal_type);
+    formData.append('recipeKkal', recipe.value.calories);
+    formData.append('recipeProtein', recipe.value.proteins);
+    formData.append('recipeFats', recipe.value.fats);
+    formData.append('recipeCarbs', recipe.value.carbs);
+    formData.append('recipeSource', recipe.value.source);
+
     const response = await fetch('http://192.168.1.2:3000/admin/addRecipe', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        recipeImage: recipe.value.image,
-        recipeName: recipe.value.title,
-        recipeIngredients: recipe.value.ingredients,
-        recipeSteps: recipe.value.instructions,
-        recipeDiet: recipe.value.diet,
-        recipeMealType: recipe.value.meal_type,
-        recipeKkal: recipe.value.calories,
-        recipeProtein: recipe.value.proteins,
-        recipeFats: recipe.value.fats,
-        recipeCarbs: recipe.value.carbs,
-        recipeSource: recipe.value.source
-      })
+      body: formData
     });
 
     if (!response.ok) {
@@ -169,17 +174,18 @@ const deleteRecipe = async () => {
 }
 
 const clearForm = () => {
-  recipe.value.image = '';
-  recipe.value.title = '';
-  recipe.value.ingredients = '';
-  recipe.value.instructions = '';
-  recipe.value.diet = '';
-  recipe.value.meal_type = '';
-  recipe.value.calories = null;
-  recipe.value.proteins = null;
-  recipe.value.fats = null;
-  recipe.value.carbs = null;
-  recipe.value.source = '';
+  // recipe.value.image = '';
+  // recipe.value.title = '';
+  // recipe.value.ingredients = '';
+  // recipe.value.instructions = '';
+  // recipe.value.diet = '';
+  // recipe.value.meal_type = '';
+  // recipe.value.calories = null;
+  // recipe.value.proteins = null;
+  // recipe.value.fats = null;
+  // recipe.value.carbs = null;
+  // recipe.value.source = '';
+  console.log(1);
 }
 </script>
 

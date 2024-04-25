@@ -1,7 +1,7 @@
 <script setup>
 import Header from '@/components/Header.vue'
 import Sidebar from "@/components/Profile/Sidebar.vue";
-import {computed, ref} from 'vue'
+import {computed, ref, watch} from 'vue'
 import store from "@/store/index.js";
 import router from "@/router/router.js";
 
@@ -15,6 +15,10 @@ const handleLogout = () => {
   store.dispatch('logout');
   router.push('/login');
 };
+
+const getTitle = {
+
+}
 async function changeUsername() {
   try{
     const token = sessionStorage.getItem('token');

@@ -4,6 +4,8 @@ import { useStore } from 'vuex';
 
 const store = useStore();
 const loggedIn = computed(() => store.getters.isLoggedIn);
+const isAdmin = computed(() => store.state.isAdmin);
+
 const toggleBurgerMenu = () => {
   document.querySelector('.header__burger').classList.toggle('active');
   document.querySelector('.header__menu').classList.toggle('active');
@@ -25,6 +27,11 @@ const toggleBurgerMenu = () => {
         </div>
         <nav class="header__menu" :class="{ active: burgerMenuOpen }">
           <ul class="header__list">
+            <li v-if="isAdmin">
+              <router-link v-if="isAdmin" class="sidebar-link admin-panel" to="/admin">
+                Админ панель
+              </router-link>
+            </li>
             <li>
               <router-link to="/receipts" class="header__link">
                 Рецепты

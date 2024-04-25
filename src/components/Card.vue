@@ -1,7 +1,7 @@
 <template>
   <div class="cards-card flex flex-col shadow-md">
     <div class="recipe-info">
-      <img :src="recipe.image_url" :alt="recipe.name">
+      <img class="recipe-image" :src="'http://192.168.1.2:3000/' + recipe.image_url" :alt="recipe.name">
       <h1 class="food-name">{{ recipe.name }}</h1>
       <p>Ккал: {{ recipe.kkal }}</p>
     </div>
@@ -216,5 +216,12 @@ button {
 
 .menu button:hover {
   background-color: #f0f0f0;
+}
+
+.recipe-image{
+  max-width: 200px;
+  max-height: 170px;
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
 </style>
