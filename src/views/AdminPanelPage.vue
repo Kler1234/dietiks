@@ -4,7 +4,7 @@
     <h1 class="title-admin text-center text-3xl">Админ панель</h1>
     <div class="form-container">
       <div class="form-wrapper">
-        <form class="form" @submit.prevent="submitRecipe">
+        <form class="form" @submit.prevent="submitRecipe" enctype="multipart/form-data">
           <h1 class="text-2xl text-center pb-5">Добавление рецепта</h1>
           <label class="form-label">
             Изображение:
@@ -26,18 +26,28 @@
             Диета:
             <select v-model="recipe.diet" required>
               <option disabled value="">Выберите диету</option>
-              <option value="Вегетарианская">Вегетарианская</option>
-              <option value="Веганская">Веганская</option>
-              <option value="Низкоуглеводная">Низкоуглеводная</option>
-              <option value="Много клетчатки">Много клетчатки</option>
-              <option value="Чистое питание">Чистое питание</option>
-              <option value="Кетодиета">Кетодиета</option>
-              <option value="Мало жира">Мало жира</option>
-              <option value="Низкокалорийная">Низкокалорийная</option>
-              <option value="Высокобелковая">Высокобелковая</option>
-              <option value="Пескетарианство">Пескетарианство</option>
-              <option value="Без сахара">Без сахара</option>
-              <option value="Без лактозы">Без лактозы</option>
+              <option value="vegetarian">Вегетарианская</option>
+              <option value="vegan">Веганская</option>
+              <option value="lowCarb">Низкоуглеводная</option>
+              <option value="highFiber">Много клетчатки</option>
+              <option value="cleanEating">Чистое питание</option>
+              <option value="keto">Кетодиета</option>
+              <option value="lowFat">Мало жира</option>
+              <option value="lowCalorie">Низкокалорийная</option>
+              <option value="highProtein">Высокобелковая</option>
+              <option value="pescatarian">Пескетарианство</option>
+              <option value="sugarFree">Без сахара</option>
+              <option value="lactoseFree">Без лактозы</option>
+            </select>
+          </label><br />
+          <label class="form-label">
+            Тип питания:
+            <select v-model="recipe.meal_type">
+              <option disabled value="">Выберите тип питания</option>
+              <option value="breakfast">Завтрак</option>
+              <option value="lunch">Обед</option>
+              <option value="dinner">Ужин</option>
+              <option value="snack">Перекус</option>
             </select>
           </label><br />
           <label class="form-label">
@@ -58,7 +68,7 @@
           </label><br />
           <label class="form-label">
             Источник:
-            <input type="text" v-model="recipe.source" required />
+            <input type="text" v-model="recipe.source"/>
           </label><br />
           <button type="submit" class="submit-btn">Добавить рецепт</button>
         </form>
@@ -90,6 +100,7 @@ const recipe = ref({
   ingredients: '',
   instructions: '',
   diet: '',
+  meal_type: '',
   calories: null,
   proteins: null,
   fats: null,
@@ -100,18 +111,40 @@ const recipe = ref({
 const recipeIdToDelete = ref(null)
 
 const onImageChange = (event) => {
-  const file = event.target.files[0]
-  if (file) {
-    const reader = new FileReader()
-    reader.onload = () => {
-      recipe.value.image = reader.result
-    }
-    reader.readAsDataURL(file)
-  }
+  const file = event.target.files[0];
+  recipe.value.image = file;
 }
+const submitRecipe = async () => {
+  try {
+    const response = await fetch('http://192.168.1.2:3000/admin/addRecipe', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        recipeImage: recipe.value.image,
+        recipeName: recipe.value.title,
+        recipeIngredients: recipe.value.ingredients,
+        recipeSteps: recipe.value.instructions,
+        recipeDiet: recipe.value.diet,
+        recipeMealType: recipe.value.meal_type,
+        recipeKkal: recipe.value.calories,
+        recipeProtein: recipe.value.proteins,
+        recipeFats: recipe.value.fats,
+        recipeCarbs: recipe.value.carbs,
+        recipeSource: recipe.value.source
+      })
+    });
 
-const submitRecipe = () => {
-  console.log('Отправляем рецепт:', recipe.value)
+    if (!response.ok) {
+      throw new Error('Произошла ошибка при добавлении рецепта.');
+    }
+
+    alert('Рецепт успешно добавлен');
+    clearForm();
+  } catch (error) {
+    alert('Ошибка:', error.message);
+  }
 }
 
 const deleteRecipe = async () => {
@@ -131,8 +164,22 @@ const deleteRecipe = async () => {
 
     alert('Рецепт успешно удален');
   } catch (error) {
-    console.error('Ошибка:', error.message);
+    alert('Ошибка:', error.message);
   }
+}
+
+const clearForm = () => {
+  recipe.value.image = '';
+  recipe.value.title = '';
+  recipe.value.ingredients = '';
+  recipe.value.instructions = '';
+  recipe.value.diet = '';
+  recipe.value.meal_type = '';
+  recipe.value.calories = null;
+  recipe.value.proteins = null;
+  recipe.value.fats = null;
+  recipe.value.carbs = null;
+  recipe.value.source = '';
 }
 </script>
 

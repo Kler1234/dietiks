@@ -6,7 +6,7 @@
           <div class="popup-content">
             <div class="recipe-info">
               <div class="closeModal" @click="closePopup"></div>
-              <h1 class="recipe-name">{{ props.recipeInfo.name }} грамм</h1>
+              <h1 class="recipe-name">{{ props.recipeInfo.name }}</h1>
               <h2 class="text-xl pt-5 pb-2">Ингридиенты:</h2>
               <p>{{props.recipeInfo.ingridients}} грамм</p>
               <h2 class="text-xl pt-5 pb-2">Способ приготовления:</h2>
@@ -16,7 +16,7 @@
               <p>Белки: {{ props.recipeInfo.protein }} грамм</p>
               <p>Жиры: {{ props.recipeInfo.fats }} грамм</p>
               <p>Углеводы: {{ props.recipeInfo.carbohydrates }} грамм</p>
-              <p>Диета: {{ props.recipeInfo.diet }} грамм</p>
+              <p>Диета: {{ props.recipeInfo.diet }}</p>
               <h2 class="text-xl pt-5 pb-2">Источник: {{ props.recipeInfo.source }}</h2>
               <h3 class="text-id pt-5 pb-2">ID рецепта: {{props.recipeInfo.recipe_id}}</h3>
             </div>

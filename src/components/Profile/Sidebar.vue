@@ -5,15 +5,17 @@
     </div>
     <router-link to="/profile" class="sidebar-link profile">Профиль</router-link>
     <router-link to="/settings" class="sidebar-link settings">Настройки</router-link>
+    <router-link v-if="isAdmin" class="sidebar-link admin-panel" to="/admin">Админ панель</router-link>
     <button @click="handleLogout" class="logout-btn">Выйти из аккаунта</button>
   </div>
 </template>
 
 <script setup>
-import { defineEmits } from 'vue';
-
+import {useStore} from "vuex";
+import { defineEmits, computed } from 'vue';
+const store = useStore();
 const emitLogout = defineEmits(['logout']);
-
+const isAdmin = computed(() => store.state.isAdmin);
 const handleLogout = () => {
   emitLogout('logout');
 };
