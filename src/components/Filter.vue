@@ -54,7 +54,7 @@
 <script setup>
 import Button from "primevue/button";
 import RadioButton from "primevue/radiobutton";
-import {ref, defineProps} from 'vue';
+import {ref, defineProps, onMounted} from 'vue';
 import { watch } from 'vue';
 
 const { applyFiltersCallback, currentPage } = defineProps(['applyFiltersCallback', 'currentPage']);
@@ -62,9 +62,15 @@ const { applyFiltersCallback, currentPage } = defineProps(['applyFiltersCallback
 const loading = ref(false);
 const calories = [
   { label: "Ничего из нижеперечисленного", value: null },
-  { label: "300", value: '300' },
-  { label: '500', value: '500' },
-  { label: "700", value: '700' }
+  { label: "От 0 до 100", value: { min: 0, max: 100 } },
+  { label: "От 100 до 200", value: { min: 100, max: 200 } },
+  { label: "От 200 до 300", value: { min: 200, max: 300 } },
+  { label: "От 300 до 400", value: { min: 300, max: 400 } },
+  { label: "От 400 до 500", value: { min: 400, max: 500 } },
+  { label: "От 500 до 600", value: { min: 500, max: 600 } },
+  { label: "От 600 до 700", value: { min: 600, max: 700 } },
+  { label: "От 700 и более", value: { min: 700, max: 15000 } },
+
 ];
 const meals = [
   { label: "Ничего из нижеперечисленного", value: null },
@@ -100,7 +106,10 @@ const applyFilters = async () => {
   loading.value = true;
   try {
     const queryParams = [];
-    if (selectedCalories.value) queryParams.push(`kkal=${selectedCalories.value}`);
+    if (selectedCalories.value) {
+      const { min, max } = selectedCalories.value;
+      queryParams.push(`kkal_min=${min}&kkal_max=${max}`);
+    }
     if (selectedMeal.value) queryParams.push(`meal_type=${selectedMeal.value}`);
     if (!Array.isArray(selectedDiets.value)) {
       selectedDiets.value = [selectedDiets.value];
@@ -138,6 +147,10 @@ const toggleMeals = () => {
 const toggleDiets = () => {
   showDiets.value = !showDiets.value;
 };
+
+onMounted(() => {
+  applyFilters();
+});
 
 </script>
 

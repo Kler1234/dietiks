@@ -16,7 +16,7 @@
               <p>Белки: {{ props.recipeInfo.protein }} грамм</p>
               <p>Жиры: {{ props.recipeInfo.fats }} грамм</p>
               <p>Углеводы: {{ props.recipeInfo.carbohydrates }} грамм</p>
-              <p>Диета: {{ props.recipeInfo.diet }}</p>
+              <p>Диета: {{ diet.find(item => item.value === props.recipeInfo.diet).label }}</p>
               <h2 class="text-xl pt-5 pb-2">Источник: {{ props.recipeInfo.source }}</h2>
               <h3 class="text-id pt-5 pb-2">ID рецепта: {{props.recipeInfo.recipe_id}}</h3>
             </div>
@@ -36,6 +36,21 @@ const emit = defineEmits(['closePopup']);
 const closePopup = () => {
   emit('closePopup');
 };
+
+const diet = [
+  { label: "Вегетарианство", value: "vegetarian" },
+  { label: "Веганская", value: "vegan" },
+  { label: "Низкоуглеводная", value: "lowCarb" },
+  { label: "Много клетчатки", value: "highFiber" },
+  { label: "Чистое питание", value: "cleanEating" },
+  { label: "Кетодиета", value: "keto" },
+  { label: "Мало жира", value: "lowFat" },
+  { label: "Низкокалорийная", value: "lowCalorie" },
+  { label: "Высокобелковая", value: "highProtein" },
+  { label: "Пескетарианство", value: "pescatarian" },
+  { label: "Без сахара", value: "sugarFree" },
+  { label: "Без лактозы", value: "lactoseFree" }
+];
 
 
 </script>

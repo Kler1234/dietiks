@@ -174,17 +174,17 @@ const deleteRecipe = async () => {
 }
 
 const clearForm = () => {
-  // recipe.value.image = '';
-  // recipe.value.title = '';
-  // recipe.value.ingredients = '';
-  // recipe.value.instructions = '';
-  // recipe.value.diet = '';
-  // recipe.value.meal_type = '';
-  // recipe.value.calories = null;
-  // recipe.value.proteins = null;
-  // recipe.value.fats = null;
-  // recipe.value.carbs = null;
-  // recipe.value.source = '';
+  recipe.value.image = null;
+  recipe.value.title = '';
+  recipe.value.ingredients = '';
+  recipe.value.instructions = '';
+  recipe.value.diet = '';
+  recipe.value.meal_type = '';
+  recipe.value.calories = null;
+  recipe.value.proteins = null;
+  recipe.value.fats = null;
+  recipe.value.carbs = null;
+  recipe.value.source = '';
   console.log(1);
 }
 </script>
