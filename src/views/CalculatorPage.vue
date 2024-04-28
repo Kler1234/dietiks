@@ -38,18 +38,18 @@ export default {
         <div class="title__text">Калькуляторы</div>
         <div class="section">
           <!-- Используем @click, чтобы обработать событие нажатия на элементы -->
-          <a href="#" class="section__item" @click="openPopupMenu('БЖУ')">
+          <router-link to="/calculate" class="section__item">
             <img class="section__img" src="@/assets/noto-v1_fork-and-knife-with-plate.png" alt="Упс, изображения нет!">
             <p class="section__text">БЖУ</p>
-          </a>
-          <a href="#" class="section__item" @click="openPopupMenu('Индекс массы тела')">
+          </router-link>
+          <button href="#" class="section__item" @click="openPopupMenu('Индекс массы тела')">
             <img class="section__img" src="@/assets/noto_balance-scale.png" alt="Упс, изображения нет!">
             <p class="section__text">Индекс <br> массы тела</p>
-          </a>
-          <a href="#" class="section__item" @click="openPopupMenu('Калорийность')">
+          </button>
+          <button href="#" class="section__item" @click="openPopupMenu('Калорийность')">
             <img class="section__img" src="@/assets/twemoji_carrot.png" alt="Упс, изображения нет!">
             <p class="section__text">Калорийность</p>
-          </a>
+          </button>
         </div>
       </div>
     </div>

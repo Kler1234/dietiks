@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Header from '@/components/Header.vue'
 import { computed, ref } from 'vue'
+import { useStore } from 'vuex';
 
 type NutritionData = {
   gender: Gender,
@@ -151,6 +152,9 @@ function saveNutritionData() {
       console.error('Ошибка при сохранении результатов БЖУ:', error.message);
     });
 }
+
+const store = useStore()
+const loggedIn = computed(() => store.state.isAuth);
 </script>
 
 <template>
@@ -226,7 +230,7 @@ function saveNutritionData() {
         </div>
         <div class="flex justify-center gap-2">
           <router-link class="goToProfile" to="/profile">В профиль</router-link>
-          <button class="goToProfile" @click="saveNutritionData">Сохранить результат</button>
+          <button class="goToProfile" v-if='loggedIn' @click="saveNutritionData">Сохранить результат</button>
         </div>
       </div>
     </div>

@@ -71,8 +71,5 @@ export default createStore({
             sessionStorage.removeItem('isAdmin'); // Удаляем статус администратора из sessionStorage при выходе
             commit('logout');
         },
-    },
-    getters: {
-        isLoggedIn: state => state.isAuth,
-    },
+    }
 });

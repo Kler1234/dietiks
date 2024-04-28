@@ -11,7 +11,7 @@ const email = ref('');
 const password = ref('');
 const error = ref('');
 const userExists = ref(false);
-const loggedIn = computed(() => store.getters.isLoggedIn);
+const loggedIn = computed(() => store.state.isAuth);
 
 const handleLogin = async () => {
   try {

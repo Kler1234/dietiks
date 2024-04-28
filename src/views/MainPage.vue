@@ -4,7 +4,7 @@ import {ref, computed} from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
-const loggedIn = computed(() => store.getters.isLoggedIn);
+const loggedIn = computed(() => store.state.isAuth);
 
 </script>
 

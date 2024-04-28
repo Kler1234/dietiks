@@ -23,4 +23,3 @@ const token = sessionStorage.getItem('token');
 if (token) {
     store.dispatch('autoLogin', token)
 }
-

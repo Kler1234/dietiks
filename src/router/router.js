@@ -27,7 +27,7 @@ const router = createRouter({
         {path: '/product/:productName', component: CalculatorCalories},
         {path: '/profile', component: Profile, meta: { requiresAuth: true }},
         {path: '/settings', component: SettingPage, meta: {requiresAuth: true}},
-        {path: '/calculate', component: CalculatePage, meta: {requiresAuth: true}},
+        {path: '/calculate', component: CalculatePage},
         {path: '/admin', component: AdminPanelPage, meta: {requiresAuth: true, requiresAdmin: true}},
     ]
 });

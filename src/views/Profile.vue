@@ -10,7 +10,6 @@ import { useStore } from 'vuex';
 
 const store = useStore();
 const router = useRouter();
-const loggedIn = computed(() => store.getters.isLoggedIn);
 const selectedRecipe = ref(null);
 const currentDate = computed(() => new Date().toLocaleDateString());
 const breakfastRecipes = ref([]);
