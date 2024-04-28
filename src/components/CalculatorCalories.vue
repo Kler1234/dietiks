@@ -1,9 +1,9 @@
 <template>
   <div class="calorie-calculator">
-    <h2><strong>Расчет калорийности продукта</strong></h2>
+    <h2 class="text-2xl"><strong>Расчет калорийности продукта</strong></h2>
     <form @submit.prevent="fetchCalories" class="find" v-if="searchingProduct">
       <div class="product-name">
-        <label for="productName">Название продукта (пр: Яблоко):</label>
+        <label for="productName" class="text-xl">Название продукта (пр: Яблоко):</label>
         <input type="text" id="productName" v-model.trim="productName" @input="autocomplete" required>
         <ul class="autocomplete-results" v-show="showAutocomplete && autocompleteResults.length > 0">
           <li v-for="(result, index) in autocompleteResults" :key="index" @click="selectAutocompleteResult(result)">
@@ -52,91 +52,89 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      productName: '',
-      product: null,
-      productNotFound: false,
-      autocompleteResults: [],
-      showAutocomplete: false,
-      newProductName: '',
-      newProductCalories: 0,
-      newProductProtein: 0,
-      newProductFats: 0,
-      newProductCarbohydrates: 0,
-      searchingProduct: true,
-    };
-  },
-  methods: {
-    async fetchAutocompleteResults(searchTerm) {
-      try {
-        const response = await fetch(`http://192.168.1.2:3000/autocomplete/${encodeURIComponent(searchTerm)}`);
-        if (response.ok) {
-          this.autocompleteResults = await response.json();
-          this.showAutocomplete = true;
-        } else {
-          this.autocompleteResults = [];
-          this.showAutocomplete = false;
-        }
-      } catch (error) {
-        console.error('Error fetching autocomplete results:', error);
-      }
-    },
-    autocomplete() {
-      this.fetchAutocompleteResults(this.productName);
-    },
-    async selectAutocompleteResult(result) {
-      this.productName = result.name_product;
-      this.showAutocomplete = false;
-    },
-    async fetchCalories() {
-      try {
-        const response = await fetch(`http://192.168.1.2:3000/product/${encodeURIComponent(this.productName)}`);
-        if (response.ok) {
-          this.product = await response.json();
-          this.productNotFound = false;
-        } else {
-          this.product = null;
-          this.productNotFound = true;
-          this.searchingProduct = false;
+<script setup>
+import { ref, reactive } from 'vue';
 
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    },
-    async addProduct() {
-      try {
-        const response = await fetch('http://192.168.1.2:3000/product', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            name: this.newProductName,
-            kkal: this.newProductCalories,
-            protein: this.newProductProtein,
-            fats: this.newProductFats,
-            carbohydrates: this.newProductCarbohydrates
-          })
-        });
-        if (response.ok) {
-          this.newProductName = '';
-          this.newProductCalories = 0;
-          this.newProductProtein = 0;
-          this.newProductFats = 0;
-          this.newProductCarbohydrates = 0;
-          this.productNotFound = false;
-          this.searchingProduct = true;
-        } else {
-          console.error('Failed to add product');
-        }
-      } catch (error) {
-        console.error('Error adding product:', error);
-      }
+const productName = ref('');
+const product = ref(null);
+const productNotFound = ref(false);
+const autocompleteResults = ref([]);
+const showAutocomplete = ref(false);
+const newProductName = ref('');
+const newProductCalories = ref(0);
+const newProductProtein = ref(0);
+const newProductFats = ref(0);
+const newProductCarbohydrates = ref(0);
+const searchingProduct = ref(true);
+
+const fetchAutocompleteResults = async (searchTerm) => {
+  try {
+    const response = await fetch(`http://192.168.1.2:3000/autocomplete/${encodeURIComponent(searchTerm)}`);
+    if (response.ok) {
+      autocompleteResults.value = await response.json();
+      showAutocomplete.value = true;
+    } else {
+      autocompleteResults.value = [];
+      showAutocomplete.value = false;
     }
+  } catch (error) {
+    console.error('Error fetching autocomplete results:', error);
+  }
+};
+
+const autocomplete = () => {
+  fetchAutocompleteResults(productName.value);
+};
+
+const selectAutocompleteResult = async (result) => {
+  productName.value = result.name_product;
+  showAutocomplete.value = false;
+};
+
+const fetchCalories = async () => {
+  try {
+    const response = await fetch(`http://192.168.1.2:3000/product/${encodeURIComponent(productName.value)}`);
+    if (response.ok) {
+      product.value = await response.json();
+      productNotFound.value = false;
+    } else {
+      product.value = null;
+      productNotFound.value = true;
+      searchingProduct.value = false;
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
+
+const addProduct = async () => {
+  try {
+    const response = await fetch('http://192.168.1.2:3000/product', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: newProductName.value,
+        kkal: newProductCalories.value,
+        protein: newProductProtein.value,
+        fats: newProductFats.value,
+        carbohydrates: newProductCarbohydrates.value
+      })
+    });
+    if (response.ok) {
+      newProductName.value = '';
+      newProductCalories.value = 0;
+      newProductProtein.value = 0;
+      newProductFats.value = 0;
+      newProductCarbohydrates.value = 0;
+      productNotFound.value = false;
+      searchingProduct.value = true;
+    } else {
+      console.error('Failed to add product');
+    }
+  } catch (error) {
+    console.error('Error adding product:', error);
   }
 };
 </script>
@@ -151,7 +149,7 @@ export default {
   max-height: 200px;
   overflow-y: auto;
   width: 150px;
-  margin-left: 260px;
+  margin-left: 55%;
 }
 
 .autocomplete-list li {

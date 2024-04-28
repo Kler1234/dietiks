@@ -15,21 +15,6 @@ const closePopupMenu = () => {
   showPopupMenu.value = false;
 };
 </script>
-
-<script>
-export default {
-  components: {
-    PopupMenu
-  },
-  setup() {
-    return {
-      showPopupMenu,
-      selectedMenuItem,
-      openPopupMenu
-    };
-  }
-}
-</script>
 <template>
   <div>
     <Header/>
@@ -42,14 +27,14 @@ export default {
             <img class="section__img" src="@/assets/noto-v1_fork-and-knife-with-plate.png" alt="Упс, изображения нет!">
             <p class="section__text">БЖУ</p>
           </router-link>
-          <button href="#" class="section__item" @click="openPopupMenu('Индекс массы тела')">
+          <router-link to="/massindex" href="#" class="section__item">
             <img class="section__img" src="@/assets/noto_balance-scale.png" alt="Упс, изображения нет!">
             <p class="section__text">Индекс <br> массы тела</p>
-          </button>
-          <button href="#" class="section__item" @click="openPopupMenu('Калорийность')">
+          </router-link>
+          <router-link to="/products" class="section__item">
             <img class="section__img" src="@/assets/twemoji_carrot.png" alt="Упс, изображения нет!">
             <p class="section__text">Калорийность</p>
-          </button>
+          </router-link>
         </div>
       </div>
     </div>

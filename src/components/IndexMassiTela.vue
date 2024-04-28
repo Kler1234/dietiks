@@ -19,66 +19,60 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      weight: null,
-      height: null,
-      bmi: null,
-      bmiCategory: null
-    };
-  },
-  methods: {
-    calculate() {
-      if (this.weight !== null && this.height !== null) {
-        const heightInMeters = this.height / 100;
-        this.bmi = this.weight / (heightInMeters * heightInMeters);
+<script setup>
+import { ref, computed } from 'vue'
 
-        if (this.bmi < 18.5) {
-          this.bmiCategory = 'Недостаточная масса тела';
-        } else if (this.bmi >= 18.5 && this.bmi < 25) {
-          this.bmiCategory = 'Нормальная масса тела';
-        } else if (this.bmi >= 25 && this.bmi < 30) {
-          this.bmiCategory = 'Избыточная масса тела (предожирение)';
-        } else if (this.bmi >= 30) {
-          this.bmiCategory = 'Ожирение';
-        }
-      } else {
-        alert('Пожалуйста, заполните все поля для расчета.');
-      }
+const weight = ref(null)
+const height = ref(null)
+const bmi = ref(null)
+const bmiCategory = ref(null)
+
+const calculate = () => {
+  if (weight.value !== null && height.value !== null) {
+    const heightInMeters = height.value / 100
+    bmi.value = weight.value / (heightInMeters * heightInMeters)
+
+    if (bmi.value < 18.5) {
+      bmiCategory.value = 'Недостаточная масса тела'
+    } else if (bmi.value >= 18.5 && bmi.value < 25) {
+      bmiCategory.value = 'Нормальная масса тела'
+    } else if (bmi.value >= 25 && bmi.value < 30) {
+      bmiCategory.value = 'Избыточная масса тела (предожирение)'
+    } else if (bmi.value >= 30) {
+      bmiCategory.value = 'Ожирение'
     }
-  },
-  computed: {
-    bmiCategoryClass() {
-      if (this.bmi < 18.5) {
-        return 'underweight';
-      } else if (this.bmi >= 18.5 && this.bmi < 25) {
-        return 'normal';
-      } else if (this.bmi >= 25 && this.bmi < 30) {
-        return 'overweight';
-      } else if (this.bmi >= 30) {
-        return 'obese';
-      }
-    }
-  },
-};
+  } else {
+    alert('Пожалуйста, заполните все поля для расчета.')
+  }
+}
+
+const bmiCategoryClass = computed(() => {
+  if (bmi.value < 18.5) {
+    return 'underweight'
+  } else if (bmi.value >= 18.5 && bmi.value < 25) {
+    return 'normal'
+  } else if (bmi.value >= 25 && bmi.value < 30) {
+    return 'overweight'
+  } else if (bmi.value >= 30) {
+    return 'obese'
+  }
+})
 </script>
 
 <style scoped>
 .main{
   display: flex;
   flex-flow: column;
-
 }
 .title-block{
   display: flex;
   font-size: 25px;
+  margin: 0 auto;
+
 }
 
 .title{
   align-content: center;
-
 }
 label{
   font-size: 20px;
@@ -87,10 +81,13 @@ label{
 .btn{
   background-color: #04AA6D !important;
   border-radius: 5px;
+  max-width: 200px;
   font-size: 17px;
   font-family: 'Source Sans Pro', sans-serif;
   padding: 6px 18px;
   color: white;
+  margin: 0 auto;
+  margin-top: 10px;
 }
 
 input{

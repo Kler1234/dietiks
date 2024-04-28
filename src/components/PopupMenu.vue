@@ -2,7 +2,6 @@
   <div class="popup-menu rounded-[24px]" @click.stop>
     <div class="popup-content">
       <div v-if="menuItem === 'БЖУ'">
-        <BJU/>
       </div>
       <p v-else-if="menuItem === 'Индекс массы тела'">
         <IndexMassiTela/>
@@ -16,15 +15,17 @@
 
 
 <script setup>
-import IndexMassiTela from "@/components/IndexMassiTela.vue"
+import IndexMassiTela from "@/components/IndexMassiTela.vue";
 import BJU from "@/components/BJU.vue";
 import CalculatorCalories from "@/components/CalculatorCalories.vue";
-</script>
+import CalculatePage from "@/views/CalculatePage.vue";
 
-<script>
-export default {
-  props: ['menuItem']
-}
+const props = defineProps({
+  menuItem: {
+    type: Object,
+    required: true
+  }
+});
 </script>
 
 <style scoped>

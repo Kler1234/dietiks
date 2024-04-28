@@ -11,8 +11,10 @@ const ReceiptsPage = () => import("@/views/ReceiptsPage.vue");
 const SettingPage = () => import("@/views/SettingPage.vue")
 const IndexMassiTela = () => import("@/components/IndexMassiTela.vue");
 const CalculatorCalories = () => import("@/components/CalculatorCalories.vue");
-const CalculatePage = () => import("@/views/CalculatePage.vue")
-const AdminPanelPage = () => import("@/views/AdminPanelPage.vue")
+const CalculatePage = () => import("@/views/CalculatePage.vue");
+const BMIPage = () => import("@/views/BMIPage.vue");
+const AdminPanelPage = () => import("@/views/AdminPanelPage.vue");
+const ProductPage = () => import("@/views/ProductPage.vue");
 
 const router = createRouter({
     history: createWebHistory(),
@@ -28,6 +30,8 @@ const router = createRouter({
         {path: '/profile', component: Profile, meta: { requiresAuth: true }},
         {path: '/settings', component: SettingPage, meta: {requiresAuth: true}},
         {path: '/calculate', component: CalculatePage},
+        {path: '/massindex', component: BMIPage},
+        {path: '/products', component: ProductPage},
         {path: '/admin', component: AdminPanelPage, meta: {requiresAuth: true, requiresAdmin: true}},
     ]
 });

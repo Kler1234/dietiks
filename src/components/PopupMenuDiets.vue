@@ -54,7 +54,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import { defineProps } from 'vue';
 import ClearFoodInfo from '@/components/DietsInfo/ClearFoodInfo.vue'
 import HighBelokInfo from "@/components/DietsInfo/HighBelokInfo.vue";
