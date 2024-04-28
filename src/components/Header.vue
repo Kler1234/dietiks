@@ -1,19 +1,20 @@
 <script setup>
-import {ref, computed} from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
 const loggedIn = computed(() => store.getters.isLoggedIn);
 const isAdmin = computed(() => store.state.isAdmin);
 
+const burgerMenuOpen = ref(false);
+
 const toggleBurgerMenu = () => {
   document.querySelector('.header__burger').classList.toggle('active');
   document.querySelector('.header__menu').classList.toggle('active');
   document.querySelector('body').classList.toggle('lock');
+  burgerMenuOpen.value = !burgerMenuOpen.value;
 }
 </script>
-
-
 
 <template>
   <header class="header">
@@ -59,23 +60,9 @@ const toggleBurgerMenu = () => {
   </header>
 </template>
 
-
 <style scoped>
-
-
-
-@font-face {
-  font-family: "Kyiv_TypeSerif";
-  src: url("@/fonts/KyivTypeSerif-Regular2.otf");
-}@font-face {
-  font-family: "Merriweather";
-  src: url("@/fonts/Merriweather/Merriweather-Regular.ttf");
-}
-
-
 body {
   box-sizing: border-box;
-  font-family: Merriweather, serif;
 }
 
 a {
@@ -105,7 +92,6 @@ a:hover:after, a:focus:after {
   top: 0;
   left: 0;
   z-index: 50;
-  font-family: Merriweather;
   font-size: calc(14px + 0.5208333333vw);
 }
 

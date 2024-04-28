@@ -38,7 +38,7 @@ router.afterEach((to, from) => {
 
 router.beforeEach(async (to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (!store.state.loggedIn) {
+        if (!store.state.isAuth) {
             next('/login');
         } else {
             // Проверяем, является ли пользователь администратором

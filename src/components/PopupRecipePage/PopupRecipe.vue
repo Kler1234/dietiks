@@ -8,9 +8,9 @@
               <div class="closeModal" @click="closePopup"></div>
               <h1 class="recipe-name">{{ props.recipeInfo.name }}</h1>
               <h2 class="text-xl pt-5 pb-2">Ингридиенты:</h2>
-              <p>{{props.recipeInfo.ingridients}} грамм</p>
+              <p>{{props.recipeInfo.ingridients}}</p>
               <h2 class="text-xl pt-5 pb-2">Способ приготовления:</h2>
-              <p>{{ props.recipeInfo.description }} грамм</p>
+              <p>{{ props.recipeInfo.description }}</p>
               <h2 class="text-xl pt-5 pb-2">Пищевая ценность:</h2>
               <p>ККАЛ: {{ props.recipeInfo.kkal }} грамм</p>
               <p>Белки: {{ props.recipeInfo.protein }} грамм</p>

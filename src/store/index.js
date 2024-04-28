@@ -2,13 +2,13 @@ import { createStore } from 'vuex';
 
 export default createStore({
     state: {
-        loggedIn: false,
+        isAuth: false,
         token: null,
         isAdmin: false,
     },
     mutations: {
         setLoggedIn(state, value) {
-            state.loggedIn = value;
+            state.isAuth = value;
         },
         setToken(state, token) {
             state.token = token;
@@ -17,7 +17,7 @@ export default createStore({
         logout(state) {
             sessionStorage.removeItem('token'); // Удаляем токен из sessionStorage при выходе
             sessionStorage.removeItem('isAdmin');
-            state.loggedIn = false;
+            state.isAuth = false;
             state.token = null;
             state.isAdmin = false;
         },
@@ -56,6 +56,7 @@ export default createStore({
         autoLogin({ commit }) {
             const token = sessionStorage.getItem('token'); // Получаем токен из sessionStorage
             const isAdmin = sessionStorage.getItem('isAdmin'); // Получаем статус администратора из sessionStorage
+            
             if (token) {
                 commit('setToken', token);
                 commit('setLoggedIn', true);
@@ -72,6 +73,6 @@ export default createStore({
         },
     },
     getters: {
-        isLoggedIn: state => state.loggedIn,
+        isLoggedIn: state => state.isAuth,
     },
 });

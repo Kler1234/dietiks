@@ -56,15 +56,12 @@ export default {
     <footer class="footer">
       <p class="text-xs text-white">* - Этот сайт предоставляет информацию о диетах и здоровье и не является медицинской организацией. Мы не предоставляем медицинских консультаций и не имеем медицинского образования. Перед принятием каких-либо диетических решений, проконсультируйтесь с врачом или другим квалифицированным специалистом.</p>
     </footer>
-
-    <portal to="popup-menu">
       <transition name="fade">
         <div class="overlay" v-if="showPopupMenu" @click="closePopupMenu"></div>
       </transition>
       <transition name="slide">
         <PopupMenu :menuItem="selectedMenuItem" v-if="showPopupMenu" />
       </transition>
-    </portal>
   </div>
 </template>
 

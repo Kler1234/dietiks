@@ -189,9 +189,6 @@ template{
   color: #000000;
 }
 
-.input-box{
-
-}
 
 .forgot {
   display: flex;

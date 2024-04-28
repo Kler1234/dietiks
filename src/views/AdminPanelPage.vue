@@ -1,95 +1,3 @@
-<template>
-  <div>
-    <Header />
-    <h1 class="title-admin text-center text-3xl">Админ панель</h1>
-    <div class="form-container">
-      <div class="form-wrapper">
-        <form class="form" @submit.prevent="submitRecipe">
-          <h1 class="text-2xl text-center pb-5">Добавление рецепта</h1>
-          <label class="form-label">
-            Изображение:
-            <input type="file" accept="image/*" @change="onImageChange" ref="imageInput" required />
-          </label><br />
-          <label class="form-label">
-            Название:
-            <input type="text" v-model="recipe.title" required />
-          </label><br />
-          <label class="form-label">
-            Ингредиенты:
-            <textarea v-model="recipe.ingredients" required></textarea>
-          </label><br />
-          <label class="form-label">
-            Способ приготовления:
-            <textarea v-model="recipe.instructions" required></textarea>
-          </label><br />
-          <label class="form-label">
-            Диета:
-            <select v-model="recipe.diet" required>
-              <option disabled value="">Выберите диету</option>
-              <option value="vegetarian">Вегетарианская</option>
-              <option value="vegan">Веганская</option>
-              <option value="lowCarb">Низкоуглеводная</option>
-              <option value="highFiber">Много клетчатки</option>
-              <option value="cleanEating">Чистое питание</option>
-              <option value="keto">Кетодиета</option>
-              <option value="lowFat">Мало жира</option>
-              <option value="lowCalorie">Низкокалорийная</option>
-              <option value="highProtein">Высокобелковая</option>
-              <option value="pescatarian">Пескетарианство</option>
-              <option value="sugarFree">Без сахара</option>
-              <option value="lactoseFree">Без лактозы</option>
-            </select>
-          </label><br />
-          <label class="form-label">
-            Тип питания:
-            <select v-model="recipe.meal_type">
-              <option disabled value="">Выберите тип питания</option>
-              <option value="breakfast">Завтрак</option>
-              <option value="lunch">Обед</option>
-              <option value="dinner">Ужин</option>
-              <option value="snack">Перекус</option>
-            </select>
-          </label><br />
-          <label class="form-label">
-            ККАЛ:
-            <input type="number" v-model="recipe.calories" required />
-          </label><br />
-          <label class="form-label">
-            Белки:
-            <input type="number" v-model="recipe.proteins" required />
-          </label><br />
-          <label class="form-label">
-            Жиры:
-            <input type="number" v-model="recipe.fats" required />
-          </label><br />
-          <label class="form-label">
-            Углеводы:
-            <input type="number" v-model="recipe.carbs" required />
-          </label><br />
-          <label class="form-label">
-            Источник:
-            <input type="text" v-model="recipe.source"/>
-          </label><br />
-          <button type="submit" class="submit-btn">Добавить рецепт</button>
-        </form>
-      </div>
-      <div class="delete-form-wrapper">
-        <form class="delete-form" @submit.prevent="deleteRecipe">
-          <h1 class="text-2xl text-center pb-5">Удалить рецепт по ID:</h1>
-          <div class="explanation">
-            <span class="explanation-sign" text='Чтобы узнать ID рецепта зайдите на страницу "Рецепты", нажмите на интересующий рецепт и в появившемся окне, снизу, будет ID рецепта.'>?</span>
-          </div>
-          <label class="form-label">
-            Напишите ID рецепта
-            <input type="number" v-model="recipeIdToDelete" required />
-          </label>
-          <button type="submit" class="delete-btn">Удалить</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup>
 import Header from '@/components/Header.vue'
 import { ref } from 'vue'
@@ -185,9 +93,100 @@ const clearForm = () => {
   recipe.value.fats = null;
   recipe.value.carbs = null;
   recipe.value.source = '';
-  console.log(1);
 }
 </script>
+
+<template>
+  <div>
+    <Header />
+    <h1 class="title-admin text-center text-3xl">Админ панель</h1>
+    <div class="form-container">
+      <div class="form-wrapper">
+        <form class="form" @submit.prevent="submitRecipe">
+          <h1 class="text-2xl text-center pb-5">Добавление рецепта</h1>
+          <label class="form-label">
+            Изображение:
+            <input type="file" accept="image/*" @change="onImageChange" ref="imageInput" required />
+          </label><br />
+          <label class="form-label">
+            Название:
+            <input type="text" v-model="recipe.title" required />
+          </label><br />
+          <label class="form-label">
+            Ингредиенты:
+            <textarea v-model="recipe.ingredients" required></textarea>
+          </label><br />
+          <label class="form-label">
+            Способ приготовления:
+            <textarea v-model="recipe.instructions" required></textarea>
+          </label><br />
+          <label class="form-label">
+            Диета:
+            <select v-model="recipe.diet" required>
+              <option disabled value="">Выберите диету</option>
+              <option value="vegetarian">Вегетарианская</option>
+              <option value="vegan">Веганская</option>
+              <option value="lowCarb">Низкоуглеводная</option>
+              <option value="highFiber">Много клетчатки</option>
+              <option value="cleanEating">Чистое питание</option>
+              <option value="keto">Кетодиета</option>
+              <option value="lowFat">Мало жира</option>
+              <option value="lowCalorie">Низкокалорийная</option>
+              <option value="highProtein">Высокобелковая</option>
+              <option value="pescatarian">Пескетарианство</option>
+              <option value="sugarFree">Без сахара</option>
+              <option value="lactoseFree">Без лактозы</option>
+            </select>
+          </label><br />
+          <label class="form-label">
+            Тип питания:
+            <select v-model="recipe.meal_type">
+              <option disabled value="">Выберите тип питания</option>
+              <option value="breakfast">Завтрак</option>
+              <option value="lunch">Обед</option>
+              <option value="dinner">Ужин</option>
+              <option value="snack">Перекус</option>
+            </select>
+          </label><br />
+          <label class="form-label">
+            ККАЛ:
+            <input type="number" v-model="recipe.calories" required />
+          </label><br />
+          <label class="form-label">
+            Белки:
+            <input type="number" v-model="recipe.proteins" required />
+          </label><br />
+          <label class="form-label">
+            Жиры:
+            <input type="number" v-model="recipe.fats" required />
+          </label><br />
+          <label class="form-label">
+            Углеводы:
+            <input type="number" v-model="recipe.carbs" required />
+          </label><br />
+          <label class="form-label">
+            Источник:
+            <input type="text" v-model="recipe.source"/>
+          </label><br />
+          <button type="submit" class="submit-btn">Добавить рецепт</button>
+        </form>
+      </div>
+      <div class="delete-form-wrapper">
+        <form class="delete-form" @submit.prevent="deleteRecipe">
+          <h1 class="text-2xl text-center pb-5">Удалить рецепт по ID:</h1>
+          <div class="explanation">
+            <span class="explanation-sign" text='Чтобы узнать ID рецепта зайдите на страницу "Рецепты", нажмите на интересующий рецепт и в появившемся окне, снизу, будет ID рецепта.'>?</span>
+          </div>
+          <label class="form-label">
+            Напишите ID рецепта
+            <input type="number" v-model="recipeIdToDelete" required />
+          </label>
+          <button type="submit" class="delete-btn">Удалить</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 

@@ -1,33 +1,11 @@
-<template>
-  <div>
-    <Header/>
-    <div class="wrapper grid grid-cols-2 row-span-1">
-      <div class="wrapper-filter pt-5">
-        <Filter :applyFiltersCallback="updateRecipes" />
-      </div>
-      <div class="wrapper-recipes flex flex-wrap">
-        <template v-if="!loading && recipes.length === 0">
-          <p class="noRecipes">Нет рецептов, удовлетворяющих выбранным критериям.</p>
-        </template>
-        <template v-else>
-          <CardList :recipes="recipes" @recipeClick="openRecipePopup" />
-        </template>
-      </div>
-    </div>
-    <footer class="footer">
-      <p class="text-xs text-white">* - Этот сайт предоставляет информацию о диетах и здоровье и не является медицинской организацией. Мы не предоставляем медицинских консультаций и не имеем медицинского образования. Перед принятием каких-либо диетических решений, проконсультируйтесь с врачом или другим квалифицированным специалистом.</p>
-    </footer>
-    <PopupRecipe v-if="popupVisible"  :recipeInfo="selectedRecipe" @closePopup="closeRecipePopup" />
-  </div>
-</template>
-
 <script setup>
 import Header from "@/components/Header.vue";
 import Filter from "@/components/Filter.vue";
 import CardList from "@/components/CardList.vue";
 import PopupRecipe from "@/components/PopupRecipePage/PopupRecipe.vue";
-import {ref} from 'vue';
+import { ref } from 'vue';
 
+const first = ref(0);
 const loading = ref(false);
 const recipes = ref([]);
 const selectedRecipe = ref(null);
@@ -44,8 +22,40 @@ const openRecipePopup = (recipe) => {
 
 const closeRecipePopup = () => {
   popupVisible.value = false;
-};
+}
+
+const token = sessionStorage.getItem('token')
 </script>
+
+<template>
+  <div>
+    <Header/>
+    <div class="wrapper grid grid-cols-2 row-span-1">
+      <div class="wrapper-filter pt-5">
+        <Filter :applyFiltersCallback="updateRecipes" />
+
+      </div>
+      <div class="wrapper-recipes flex flex-wrap">
+        <template v-if="!loading && recipes.length === 0">
+          <p class="noRecipes">Нет рецептов, удовлетворяющих выбранным критериям.</p>
+        </template>
+        <template v-else>
+          <CardList :recipes="recipes" @recipeClick="openRecipePopup" />
+          <Paginator v-model:first="first"
+              :rows="10"
+              :totalRecords="120">
+          </Paginator>
+        </template>
+      </div>
+    </div>
+    <footer class="footer">
+      <p class="text-xs text-white">* - Этот сайт предоставляет информацию о диетах и здоровье и не является медицинской организацией. Мы не предоставляем медицинских консультаций и не имеем медицинского образования. Перед принятием каких-либо диетических решений, проконсультируйтесь с врачом или другим квалифицированным специалистом.</p>
+    </footer>
+    <PopupRecipe v-if="popupVisible"  :recipeInfo="selectedRecipe" @closePopup="closeRecipePopup" />
+  </div>
+</template>
+
+
 
 <style scoped>
 .wrapper {

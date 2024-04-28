@@ -1,9 +1,8 @@
 <template>
   <div class="filter-area">
-    <!-- Фильтр по калориям -->
     <div class="filter pl-5 pt-3 rounded-tr-lg">
       <h1 class="text-center text-3xl">Фильтры</h1>
-      <h1 class="title text-center cursor-pointer" @click="toggleCalories">
+      <h1 class="title text-center text-xl cursor-pointer" @click="toggleCalories">
         {{ showCalories ? 'Количество калорий <' : 'Количество калорий >' }}
       </h1>
       <div v-show="showCalories">
@@ -15,9 +14,8 @@
         </div>
       </div>
     </div>
-    <!-- Фильтр по приему пищи -->
     <div class="filter pl-5">
-      <h1 class="title text-center cursor-pointer" @click="toggleMeals">
+      <h1 class="title text-center text-xl cursor-pointer" @click="toggleMeals">
         {{ showMeals ? 'Приём пищи <' : 'Приём пищи >' }}
       </h1>
       <div v-show="showMeals">
@@ -31,7 +29,7 @@
     </div>
     <!-- Фильтр по диетам -->
     <div class="filter pl-5 rounded-br-lg pb-3">
-      <h1 class="title text-center cursor-pointer" @click="toggleDiets">
+      <h1 class="title text-center text-xl cursor-pointer" @click="toggleDiets">
         {{ showDiets ? 'Диеты <' : 'Диеты >' }}
       </h1>
       <div v-show="showDiets">
@@ -57,7 +55,7 @@ import RadioButton from "primevue/radiobutton";
 import {ref, defineProps, onMounted} from 'vue';
 import { watch } from 'vue';
 
-const { applyFiltersCallback, currentPage } = defineProps(['applyFiltersCallback', 'currentPage']);
+const { applyFiltersCallback } = defineProps(['applyFiltersCallback']);
 
 const loading = ref(false);
 const calories = [
@@ -101,7 +99,6 @@ const selectedDiets = ref([]);
 const showCalories = ref(false);
 const showMeals = ref(false);
 const showDiets = ref(false);
-
 const applyFilters = async () => {
   loading.value = true;
   try {
@@ -156,7 +153,6 @@ onMounted(() => {
 
 <style scoped>
 .title {
-  font-size: 15px;
   padding-top: 15px;
   transition: color 0.3s;
 }
@@ -180,14 +176,12 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   color: black;
-  padding-top: 7px;
   background-color: #54B947;
 
 }
 
 .filter-area {
   width: 350px;
-  font-family: Merriweather, serif;
 }
 
 .filter-checkbox label {

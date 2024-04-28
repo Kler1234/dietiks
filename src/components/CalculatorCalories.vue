@@ -46,7 +46,7 @@
           <label for="newProductCarbohydrates">Углеводы:</label>
           <input class="ml-10" type="number" id="newProductCarbohydrates" step="any" v-model.number="newProductCarbohydrates" required>
         </div>
-        <button type="submit">Добавить продукт</button>
+        <Button type="submit">Добавить продукт</Button>
       </form>
     </div>
   </div>

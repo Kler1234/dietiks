@@ -66,13 +66,14 @@
           <p>Жиры: {{ result.fats }} г</p>
           <p>Углеводы: {{ result.carbs }} г</p>
         </div>
-        <button class="restart" @click="resetForm">Новый расчет</button>
+        <Button class="restart" @click="resetForm">Новый расчет</Button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Button from "primevue/button";
 export default {
   data() {
     return {
@@ -99,7 +100,6 @@ export default {
         alert('Пожалуйста, заполните все поля.');
         return;
       }
-      // Определение базового метаболизма (BMR)
       let bmr;
       if (this.gender === 'male') {
         bmr = 10 * this.weight + 6.25 * this.height - 5 * this.age + 5;
@@ -107,7 +107,6 @@ export default {
         bmr = 10 * this.weight + 6.25 * this.height - 5 * this.age - 161;
       }
 
-      // Учет уровня активности
       let activityFactor;
       switch (this.activityLevel) {
         case 'sedentary':
@@ -132,6 +131,7 @@ export default {
       const totalCalories = bmr * activityFactor;
 
       let goalMultiplier;
+      
       switch (this.goal) {
         case 'lose-weight':
           goalMultiplier = this.caloricDeficit === 'yes' ? 0.8 : 1;
@@ -161,16 +161,15 @@ export default {
         carbs: carbs.toFixed(0)
       };
 
-      this.step = 4; // Переход к результатам
+      this.step = 4; 
     },
     nextStep() {
-      this.step++; // Переход к следующему шагу
+      this.step++; 
     },
     prevStep() {
-      this.step--; // Возврат к предыдущему шагу
+      this.step--; 
     },
     resetForm() {
-      // Сброс формы для нового расчета
       this.step = 1;
       this.result = null;
     }
