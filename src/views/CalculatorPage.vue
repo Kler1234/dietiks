@@ -22,7 +22,6 @@ const closePopupMenu = () => {
       <div class="title">
         <div class="title__text">Калькуляторы</div>
         <div class="section">
-          <!-- Используем @click, чтобы обработать событие нажатия на элементы -->
           <router-link to="/calculate" class="section__item">
             <img class="section__img" src="@/assets/noto-v1_fork-and-knife-with-plate.png" alt="Упс, изображения нет!">
             <p class="section__text">БЖУ</p>

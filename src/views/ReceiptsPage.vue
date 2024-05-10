@@ -33,18 +33,17 @@ const token = sessionStorage.getItem('token')
     <div class="wrapper grid grid-cols-2 row-span-1">
       <div class="wrapper-filter pt-5">
         <Filter :applyFiltersCallback="updateRecipes" />
-
       </div>
       <div class="wrapper-recipes flex flex-wrap">
         <template v-if="!loading && recipes.length === 0">
           <p class="noRecipes">Нет рецептов, удовлетворяющих выбранным критериям.</p>
         </template>
         <template v-else>
-          <CardList :recipes="recipes" @recipeClick="openRecipePopup" />
-          <Paginator v-model:first="first"
+          <CardList :recipes="recipes" @recipeClick="openRecipePopup"/>
+         <Paginator class="paginator" v-model:first="first"
               :rows="10"
               :totalRecords="120">
-          </Paginator>
+            </Paginator>
         </template>
       </div>
     </div>
@@ -78,6 +77,8 @@ const token = sessionStorage.getItem('token')
   align-content: center;
   margin: 0 auto;
 }
+
+
 
 @media (max-width: 952px) {
   .wrapper {

@@ -6,6 +6,7 @@ import PrimeVue from "primevue/config";
 import router from "@/router/router.js";
 import store from './store'
 import 'primevue/resources/themes/aura-light-green/theme.css'
+import './fonts/benzin/stylesheet.css'
 import Button from 'primevue/button'
 import Paginator from "primevue/paginator";
 

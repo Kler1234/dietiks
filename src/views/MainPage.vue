@@ -80,10 +80,7 @@ const loggedIn = computed(() => store.state.isAuth);
   font-family: "Merriweather";
   src: url("@/fonts/Merriweather/Merriweather-Regular.ttf");
 }
-@font-face {
-  font-family: "LTSuperior";
-  src: url("@/fonts/LTSuperior-Regular.otf")
-}
+
 
 
 a {
@@ -114,8 +111,10 @@ a:hover:after, a:focus:after {
   justify-content: center;
 }
 
+.title-dietiks{
+  font-family: benzin, serif;
+}
 .title-description__text, .title-dietiks{
-  font-family: Kyiv_TypeSerif, serif;
   font-size: 25px ;
 }
 
@@ -124,7 +123,6 @@ a:hover:after, a:focus:after {
 }
 
 .btn-try{
- font-family: Merriweather;
   width: 350px;
 }
 
@@ -153,7 +151,6 @@ a:hover:after, a:focus:after {
   flex-flow: column;
   justify-content: space-between;
   align-items: center;
-  font-family: Merriweather, serif;
   //padding-right: 100px;
 }
 .wrapper__info:last-child {
@@ -170,6 +167,7 @@ a:hover:after, a:focus:after {
 }
 .wrapper__info span {
   color: #54B947;
+
 }
 
 .wrapper-image {
@@ -183,7 +181,6 @@ a:hover:after, a:focus:after {
   height: 723px;
 }
 
-/* Высота блока */
 .section-registry {
   padding-top: 154px;
 }
@@ -202,14 +199,12 @@ a:hover:after, a:focus:after {
   display: flex;
   flex-flow: column;
   align-items: center;
-font-family: Merriweather, serif;
   font-size: 32px;
 }
 .section-registry__infoblock span {
   display: flex;
   flex-flow: column;
   align-items: center;
-  font-family: Merriweather, serif;
 
   font-size: 32px;
 }
@@ -250,6 +245,11 @@ font-family: Merriweather, serif;
   height: 50px;
 }
 
+@media (max-width: 1350px){
+  .about-dietiks{
+    padding-top: 150px;
+  }
+}
 
 @media (max-width: 1250px) {
   .wrapper {
@@ -272,6 +272,10 @@ font-family: Merriweather, serif;
   .img-food{
     scale: 80%;
     margin-top: -50px;
+  }
+
+  .about-dietiks{
+    padding-top: 0px;
   }
 
 }

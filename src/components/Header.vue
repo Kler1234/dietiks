@@ -86,6 +86,8 @@ a:hover:after, a:focus:after {
   width: 100%;
 }
 
+
+
 .header {
   position: fixed;
   width: 100%;
@@ -116,7 +118,7 @@ a:hover:after, a:focus:after {
 }
 
 .header__logo {
-  font-family: Kyiv_TypeSerif, serif;
+  font-family: Benzin, regular;
   font-size: calc(24px + 1.25vw);
   margin-left: 43px;
   position: relative;
