@@ -35,7 +35,6 @@ export default createStore({
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({ email, password }),
-                    referrerPolicy: "unsafe-url",
                 });
                 if (!response.ok) {
                     throw new Error('Неверные почта или пароль');
