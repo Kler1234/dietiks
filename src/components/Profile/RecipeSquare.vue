@@ -1,6 +1,6 @@
 <template>
   <div class="recipe-square" @click="openPopup(recipe)">
-    <img class="recipe-image" :src="'http://192.168.1.2:3000/' + recipe.image_url" :alt="recipe.name">
+    <img class="recipe-image" :src="'http://217.71.129.139:4101/' + recipe.image_url" :alt="recipe.name">
     <h3>{{ recipe.name }}</h3>
     <p>Калории: {{ Math.round(recipe.kkal) }}</p>
   </div>

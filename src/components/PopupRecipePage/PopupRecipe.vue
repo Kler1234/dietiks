@@ -7,7 +7,7 @@
             <div class="recipe-info">
               <div class="closeModal" @click="closePopup"></div>
               <h1 class="recipe-name">{{ props.recipeInfo.name }}</h1>
-              <h2 class="text-xl pt-5 pb-2">Ингридиенты:</h2>
+              <h2 class="text-xl pt-5 pb-2">Ингридиенты (на 1 порцию):</h2>
               <p>{{props.recipeInfo.ingridients}}</p>
               <h2 class="text-xl pt-5 pb-2">Способ приготовления:</h2>
               <p>{{ props.recipeInfo.description }}</p>

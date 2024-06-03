@@ -25,7 +25,7 @@ const register = async () => {
     if (password.value !== confirmPassword.value) {
       throw new Error('Пароли не совпадают');
     }
-    const response = await fetch('http://192.168.1.2:3000/register', {
+    const response = await fetch('http://217.71.129.139:4101/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

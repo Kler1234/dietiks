@@ -21,7 +21,7 @@ const fetchFavoriteStatus = async () => {
       recipeId: props.recipe.recipe_id,
     };
 
-    const response = await fetch(`http://192.168.1.2:3000/favorites/status`, {
+    const response = await fetch(`http://217.71.129.139:4101/favorites/status`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ const toggleFavorite = async () => {
       isFavorite: !isFavorite.value
     };
 
-    const response = await fetch('http://192.168.1.2:3000/favorites/toggle', {
+    const response = await fetch('http://217.71.129.139:4101/favorites/toggle', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ const handleMenuClick = async (menuItem) => {
       recipeCarbohydrates: props.recipe.carbohydrates
     };
 
-    const response = await fetch('http://192.168.1.2:3000/diary/add', {
+    const response = await fetch('http://217.71.129.139:4101/diary/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -150,7 +150,7 @@ onUnmounted(() => {
 <template>
   <div class="cards-card flex flex-col shadow-md">
     <div class="recipe-info">
-      <img class="recipe-image" :src="'http://192.168.1.2:3000/' + recipe.image_url" :alt="recipe.name">
+      <img class="recipe-image" :src="'http://217.71.129.139:4101/' + recipe.image_url" :alt="recipe.name">
       <h1 class="food-name">{{ recipe.name }}</h1>
       <p>Ккал: {{ recipe.kkal }}</p>
     </div>

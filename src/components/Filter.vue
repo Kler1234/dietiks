@@ -33,7 +33,7 @@
         {{ showDiets ? 'Диеты <' : 'Диеты >' }}
       </h1>
       <div v-show="showDiets">
-        <div class="diets flex flex-col gap-3 mt-3">
+        <div class="diets flex flex-col gap-3 mt-3"> 
           <div v-for="(diet, index) in diets" :key="index" class="filter-checkbox flex col gap-5">
             <RadioButton v-model="selectedDiets" :inputId="'dietType'+(index+1)" :value="diet.value"/>
             <label :for="'dietType'+(index+1)" class="ml-2">{{ diet.label }}</label>
@@ -46,7 +46,12 @@
       <Button class="btn-confirm rounded-lg" label="Принять" icon="pi pi-check" iconPos="right" :loading="loading"
               @click="applyFilters"/>
     </div>
+
+  <RadioButton/>
+
   </div>
+
+
 </template>
 
 <script setup>
@@ -115,7 +120,7 @@ const applyFilters = async () => {
       selectedDiets.value.forEach(diet => queryParams.push(`diet=${diet}`));
     }
 
-    const url = queryParams.length > 0 ? `http://192.168.1.2:3000/recipes?${queryParams.join('&')}` : 'http://192.168.1.2:3000/recipes';
+    const url = queryParams.length > 0 ? `http://217.71.129.139:4101/recipes?${queryParams.join('&')}` : 'http://217.71.129.139:4101/recipes';
 
     const response = await fetch(url);
     const responseData = await response.json();
@@ -152,6 +157,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
 .title {
   padding-top: 15px;
   transition: color 0.3s;
@@ -177,7 +183,6 @@ onMounted(() => {
   justify-content: center;
   color: black;
   background-color: #54B947;
-
 }
 
 .filter-area {

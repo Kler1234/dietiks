@@ -18,7 +18,7 @@ const handleLogout = () => {
 async function changeUsername() {
   try{
     const token = sessionStorage.getItem('token');
-    const response = await fetch('http://192.168.1.2:3000/user/changeUsername', {
+    const response = await fetch('http://217.71.129.139:4101/user/changeUsername', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ async function changePassword() {
       throw new Error("Новый пароль и его подтверждение не совпадают.");
     }
     const token = sessionStorage.getItem('token');
-    const response = await fetch('http://192.168.1.2:3000/user/changePassword', {
+    const response = await fetch('http://217.71.129.139:4101/user/changePassword', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

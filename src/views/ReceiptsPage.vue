@@ -40,10 +40,6 @@ const token = sessionStorage.getItem('token')
         </template>
         <template v-else>
           <CardList :recipes="recipes" @recipeClick="openRecipePopup"/>
-         <Paginator class="paginator" v-model:first="first"
-              :rows="10"
-              :totalRecords="120">
-            </Paginator>
         </template>
       </div>
     </div>

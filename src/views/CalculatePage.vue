@@ -134,7 +134,7 @@ function saveNutritionData() {
     return
   }
 
-  fetch('http://192.168.1.2:3000/calculate', {
+  fetch('http://217.71.129.139:4101/calculate', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
