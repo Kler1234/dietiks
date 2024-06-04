@@ -151,7 +151,6 @@ a:hover:after, a:focus:after {
   flex-flow: column;
   justify-content: space-between;
   align-items: center;
-  //padding-right: 100px;
 }
 .wrapper__info:last-child {
   padding-right: 0;

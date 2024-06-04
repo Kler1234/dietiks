@@ -121,14 +121,11 @@ const closePopupMenu = () => {
 }
 
 .content {
-  //position: relative;
   padding-top: 100px;
   padding-bottom: 100px;
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  //user-select: none;
-  //min-height: 100%;
 }
 
 .container{

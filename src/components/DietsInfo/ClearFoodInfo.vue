@@ -103,8 +103,7 @@ h1, h2 {
 .diet-name{
   text-align: center;
 }
-.important-case{
-}
+
 .important{
   color: red;
   margin: 30px 0 30px 0;

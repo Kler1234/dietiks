@@ -111,7 +111,7 @@ p {
   background-color: white;
   border: 1px solid black;
   border-radius: 24px;
-  z-inedx: 56;
+  z-index: 56;
 }
 
 .popup-content {
