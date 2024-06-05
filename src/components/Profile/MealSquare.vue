@@ -34,7 +34,7 @@ const filteredRecipes = computed(() => {
 const deleteRecipe = async (entryID) => {
   try {
     const token = sessionStorage.getItem('token');
-    const response = await fetch('http://172.17.3.77:3000/diary/delete', {
+    const response = await fetch('http://217.71.129.139:4327/diary/delete', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'

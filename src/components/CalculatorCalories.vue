@@ -69,7 +69,7 @@ const searchingProduct = ref(true);
 
 const fetchAutocompleteResults = async (searchTerm) => {
   try {
-    const response = await fetch(`http://172.17.3.77:3000/autocomplete/${encodeURIComponent(searchTerm)}`);
+    const response = await fetch(`http://217.71.129.139:4327/autocomplete/${encodeURIComponent(searchTerm)}`);
     if (response.ok) {
       autocompleteResults.value = await response.json();
       showAutocomplete.value = true;
@@ -93,7 +93,7 @@ const selectAutocompleteResult = async (result) => {
 
 const fetchCalories = async () => {
   try {
-    const response = await fetch(`http://172.17.3.77:3000/product/${encodeURIComponent(productName.value)}`);
+    const response = await fetch(`http://217.71.129.139:4327/product/${encodeURIComponent(productName.value)}`);
     if (response.ok) {
       product.value = await response.json();
       productNotFound.value = false;
@@ -109,7 +109,7 @@ const fetchCalories = async () => {
 
 const addProduct = async () => {
   try {
-    const response = await fetch('http://172.17.3.77:3000/product', {
+    const response = await fetch('http://217.71.129.139:4327/product', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
