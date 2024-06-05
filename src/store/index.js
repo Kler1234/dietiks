@@ -29,7 +29,7 @@ export default createStore({
     actions: {
         async login({ commit }, { email, password }) {
             try {
-                const response = await fetch('https://217.71.129.139:4101/login', {
+                const response = await fetch('https://172.17.3.77:3000/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

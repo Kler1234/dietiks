@@ -47,7 +47,7 @@ const userData = reactive({
 
 const fetchUserData = async () => {
   try {
-    const response = await fetch('http://217.71.129.139:4101/user/profile', {
+    const response = await fetch('http://172.17.3.77:3000/user/profile', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ const fetchFavoriteRecipes = async () => {
       return;
     }
 
-    const response = await fetch('http://217.71.129.139:4101/favorites/recipes', {
+    const response = await fetch('http://172.17.3.77:3000/favorites/recipes', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ const fetchFavoriteRecipes = async () => {
 
 const fetchUserRecipes = async () => {
   try {
-    const response = await fetch('http://217.71.129.139:4101/user/recipes', {
+    const response = await fetch('http://172.17.3.77:3000/user/recipes', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -189,13 +189,7 @@ const recipes = ref([]);
       <h1 class="profile text-center pb-10 text-3xl">Здравствуйте, {{userData.username}}</h1>
       <h1 class="profile-phone text-center pb-10 text-3xl"><strong>{{userData.username}}</strong></h1>
       <div class="date">
-<!--        <button>-->
-<!--          <img class="arrow-left" src="@/assets/arrow-left-5-svgrepo-com.svg" alt="left-arrow">-->
-<!--        </button>-->
         <div class="currentDate pb-5 text-2xl"> {{currentDate}}</div>
-<!--        <button>-->
-<!--          <img class="arrow-right" src="@/assets/right-arrow-svgrepo-com.svg" alt="right-arrow">-->
-<!--        </button>-->
       </div>
       <div class="progressBar flex gap-5">
           <div class="score flex ">
