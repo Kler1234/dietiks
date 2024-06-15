@@ -204,14 +204,6 @@ const loggedIn = computed(() => store.state.isAuth);
           <label for="weight">Вес (кг):</label>
           <input type="number" v-model.number="nutritionData.weight" id="weight">
         </div>
-        <div class="form-group">
-          <label for="goal">Цель:</label>
-          <select v-model="nutritionData.goal" id="goal">
-            <option value="lose-weight">Сбросить вес</option>
-            <option value="maintain-weight">Поддерживать вес</option>
-            <option value="gain-weight">Набрать вес</option>
-          </select>
-        </div>
         <div class="group-of-button gap-10">
           <button class="prev-button" @click="prevStep">Назад</button>
           <button class="result-btn" type="submit">Рассчитать БЖУ</button>
