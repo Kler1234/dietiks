@@ -111,7 +111,14 @@ const props = defineProps({
   padding: 20px;
 }
 
-@media (max-width: 780px){
+@media (max-width: 780px, max-height: 800px){
+  .popup-menu{
+    width: 80%;
+    height: 80%;
+  }
+}
+
+@media (max-height: 800px){
   .popup-menu{
     width: 80%;
     height: 80%;
