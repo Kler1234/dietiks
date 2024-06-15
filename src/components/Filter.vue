@@ -120,7 +120,7 @@ const applyFilters = async () => {
       selectedDiets.value.forEach(diet => queryParams.push(`diet=${diet}`));
     }
 
-    const url = queryParams.length > 0 ? `http://217.71.129.139:4327/recipes?${queryParams.join('&')}` : 'http://217.71.129.139:4327/recipes';
+    const url = queryParams.length > 0 ? `http://217.71.129.139:4101/recipes?${queryParams.join('&')}` : 'http://217.71.129.139:4101/recipes';
 
     const response = await fetch(url);
     const responseData = await response.json();

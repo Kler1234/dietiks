@@ -47,7 +47,7 @@ const userData = reactive({
 
 const fetchUserData = async () => {
   try {
-    const response = await fetch('http://217.71.129.139:4327/user/profile', {
+    const response = await fetch('http://217.71.129.139:4101/user/profile', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ const fetchFavoriteRecipes = async () => {
       return;
     }
 
-    const response = await fetch('http://217.71.129.139:4327/favorites/recipes', {
+    const response = await fetch('http://217.71.129.139:4101/favorites/recipes', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ const fetchFavoriteRecipes = async () => {
 
 const fetchUserRecipes = async () => {
   try {
-    const response = await fetch('http://217.71.129.139:4327/user/recipes', {
+    const response = await fetch('http://217.71.129.139:4101/user/recipes', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

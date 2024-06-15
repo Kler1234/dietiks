@@ -44,7 +44,7 @@ const submitRecipe = async () => {
     formData.append('recipeCarbs', recipe.value.carbs);
     formData.append('recipeSource', recipe.value.source);
 
-    const response = await fetch('http://217.71.129.139:4327/admin/addRecipe', {
+    const response = await fetch('http://217.71.129.139:4101/admin/addRecipe', {
       method: 'POST',
       body: formData
     });
@@ -63,7 +63,7 @@ const submitRecipe = async () => {
 const deleteRecipe = async () => {
   try {
     const recipeID = recipeIdToDelete.value;
-    const response = await fetch('http://217.71.129.139:4327/admin/delete', {
+    const response = await fetch('http://217.71.129.139:4101/admin/delete', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'

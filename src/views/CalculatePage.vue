@@ -83,26 +83,26 @@ function calculateNutritionData() {
 
   const totalCalories = basalMetabolicRate.value * nutritionData.value.activityFactor
 
-  let goalMultiplier: number
+  // let goalMultiplier: number
 
-  if (nutritionData.value.goal === 'lose-weight') {
-    goalMultiplier =  0.8;
-  }
-  else if (nutritionData.value.goal === 'maintain-weight') {
-    goalMultiplier = 1;
-  }
-  else if (nutritionData.value.goal === 'gain-weight') {
-    goalMultiplier = 1.2;
-  }
+  // if (nutritionData.value.goal === 'lose-weight') {
+  //   goalMultiplier =  0.8;
+  // }
+  // else if (nutritionData.value.goal === 'maintain-weight') {
+  //   goalMultiplier = 1;
+  // }
+  // else if (nutritionData.value.goal === 'gain-weight') {
+  //   goalMultiplier = 1.2;
+  // }
 
-  const adjustedCalories = totalCalories * goalMultiplier;
+ // const adjustedCalories = totalCalories * goalMultiplier;
 
   const protein = 0.8 * nutritionData.value.weight
-  const fats = 0.3 * adjustedCalories / 9
-  const carbs = (adjustedCalories - (protein * 4) - (fats * 9)) / 4
+  const fats = 0.3 * totalCalories / 9
+  const carbs = (totalCalories - (protein * 4) - (fats * 9)) / 4
 
   result.value = {
-    calories: adjustedCalories.toFixed(0),
+    calories: totalCalories.toFixed(0),
     protein: protein.toFixed(0),
     fats: fats.toFixed(0),
     carbs: carbs.toFixed(0)
@@ -134,7 +134,7 @@ function saveNutritionData() {
     return
   }
 
-  fetch('http://217.71.129.139:4327/calculate', {
+  fetch('http://217.71.129.139:4101/calculate', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
